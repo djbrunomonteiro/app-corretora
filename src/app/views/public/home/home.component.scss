@@ -1,0 +1,125 @@
+.container-destaque{
+    height: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0px;
+    background-size: cover;
+    background-position: center;
+
+    .corretor{
+        width: 500px;
+        img{
+           width: 100%
+
+        }
+    }
+}
+
+.filter{
+    width: 50vw;
+    text-align: center;
+    .container{
+        width: 100%;
+        display: block;
+
+        .opts{
+            display: flex;
+
+        }
+
+    }
+}
+
+.info{
+    position: relative;
+    top: -50px;
+    background-color:rgb(255, 255, 255);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 15px;
+    height: 600px;
+    padding: 10px;
+    .blocos{
+        display: flex;
+        justify-content: space-between;
+        div{
+            width: 30%;
+            padding: 30px;
+        }
+
+    }
+
+    .container-grade{
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        margin: 0px;
+        padding: 0px;
+        .card-default{
+            border-radius: 10px;
+            margin: 5px;
+            width: 300px;
+            height: 300px;
+        }
+        
+        .size1{
+            width: 500px;
+            height: 400px;
+        }
+        .size2{
+            width: 550px;
+            height: 300px;
+        }
+        .size3{
+            width: 300px;
+            height: 200px;
+        }
+    
+        .btns{
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            // width: 400px;
+        }
+    }
+    
+
+}
+
+.sobre{
+    padding: 0px;
+    height: 700px;
+    // width: 100%;
+    .card-default{
+        width: 100px;
+        height: 100px;
+    }
+    .vetor{
+        width: 70vw;
+        height: 350px;
+        background-color: rgba(4, 34, 134, 0.938);
+        border-radius: 0px 10px 10px 00px;
+        position: relative;
+        left: 0px;
+        top: -110px;
+    }
+}
+
+.titulo{
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.lancamento{
+    border-radius: 15px;
+    img{
+        width: 100% ;
+        height: 100% ;
+        border-radius: 15px;
+
+    }
+}
