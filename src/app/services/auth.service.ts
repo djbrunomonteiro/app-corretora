@@ -27,9 +27,6 @@ export class AuthService {
         }else{
           const current = await this.auth.currentUser;
           current?.delete()
-          
-
-   
         }
         
       }).catch(err => {
