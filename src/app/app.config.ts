@@ -5,12 +5,14 @@ import { routes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment.development';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { provideAuth, getAuth} from '@angular/fire/auth';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { appReducers } from './store/app.state';
 import { metaReducers } from './store/logout.reducer';
+import { AnuncioEffectsService } from './store/effects/anuncio-effects.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,10 +20,11 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     importProvidersFrom([
         provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-        provideAuth(() => getAuth())
+        provideAuth(() => getAuth()),
+        provideFirestore(() => getFirestore()),
     ]),
     provideStore(appReducers, { metaReducers }),
-    provideEffects(),
+    provideEffects([AnuncioEffectsService]),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
 ]
 };

@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminLoginComponent } from './admin/login/login.component';
 import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { AuthComponent } from './auth.component';
-import { AdminAnunciosComponent } from './admin/admin-anuncios/admin-anuncios.component';
+import { AdminAnunciosComponent } from './admin/anuncios/list/admin-anuncios.component';
 import { AdminLeadsComponent } from './admin/admin-leads/admin-leads.component';
 import { AdminClientesComponent } from './admin/admin-clientes/admin-clientes.component';
 

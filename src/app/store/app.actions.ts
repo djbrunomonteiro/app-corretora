@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 
 export enum EGroup {
     User = "User",
+    Anuncio = "Anuncio",
 }
 
 export enum EAction {
