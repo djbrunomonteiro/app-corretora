@@ -1,21 +1,48 @@
 <div class="header">
+    @if(isAdmin$ | async){
     <div class="toolbar align-items-center px-5">
         <div class="logo d-flex align-items-center">
-            <!-- <div class="img">
-                <img src="../../../assets/imgs/perfil.png" alt="">
-            </div> -->
             <div class="p-3">
                 <p class="titulo">Telma Monteiro</p>
                 <p class="creci">CRECI 6489</p>
-    
+
             </div>
-        </div>    
-        <div class="d-flex justify-content-between align-items-center">
-            <button mat-stroked-button color="primary" class="p-4 mx-4" >ÁREA DO CLIENTE</button>
-            <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-                <mat-icon>menu</mat-icon>
-              </button>
         </div>
+
+        <nav>
+            <ul>
+                @for (item of menuAdmin; track $index) {
+                    <li><a mat-stroked-button [routerLink]="item.url" color="primary" class="p-4">{{item.titulo}}</a></li>
+                }
+
+            </ul>
+        </nav>
+
     </div>
+
+    }@else {
+
+    <div class="toolbar align-items-center px-5">
+        <div class="logo d-flex align-items-center">
+            <div class="p-3">
+                <p class="titulo">Telma Monteiro</p>
+                <p class="creci">CRECI 6489</p>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="d-flex justify-content-between align-items-center">
+        <button mat-stroked-button color="primary" class="p-4 mx-4">ÁREA DO CLIENTE</button>
+        <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+            <mat-icon>menu</mat-icon>
+        </button>
+    </div>
+
+    }
+
+
 
 </div>

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Auth, signInWithPopup, GoogleAuthProvider } from '@angular/fire/auth';
+import { StoreService } from './store.service';
+import { EAction, EGroup } from '../store/app.actions';
 
 
 @Injectable({
@@ -11,6 +13,7 @@ export class AuthService {
 
   constructor(
     private auth: Auth,
+    private storeService: StoreService
   ) {
 
     this.googleAuthProvider.setCustomParameters({
@@ -23,7 +26,8 @@ export class AuthService {
       .then(async res => {
         const email = res.user.email
         if(email === 'kelvinbruno15@gmail.com' || 'brunomonteiroestudio@gmail.com'){
-          console.log('sucesso', res);
+          const item = {nome: res?.user.displayName, email: res.user.email, id: res.user.uid, foto: res.user.photoURL};
+          this.storeService.dispatchAction({group: EGroup.User, action: EAction.SetOneStore, props: {item}})          
         }else{
           const current = await this.auth.currentUser;
           current?.delete()
@@ -33,6 +37,17 @@ export class AuthService {
         console.log('houve error', err);
 
       });
+
+      
+
+  }
+
+  isAuth(){
+    this.auth.onAuthStateChanged((user) => {
+      if (!user){return}
+      const item = {nome: user.displayName, email: user.email, id: user.uid, foto: user.photoURL};
+      this.storeService.dispatchAction({group: EGroup.User, action: EAction.SetOneStore, props: {item}})  
+    });
 
   }
 }

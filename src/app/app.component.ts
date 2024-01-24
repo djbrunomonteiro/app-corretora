@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { environment } from '../environments/environment.development';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -20,8 +21,17 @@ import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'app-corretora';
+  constructor(private auth: AuthService){
+    
+    
+  }
+  ngOnInit(): void {
+    this.auth.isAuth()
+  }
+
+  
 }
 
 
