@@ -13,11 +13,13 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { appReducers } from './store/app.state';
 import { metaReducers } from './store/logout.reducer';
 import { AnuncioEffectsService } from './store/effects/anuncio-effects.service';
+import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideAnimations(),
+    provideHttpClient(),
     importProvidersFrom([
         provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
         provideAuth(() => getAuth()),

@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, Input, OnInit, Optional } from '@angular/core';
+import { AfterViewInit, Component, Inject, Input, OnInit, Optional } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MaterialModule } from '../../../../../modules/material/material.module';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { UtilsService } from '../../../../../services/utils.service';
 
 @Component({
   selector: 'app-edit',
@@ -18,55 +19,82 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.scss'
 })
-export class AdminAnuncioEditComponent implements OnInit {
+export class AdminAnuncioEditComponent implements OnInit, AfterViewInit {
 
   form = this._formBuilder.group({
     id: [''],
-    codigo:[''],
     titulo:[''],
+    descricao: [''],
+    codigo:[''],
     categoria :[''],
     tipo:[''],
-    fotos:[''],
-    tour_virtual:[''],
     preco:[''],
     iptu:[''],
     condominio:[''],
     area_util:[''],
+    qtd_suite:[''],
     qtd_dorm:[''],
     qtd_ban:[''],
-    qtd_suite:[''],
     qtd_vaga:[''],
     dets_imovel:[''],
-    dets_area_comun:[''],
+    dets_area_comum:[''],
     dets_proximidades:[''],
     dets_outros:[''],
-    end_cidade :[''],
+    fotos:[''],
+    tour_virtual:[''],
+    end_cep: [''],
     end_uf :[''],
+    end_cidade :[''],
+    end_bairro :[''],
     end_logradouro :[''],
     end_numero :[''],
-    end_bairro :[''],
     end_complemento :[''],
     created_at :['']
   })
 
-  firstFormGroup = this._formBuilder.group({
-    firstCtrl: ['', Validators.required],
-  });
-  secondFormGroup = this._formBuilder.group({
-    secondCtrl: ['', Validators.required],
-  });
+
+  foods: any[] = [
+    {value: 'steak-0', viewValue: 'Steak'},
+    {value: 'pizza-1', viewValue: 'Pizza'},
+    {value: 'tacos-2', viewValue: 'Tacos'},
+  ];
+
+  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
+
+  estados: any[] = [];
+  cidades: any[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<AdminAnuncioEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
 
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
+    private utils: UtilsService
 
   ){}
 
   ngOnInit(): void {
     console.log(this.data);
-    
+    this.utils.getLocalidades().subscribe((res: any) =>{
+      this.estados = res?.estados;
+      setTimeout(() => {
+        this.form.patchValue({end_uf: 'MA'})
+      },500)
+    })
   }
+
+  ngAfterViewInit(): void {
+    this.form.valueChanges.subscribe(c => {
+      if(c?.end_uf){
+        this.cidades = this.estados.filter((elem: any) => elem?.sigla === c.end_uf).map((elem: any) => elem.cidades)[0] ?? [];
+        setTimeout(() => {
+          if(c?.end_uf === 'MA'){
+            this.form.patchValue({end_cidade: 'São Luís'})
+          }
+        },500)
+      }
+    })
+  }
+
 
 }

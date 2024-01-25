@@ -1,11 +1,21 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilsService {
 
-  constructor() { }
+  url: string = 'assets/estados-cidades-br.json';
+
+  constructor(
+    private http: HttpClient,
+  ) { }
+
+  getLocalidades(): Observable<{}> {
+    return this.http.get(this.url)
+  }
 
   paramsJsonParse(itemRef: any[] | object): any[] | object {
     let result;

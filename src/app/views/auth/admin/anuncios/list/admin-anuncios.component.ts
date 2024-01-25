@@ -35,6 +35,7 @@ export class AdminAnunciosComponent implements OnInit {
 
   ngOnInit(): void {
     this.getItens();
+    this.openEdit()
 
   }
 

@@ -6,6 +6,7 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { environment } from '../environments/environment.development';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { AuthService } from './services/auth.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
