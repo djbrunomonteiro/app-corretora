@@ -20,7 +20,7 @@
         <div class="d-flex">
           <mat-form-field class="w-25 m-rigth" appearance="outline">
             <mat-label>CEP</mat-label>
-            <input matInput formControlName="end_cep">
+            <input matInput formControlName="end_cep" mask="00000-000">
           </mat-form-field>
 
           <mat-form-field class="w-25 m-rigth" appearance="outline">
@@ -87,17 +87,17 @@
           <mat-form-field class="w-25 m-rigth" appearance="outline">
             <mat-label>Categoria</mat-label>
             <mat-select formControlName="categoria">
-              @for (food of foods; track food) {
-              <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
+              @for (item of categorias; track $index) {
+              <mat-option [value]="item">{{item | uppercase}}</mat-option>
               }
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field class="w-25" appearance="outline">
+          <mat-form-field class="w-50" appearance="outline">
             <mat-label>Tipo</mat-label>
             <mat-select formControlName="tipo">
-              @for (food of foods; track food) {
-              <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
+              @for (item of tipos; track $index) {
+              <mat-option [value]="item">{{item | uppercase}}</mat-option>
               }
             </mat-select>
           </mat-form-field>
@@ -109,16 +109,16 @@
         <div class="d-flex">
           <mat-form-field class="w-25 m-rigth" appearance="outline">
             <mat-label>Preço</mat-label>
-            <input matInput formControlName="preco">
+            <input matInput formControlName="preco" mask="separator.2" thousandSeparator="." decimalMarker="," [prefix]="'R$'" >
           </mat-form-field>
 
           <mat-form-field class="w-25 m-rigth" appearance="outline">
             <mat-label>IPTU</mat-label>
-            <input matInput formControlName="iptu">
+            <input matInput formControlName="iptu" mask="separator.2" thousandSeparator="." decimalMarker="," [prefix]="'R$'">
           </mat-form-field>
           <mat-form-field class="w-25" appearance="outline">
             <mat-label>Condomínio</mat-label>
-            <input matInput formControlName="condominio">
+            <input matInput formControlName="condominio" mask="separator.2" thousandSeparator="." decimalMarker="," [prefix]="'R$'">
           </mat-form-field>
         </div>
 
@@ -137,7 +137,7 @@
         <div class="d-flex mt-3">
           <mat-form-field class="w-25 m-rigth" appearance="outline">
             <mat-label>Área útil (Metros)</mat-label>
-            <input matInput placeholder="ex: 30" formControlName="area_util" required>
+            <input matInput placeholder="ex: 30" formControlName="area_util" mask="separator" thousandSeparator="." id="area_util">
 
           </mat-form-field>
         </div>
@@ -146,8 +146,8 @@
           <mat-form-field class="w-25 m-rigth" appearance="outline">
             <mat-label>Suítes</mat-label>
             <mat-select formControlName="qtd_suite">
-              @for (food of foods; track food) {
-              <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
+              @for (item of nums; track $index) {
+              <mat-option [value]="item">{{item}}</mat-option>
               }
             </mat-select>
           </mat-form-field>
@@ -155,27 +155,27 @@
           <mat-form-field class="w-25 m-rigth" appearance="outline">
             <mat-label>Dormitorios</mat-label>
             <mat-select formControlName="qtd_dorm">
-              @for (food of foods; track food) {
-              <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
-              }
+              @for (item of nums; track $index) {
+                <mat-option [value]="item">{{item}}</mat-option>
+                }
             </mat-select>
           </mat-form-field>
 
           <mat-form-field class="w-25 m-rigth" appearance="outline">
             <mat-label>Banheiros</mat-label>
             <mat-select formControlName="qtd_ban">
-              @for (food of foods; track food) {
-              <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
-              }
+              @for (item of nums; track $index) {
+                <mat-option [value]="item">{{item}}</mat-option>
+                }
             </mat-select>
           </mat-form-field>
 
           <mat-form-field class="w-25" appearance="outline">
             <mat-label>Vagas de garagem</mat-label>
             <mat-select formControlName="qtd_vaga">
-              @for (food of foods; track food) {
-              <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
-              }
+              @for (item of nums; track $index) {
+                <mat-option [value]="item">{{item}}</mat-option>
+                }
             </mat-select>
           </mat-form-field>
         </div>
@@ -186,17 +186,17 @@
           <mat-form-field appearance="outline" class="m-rigth">
             <mat-label>Imóvel</mat-label>
             <mat-select formControlName="dets_imovel" multiple>
-              @for (topping of toppingList; track topping) {
-              <mat-option [value]="topping">{{topping}}</mat-option>
-              }
+              @for (item of areasImovel; track $index) {
+                <mat-option [value]="item">{{item}}</mat-option>
+                }
             </mat-select>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label> Área Comum</mat-label>
             <mat-select formControlName="dets_area_comum" multiple>
-              @for (topping of toppingList; track topping) {
-              <mat-option [value]="topping">{{topping}}</mat-option>
+              @for (item of areasComuns; track $index) {
+              <mat-option [value]="item">{{item}}</mat-option>
               }
             </mat-select>
           </mat-form-field>   
@@ -208,17 +208,17 @@
           <mat-form-field appearance="outline" class="m-rigth">
             <mat-label> Pŕoximidades</mat-label>
             <mat-select formControlName="dets_proximidades" multiple>
-              @for (topping of toppingList; track topping) {
-              <mat-option [value]="topping">{{topping}}</mat-option>
-              }
+              @for (item of itensProximos; track $index) {
+                <mat-option [value]="item">{{item}}</mat-option>
+                }
             </mat-select>
           </mat-form-field>          
           <mat-form-field appearance="outline">
             <mat-label> Outros</mat-label>
             <mat-select formControlName="dets_outros" multiple>
-              @for (topping of toppingList; track topping) {
-              <mat-option [value]="topping">{{topping}}</mat-option>
-              }
+              @for (item of itensAdicionais; track $index) {
+                <mat-option [value]="item">{{item}}</mat-option>
+                }
             </mat-select>
           </mat-form-field>
         </div>

@@ -14,12 +14,14 @@ import { appReducers } from './store/app.state';
 import { metaReducers } from './store/logout.reducer';
 import { AnuncioEffectsService } from './store/effects/anuncio-effects.service';
 import { provideHttpClient } from '@angular/common/http';
+import { provideEnvironmentNgxMask } from 'ngx-mask';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideAnimations(),
     provideHttpClient(),
+    provideEnvironmentNgxMask(),
     importProvidersFrom([
         provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
         provideAuth(() => getAuth()),
