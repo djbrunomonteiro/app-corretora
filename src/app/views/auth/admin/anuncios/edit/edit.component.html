@@ -241,9 +241,8 @@
 
         <p>Fotos Padrão</p>
 
-        <div class="border" style="width: 150px; height: 150px">
+        <app-image-dropzone [folder]="folder" (getImgs)="getImgsDropzone($event)" [multiple]="true" [urls$]="urlsFotos$" ></app-image-dropzone>
 
-        </div>
 
 
         <div>

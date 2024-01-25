@@ -6,6 +6,12 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { UtilsService } from '../../../../../services/utils.service';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { ImageDropzoneComponent } from '../../../../../shared/image-dropzone/image-dropzone.component';
+import { EFolderUpload } from '../../../../../enums/folders';
+import { BehaviorSubject } from 'rxjs';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { DropzoneCdkModule } from '@ngx-dropzone/cdk';
+import { DropzoneMaterialModule } from '@ngx-dropzone/material';
 
 @Component({
   selector: 'app-edit',
@@ -16,7 +22,8 @@ import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
     ReactiveFormsModule,
     MaterialModule,
     NgxMaskDirective,
-    NgxMaskPipe
+    NgxMaskPipe,
+    ImageDropzoneComponent,
   ],
   providers: [
     {
@@ -48,7 +55,7 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit {
     dets_area_comum: [''],
     dets_proximidades: [''],
     dets_outros: [''],
-    fotos: [''],
+    fotos: [['']],
     tour_virtual: [''],
     end_cep: [''],
     end_uf: [''],
@@ -150,6 +157,9 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit {
   estados: any[] = [];
   cidades: any[] = [];
 
+  folder = EFolderUpload.anuncio;
+  urlsFotos$ = new BehaviorSubject<string[]>([]);
+
   constructor(
     public dialogRef: MatDialogRef<AdminAnuncioEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -189,6 +199,11 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit {
       this.nums.push(index)
     }
 
+  }
+
+  getImgsDropzone(imgs: any[]) {
+    const nomes = imgs.map((img: File) => img.name ?? '');
+    this.form.patchValue({ fotos: nomes });
   }
 
 

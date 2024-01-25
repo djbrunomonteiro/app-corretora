@@ -15,9 +15,11 @@ import { metaReducers } from './store/logout.reducer';
 import { AnuncioEffectsService } from './store/effects/anuncio-effects.service';
 import { provideHttpClient } from '@angular/common/http';
 import { provideEnvironmentNgxMask } from 'ngx-mask';
+import { Ng2ImgMaxService } from 'ng2-img-max';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    Ng2ImgMaxService,
     provideRouter(routes),
     provideAnimations(),
     provideHttpClient(),

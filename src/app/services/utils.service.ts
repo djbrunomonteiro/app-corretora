@@ -13,6 +13,18 @@ export class UtilsService {
     private http: HttpClient,
   ) { }
 
+  filenameCreate(pre: any = '', pos: any = '') {
+    const caracteres = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    let resultado = '';
+
+    for (let i = 0; i < 30; i++) {
+      const indiceAleatorio = Math.floor(Math.random() * caracteres.length);
+      resultado += caracteres.charAt(indiceAleatorio);
+    }
+
+    return resultado;
+  }
+
   getLocalidades(): Observable<{}> {
     return this.http.get(this.url)
   }

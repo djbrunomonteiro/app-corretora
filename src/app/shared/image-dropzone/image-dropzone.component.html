@@ -1,0 +1,16 @@
+<mat-form-field appearance="fill">
+    <mat-label>Arraste seus arquivos ou clique aqui!</mat-label>
+    <ngx-mat-dropzone>
+        <input type="file" multiple fileInput [formControl]="fileCtrl" accept="image/*" (change)="teste()" />
+        @if (fileCtrl.value) {
+            <mat-chip-row (removed)="clear()">
+            @for (item of fileCtrl.value; track $index) {
+                {{item?.name}}
+  
+
+            }
+        </mat-chip-row>
+        }
+    </ngx-mat-dropzone>
+    <mat-icon matSuffix color="primary">cloud_upload</mat-icon>
+</mat-form-field>
