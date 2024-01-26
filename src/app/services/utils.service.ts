@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { Observable, map } from 'rxjs';
 
 @Injectable({
@@ -11,7 +12,12 @@ export class UtilsService {
 
   constructor(
     private http: HttpClient,
+    private _snackBar: MatSnackBar
   ) { }
+
+  // showMessage(message: string = '', action: string = 'X', config: MatSnackBarConfig = {horizontalPosition: 'center', verticalPosition: 'bottom', duration: 3000}){
+  //   this._snackBar.open(message, action, config);
+  // }
 
   filenameCreate(pre: any = '', pos: any = '') {
     const caracteres = 'abcdefghijklmnopqrstuvwxyz0123456789';

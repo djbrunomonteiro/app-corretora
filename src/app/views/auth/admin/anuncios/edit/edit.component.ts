@@ -8,12 +8,14 @@ import { UtilsService } from '../../../../../services/utils.service';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { ImageDropzoneComponent } from '../../../../../shared/image-dropzone/image-dropzone.component';
 import { EFolderUpload } from '../../../../../enums/folders';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, first } from 'rxjs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DropzoneCdkModule } from '@ngx-dropzone/cdk';
 import { DropzoneMaterialModule } from '@ngx-dropzone/material';
 import { UploadService } from '../../../../../services/upload.service';
 import { UrlFotosPipe } from '../../../../../pipes/url-fotos.pipe';
+import { StoreService } from '../../../../../services/store.service';
+import { EAction, EGroup } from '../../../../../store/app.actions';
 
 @Component({
   selector: 'app-edit',
@@ -42,12 +44,13 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit {
 
   form = this._formBuilder.group({
     id: [''],
-    titulo: [''],
+    status: ['aberto'],
+    titulo: ['', Validators.required],
     descricao: [''],
     codigo: [''],
-    categoria: [''],
-    tipo: [''],
-    preco: [''],
+    categoria: ['', Validators.required],
+    tipo: ['', Validators.required],
+    preco: ['',Validators.required],
     iptu: [''],
     condominio: [''],
     area_util: [''],
@@ -62,14 +65,20 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit {
     fotos: [['']],
     tour_virtual: [''],
     end_cep: [''],
-    end_uf: [''],
-    end_cidade: [''],
+    end_uf: ['',Validators.required],
+    end_cidade: ['',Validators.required],
     end_bairro: [''],
     end_logradouro: [''],
     end_numero: [''],
     end_complemento: [''],
     created_at: ['']
   });
+
+  ctrltitulo = this.form.get('titulo') as FormControl;
+  ctrldescricao = this.form.get('descricao') as FormControl;
+  ctrlcategoria = this.form.get('categoria') as FormControl;
+  ctrltipo = this.form.get('tipo') as FormControl;
+  ctrlpreco = this.form.get('preco') as FormControl;
 
   categorias = [
     'comprar',
@@ -167,7 +176,7 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit {
   loadingUpload = false;
 
   filesCtrl = new FormControl();
-  novos$= new BehaviorSubject<string[]>([]);
+  fotos$= new BehaviorSubject<string[]>([]);
   
   constructor(
     public dialogRef: MatDialogRef<AdminAnuncioEditComponent>,
@@ -175,7 +184,8 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit {
 
     private _formBuilder: FormBuilder,
     private utils: UtilsService,
-    public uploadService: UploadService
+    public uploadService: UploadService,
+    private storeService: StoreService
 
   ) {
     this.generateNums();
@@ -228,10 +238,10 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit {
       const fullPath = await this.uploadService.getFoto(res, 'anuncios');
       if(res){
         fotos.push(res);
-        const nvs = [...this.novos$.value, fullPath];
+        const nvs = [...this.fotos$.value, fullPath];
         console.log('nvs', nvs);
         
-        this.novos$.next(nvs)
+        this.fotos$.next(nvs)
       }
     }
 
@@ -242,6 +252,28 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit {
     
 
 
+  }
+
+  remove(index: number){
+    if(!this.form.value.fotos){return}
+    const fotos = this.form.value.fotos.filter((_, i) => i != index);
+    this.form.patchValue({fotos});
+    this.fotos$.next(this.fotos$.value.filter((_, i) => i != index));
+  }
+
+  salvar(){
+    const item = {...this.form.value};
+    const result$ = this.storeService.dispatchAction({group:EGroup.Anuncio, action: EAction.SetOne, props: {item}})
+    result$.pipe(first()).subscribe(res => {
+      console.log('res dispacth', res);
+      
+      // this.utils.showMessage(res?.props?.message)
+
+      if(!res.props?.error){
+       this.dialogRef.close();
+      }
+      
+    })
   }
 
 

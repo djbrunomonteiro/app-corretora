@@ -1,3 +1,19 @@
 .m-rigth{
     margin-right: 10px;
 }
+.foto-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    margin-left: 3px;
+
+
+    img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+    }
+
+}

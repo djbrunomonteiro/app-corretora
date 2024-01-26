@@ -30,7 +30,8 @@ export class AdminAnunciosComponent implements OnInit {
 
   constructor(
     private storeService: StoreService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private anunciosService: AnuncioService
   ){}
 
   ngOnInit(): void {
@@ -48,11 +49,14 @@ export class AdminAnunciosComponent implements OnInit {
     result$.pipe(first()).subscribe((r) =>{
       this.anuncios$ = this.storeService.select(AllAnuncios);
       this.anuncios$.subscribe(res => {
+        console.log('res', res);
+        
         if(res?.length){
           this.dataSource = new MatTableDataSource<any>(res); 
         }
       } )
     })
+
 
 
   }

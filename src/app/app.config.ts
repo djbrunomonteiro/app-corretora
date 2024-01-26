@@ -16,6 +16,7 @@ import { AnuncioEffectsService } from './store/effects/anuncio-effects.service';
 import { provideHttpClient } from '@angular/common/http';
 import { provideEnvironmentNgxMask } from 'ngx-mask';
 import { Ng2ImgMaxService } from 'ng2-img-max';
+import { getStorage } from '@angular/fire/storage';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -28,8 +29,9 @@ export const appConfig: ApplicationConfig = {
         provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
         provideAuth(() => getAuth()),
         provideFirestore(() => getFirestore()),
+        
     ]),
-    provideStore(appReducers, { metaReducers }),
+    provideStore(appReducers, { metaReducers, runtimeChecks: {strictActionImmutability: false, strictStateImmutability: false} }),
     provideEffects([AnuncioEffectsService]),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
 ]
