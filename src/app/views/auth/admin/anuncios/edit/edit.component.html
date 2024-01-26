@@ -241,11 +241,28 @@
 
         <p>Fotos Padrão</p>
 
-        <app-image-dropzone [folder]="folder" (getImgs)="getImgsDropzone($event)" [multiple]="true" [urls$]="urlsFotos$" ></app-image-dropzone>
+        @if(loadingUpload){
+          Enviando imagens
+          <mat-progress-bar mode="buffer"></mat-progress-bar>
+        }@else{
+          <mat-form-field appearance="fill">
+            <mat-label>Arraste seus arquivos ou clique aqui!</mat-label>
+            <ngx-mat-dropzone>
 
+                <input type="file" multiple fileInput [formControl]="filesCtrl" accept="image/*" />
+              </ngx-mat-dropzone>
+              <mat-icon matSuffix color="primary">cloud_upload</mat-icon>
+            </mat-form-field>
+          
+        }
 
+        <div class="d-flex">
+        @for (item of novos$ | async; track $index) {
+            <img [src]="item" alt="" style="width: 150px; height: 150px;">
+          }
+        </div>
 
-        <div>
+        <div class="my-3">
           <button mat-button matStepperNext>Próximo</button>
         </div>
       </mat-step>

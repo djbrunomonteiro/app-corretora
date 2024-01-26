@@ -41,6 +41,7 @@ export class ImageDropzoneComponent implements OnInit, OnDestroy {
   uploading = false;
 
   fileCtrl = new FormControl();
+  
 
   private destroy$: Subject<void> = new Subject<void>();
 

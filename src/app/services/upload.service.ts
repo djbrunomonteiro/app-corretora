@@ -4,22 +4,57 @@ import { Ng2ImgMaxService } from 'ng2-img-max';
 import { Observable, catchError, first, map, of, switchMap, throwError } from 'rxjs';
 import { EFolderUpload, ESize } from '../enums/folders';
 import { UtilsService } from './utils.service';
+import { StorageReference, getStorage, getDownloadURL, ref, uploadBytes } from '@angular/fire/storage'
+import { IResize } from '../models/resize';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UploadService {
 
+  basePath = '/anuncios';
+  storage = getStorage()
+  storageRef: StorageReference = ref(this.storage);
+
   constructor(
     private http: HttpClient,
     private ng2ImgMaxService: Ng2ImgMaxService,
-    private utils: UtilsService
+    private utils: UtilsService,
   ) { }
 
 
-/* Realiza o upload nas subpastas (small|medium|large) da pasta principal.
-   caso ocorrá algum erro em um dos envios, vai parar o envio e retornará um objeto com error: true ;
-*/
+  async uploadStorage(file: File, folder = 'anuncios') {
+    return new Promise<string>(async resolve => {
+      const filesResize = await this.gerarMultiplosTamanhos(file);
+      let results = ''
+      for (let index = 0; index < filesResize.length; index++) {
+        const size = filesResize[index]?.size;
+        const fileR = filesResize[index]?.file;
+        this.storageRef = ref(this.storage, `${folder}/${size}/${fileR?.name}`);
+        const resUpload = await uploadBytes(this.storageRef, file);
+        results = resUpload?.ref.name;
+      }
+
+      resolve(results)
+
+    })
+
+
+
+  }
+
+  async getFoto(name: string, folder: string, size: string = ESize.medium) {
+    const path = `${folder}/${size}/${name}`
+    this.storageRef = ref(this.storage, path);
+    return await getDownloadURL(this.storageRef)
+
+
+  }
+
+
+  /* Realiza o upload nas subpastas (small|medium|large) da pasta principal.
+     caso ocorrá algum erro em um dos envios, vai parar o envio e retornará um objeto com error: true ;
+  */
   async uploadImg(file: any, folder: EFolderUpload) {
     return new Promise<any>(async (resolve) => {
       let resEnvio;
@@ -37,7 +72,7 @@ export class UploadService {
 
         resEnvio = await this.enviar(resFile, subFolder);
         if (resEnvio?.error) {
-          resolve({ error: true, status: resEnvio?.status,  message: msgErro  })
+          resolve({ error: true, status: resEnvio?.status, message: msgErro })
           break;
         }
       }
@@ -69,8 +104,8 @@ export class UploadService {
         next: (res) => {
           resolve(res)
         },
-        error: (err) =>{
-          resolve({status: 500, error: true, message: err})
+        error: (err) => {
+          resolve({ status: 500, error: true, message: err })
         }
       })
 
@@ -89,21 +124,17 @@ export class UploadService {
   }
 
 
-  /* Como default criará 3 arquivos de tamanhos diferentes mas com o mesmo name.*/
+  /* Como default criará 2 arquivos de tamanhos diferentes mas com o mesmo name.*/
   async gerarMultiplosTamanhos(file: File) {
-    return new Promise(async (resolve, reject) => {
+    return new Promise<IResize[]>(async (resolve, reject) => {
       const results: any[] = [];
-      const name = this.utils.filenameCreate('099', 'luah') + '.jpg';
+      const name = new Date().getTime() + '.jpg';
       let resResize;
       let size: ESize = ESize.large;
 
-      for (let index = 0; index < 3; index++) {
+      for (let index = 0; index < 2; index++) {
         switch (index) {
           case 0:
-            resResize = await this.resizeImg(file, name, 100, 100);
-            size =  ESize.small
-            break;
-          case 1:
             resResize = await this.resizeImg(file, name, 300, 300);
             size = ESize.medium
             break;

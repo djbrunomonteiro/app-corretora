@@ -11,6 +11,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatStepperModule} from '@angular/material/stepper';
 import { MatChipsModule } from '@angular/material/chips';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [],
@@ -26,7 +27,8 @@ import { MatChipsModule } from '@angular/material/chips';
     MatPaginatorModule,
     MatDialogModule,
     MatStepperModule,
-    MatChipsModule
+    MatChipsModule,
+    MatProgressBarModule
   ],
   exports:[
     MatButtonModule,
@@ -39,7 +41,8 @@ import { MatChipsModule } from '@angular/material/chips';
     MatPaginatorModule,
     MatDialogModule,
     MatStepperModule,
-    MatChipsModule
+    MatChipsModule,
+    MatProgressBarModule
   ]
 })
 export class MaterialModule { }

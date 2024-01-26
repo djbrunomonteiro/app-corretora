@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, Inject, Input, OnInit, Optional } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MaterialModule } from '../../../../../modules/material/material.module';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
@@ -12,6 +12,8 @@ import { BehaviorSubject } from 'rxjs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DropzoneCdkModule } from '@ngx-dropzone/cdk';
 import { DropzoneMaterialModule } from '@ngx-dropzone/material';
+import { UploadService } from '../../../../../services/upload.service';
+import { UrlFotosPipe } from '../../../../../pipes/url-fotos.pipe';
 
 @Component({
   selector: 'app-edit',
@@ -23,7 +25,9 @@ import { DropzoneMaterialModule } from '@ngx-dropzone/material';
     MaterialModule,
     NgxMaskDirective,
     NgxMaskPipe,
-    ImageDropzoneComponent,
+    DropzoneCdkModule,
+    DropzoneMaterialModule,
+    UrlFotosPipe
   ],
   providers: [
     {
@@ -160,12 +164,18 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit {
   folder = EFolderUpload.anuncio;
   urlsFotos$ = new BehaviorSubject<string[]>([]);
 
+  loadingUpload = false;
+
+  filesCtrl = new FormControl();
+  novos$= new BehaviorSubject<string[]>([]);
+  
   constructor(
     public dialogRef: MatDialogRef<AdminAnuncioEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
 
     private _formBuilder: FormBuilder,
-    private utils: UtilsService
+    private utils: UtilsService,
+    public uploadService: UploadService
 
   ) {
     this.generateNums();
@@ -191,6 +201,12 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit {
           }
         }, 500)
       }
+    });
+
+    this.filesCtrl.valueChanges.subscribe(c => {
+      if(!c?.length){return;}
+      this.upload(c);
+      
     })
   }
 
@@ -201,9 +217,31 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit {
 
   }
 
-  getImgsDropzone(imgs: any[]) {
-    const nomes = imgs.map((img: File) => img.name ?? '');
-    this.form.patchValue({ fotos: nomes });
+  async upload(files: File[]){
+    this.loadingUpload = true;
+    let fotos = this.form.value.fotos ?? [];
+    fotos = fotos.filter(elem => elem);
+
+    for (let index = 0; index < files.length; index++) {
+      const file = files[index];
+      const res = await this.uploadService.uploadStorage(file);
+      const fullPath = await this.uploadService.getFoto(res, 'anuncios');
+      if(res){
+        fotos.push(res);
+        const nvs = [...this.novos$.value, fullPath];
+        console.log('nvs', nvs);
+        
+        this.novos$.next(nvs)
+      }
+    }
+
+    this.loadingUpload = false;
+    this.form.patchValue({fotos})
+
+    console.log('fotos', fotos);
+    
+
+
   }
 
 

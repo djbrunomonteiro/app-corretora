@@ -7,6 +7,7 @@ import { environment } from '../environments/environment.development';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
     RouterOutlet, 
     HeaderComponent, 
     FooterComponent,
+    
   ],
   providers: [
   ],
