@@ -10,6 +10,8 @@ import { Observable, first } from 'rxjs';
 import { AllAnuncios } from '../../../../../store/selectors/anuncio.selector';
 import { AdminAnuncioEditComponent } from '../edit/edit.component';
 import { MatDialog } from '@angular/material/dialog';
+import { AlertConfirmComponent } from '../../../../../shared/alert-confirm/alert-confirm.component';
+import { UtilsService } from '../../../../../services/utils.service';
 
 @Component({
   selector: 'app-admin-anuncios',
@@ -21,7 +23,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class AdminAnunciosComponent implements OnInit {
 
 
-  displayedColumns: string[] = ['titulo', 'status'];
+  displayedColumns: string[] = ['codigo','titulo', 'categoria', 'tipo', 'cidade', 'status', 'acoes'];
   dataSource = new MatTableDataSource<any>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -31,12 +33,13 @@ export class AdminAnunciosComponent implements OnInit {
   constructor(
     private storeService: StoreService,
     public dialog: MatDialog,
-    private anunciosService: AnuncioService
+    private anunciosService: AnuncioService,
+    private utils: UtilsService
   ){}
 
   ngOnInit(): void {
     this.getItens();
-    this.openEdit()
+    // this.openEdit()
 
   }
 
@@ -47,6 +50,8 @@ export class AdminAnunciosComponent implements OnInit {
   getItens(){
     const result$ = this.storeService.dispatchAction({group: EGroup.Anuncio, action: EAction.GetAll});
     result$.pipe(first()).subscribe((r) =>{
+      console.log('chamouu ?', r);
+      
       this.anuncios$ = this.storeService.select(AllAnuncios);
       this.anuncios$.subscribe(res => {
         console.log('res', res);
@@ -57,15 +62,23 @@ export class AdminAnunciosComponent implements OnInit {
       } )
     })
 
-
-
   }
 
   openEdit(item?: any){
-    const dialogRef = this.dialog.open(AdminAnuncioEditComponent, {disableClose: true, data: {t: 'teste'}, minWidth: 1000, minHeight: 700} );
-    dialogRef.afterClosed().pipe(first()).subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+    const dialogRef = this.dialog.open(AdminAnuncioEditComponent, {disableClose: true, data: item, minWidth: 1000, minHeight: 700} );
+  }
+
+  delete(id: string){
+    const dialogRef = this.dialog.open(AlertConfirmComponent );
+    dialogRef.afterClosed().pipe(first()).subscribe(res => {
+      if(!res){return}
+
+      const result$ = this.storeService.dispatchAction({group: EGroup.Anuncio, action: EAction.DeleteOne, params: {id}});
+      result$.pipe(first()).subscribe((act) =>{
+        this.utils.showMessage(act.props?.message)
+      })
     });
+
 
   }
 

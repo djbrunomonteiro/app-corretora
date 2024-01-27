@@ -15,9 +15,9 @@ export class UtilsService {
     private _snackBar: MatSnackBar
   ) { }
 
-  // showMessage(message: string = '', action: string = 'X', config: MatSnackBarConfig = {horizontalPosition: 'center', verticalPosition: 'bottom', duration: 3000}){
-  //   this._snackBar.open(message, action, config);
-  // }
+  showMessage(message: string = '', action: string = 'X', config: MatSnackBarConfig = {horizontalPosition: 'center', verticalPosition: 'bottom', duration: 3000}){
+    this._snackBar.open(message, action, config);
+  }
 
   filenameCreate(pre: any = '', pos: any = '') {
     const caracteres = 'abcdefghijklmnopqrstuvwxyz0123456789';

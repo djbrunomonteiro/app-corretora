@@ -53,7 +53,7 @@ export class AnuncioEffectsService {
         return this.anuncioService.addOne(item).pipe(
           map((res: IResponse) => {
             console.log('res add', res);
-            
+
             if (res.status === 200 || res.status === 201) {
               item = this.utils.paramsJsonParse(res.results)
               this.storeService.dispatchAction({ group: EGroup.Anuncio, action: EAction.SetOneStore, props: { item } })
@@ -103,32 +103,57 @@ export class AnuncioEffectsService {
 
 
 
-  //   updateOne = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(getAction(EGroup.Tanque, EAction.UpdateOne)),
-  //     switchMap((action: IAction) => {
-  //       const tanque = action?.props?.item as ITanque;
-  //       return this.tanqueService.updateOne(tanque).pipe(
-  //         map((res: IResponse) => {
-  //           console.log('RESULT UPDATE', res);
+  updateOne = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getAction(EGroup.Anuncio, EAction.UpdateOne)),
+      switchMap((action: IAction) => {
+        const item = action?.props?.item;
+        return this.anuncioService.updateOne(item).pipe(
+          map((res: IResponse) => {
+            console.log('RESULT UPDATE', res);
 
-  //           if (res.status === 200 || res.status === 201) {
-  //             const item = this.utils.paramsJsonParse(res.results)
-  //             this.storeService.dispatchAction({ group: EGroup.Tanque, action: EAction.SetOneStore, props: { item } })
-  //           }
-  //           return res;
-  //         }),
-  //       )
+            if (res.status === 200 || res.status === 201) {
+              const item = this.utils.paramsJsonParse(res.results)
+              this.storeService.dispatchAction({ group: EGroup.Anuncio, action: EAction.SetOneStore, props: { item } })
+            }
+            return res;
+          }),
+        )
 
-  //     }),
-  //     map((res: IResponse) => {
-  //       if (res.error) {
-  //         return appActions({ group: EGroup.Tanque, action: EAction.UpdateOneError, props: { status: res.status, error: res.error, message: res?.message } })
-  //       } else {
-  //         console.log('existe rror', res.error);
-  //         return appActions({ group: EGroup.Tanque, action: EAction.UpdateOneSucess, props: { status: res.status, error: res.error, message: res?.message } })
-  //       }
-  //     })
-  //   )
-  // );
+      }),
+      map((res: IResponse) => {
+        if (res.error) {
+          return appActions({ group: EGroup.Anuncio, action: EAction.UpdateOneError, props: { status: res.status, error: res.error, message: res?.message } })
+        } else {
+          console.log('existe rror', res.error);
+          return appActions({ group: EGroup.Anuncio, action: EAction.UpdateOneSucess, props: { status: res.status, error: res.error, message: res?.message } })
+        }
+      })
+    )
+  );
+
+  deleteOne = createEffect(() =>
+  this.actions$.pipe(
+    ofType(getAction(EGroup.Anuncio, EAction.DeleteOne)),
+    switchMap((action: IAction) => {
+      const id = action?.params?.id as any;
+      return this.anuncioService.deleteOne(id).pipe(
+        map((res: IResponse) => {
+          if (res.status === 200 || res.status === 201) {
+            this.storeService.dispatchAction({ group: EGroup.Anuncio, action: EAction.DeleteOneStore, props: { id } })
+          }
+          return res;
+        }),
+      )
+
+    }),
+    map((res: IResponse) => {
+      if (res.error) {
+        return appActions({ group: EGroup.Anuncio, action: EAction.DeleteOneError, props: { status: res.status, error: res.error, message: res?.message } })
+      } else {
+        return appActions({ group: EGroup.Anuncio, action: EAction.DeleteOneSucess, props: { status: res.status, error: res.error, message: res?.message } })
+      }
+    })
+  )
+);
 }
