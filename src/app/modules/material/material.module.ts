@@ -13,6 +13,7 @@ import {MatStepperModule} from '@angular/material/stepper';
 import { MatChipsModule } from '@angular/material/chips';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [],
@@ -30,7 +31,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatStepperModule,
     MatChipsModule,
     MatProgressBarModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatButtonToggleModule
     
   ],
   exports:[
@@ -46,7 +48,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatStepperModule,
     MatChipsModule,
     MatProgressBarModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatButtonToggleModule
   ]
 })
 export class MaterialModule { }

@@ -16,6 +16,7 @@ import { UploadService } from '../../../../../services/upload.service';
 import { UrlFotosPipe } from '../../../../../pipes/url-fotos.pipe';
 import { StoreService } from '../../../../../services/store.service';
 import { EAction, EGroup, IAction, MyAction } from '../../../../../store/app.actions';
+import { CoreService } from '../../../../../services/core.service';
 
 @Component({
   selector: 'app-edit',
@@ -80,92 +81,8 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit {
   ctrltipo = this.form.get('tipo') as FormControl;
   ctrlpreco = this.form.get('preco') as FormControl;
 
-  categorias = [
-    'comprar',
-    'alugar',
-    'trocar'
-  ];
 
-  tipos = ['apartamento', 'casa' , 'casa de vila', 'casa de condomínio','Lançamentos casas', 'Lançamentos apartamentos', 'cobertura', 'duplex', 'flat', 'galpão', 'hotel', 'imóvel de recreação', 'loja', 'kitnets', 'restaurante', 'sítio', 'sala comercial', 'sobrado', 'chácara', 'terreno/lotes']
-  areasComuns = [
-    "Portaria",
-    "Hall de entrada",
-    "Áreas de circulação",
-    "Elevadores",
-    "Salão de festas",
-    "Churrasqueira",
-    "Piscina",
-    "Quadra poliesportiva",
-    "Playground",
-    "Espaço gourmet",
-    "Espaço fitness",
-    "Espaço pet",
-    "Lavanderia compartilhada",
-    "Garagem",
-    "Salão de jogos",
-    "Sala de cinema",
-    "Espaço coworking",
-    "Espaço para eventos",
-    "Espaço para festas infantil"
-   ];
 
-   areasImovel = [
-    "Sala de estar",
-    "Sala de jantar",
-    "Cozinha",
-    "Lavanderia",
-    "Banheiros",
-    "Quartos",
-    "Varanda",
-    "Quintal",
-    "Sacada",
-    "Terraço",
-    "Área de serviço",
-    "Escritório",
-    "Home office",
-    "Closet",
-    "Despensa",
-    "Garagem"
-  ];
-
-  itensProximos = [
-    "Parque",
-    "Praça",
-    "Jardim",
-    "Escola",
-    "Hospital",
-    "Supermercado",
-    "Banco",
-    "Restaurante",
-    "Lojas",
-    "Transporte público",
-    "Vias de acesso",
-    "Centro comercial",
-    "Pontos turísticos"
-  ];
-
-  itensAdicionais = [
-    "Depósito",
-    "Guarita",
-    "Manobrista",
-    "Portão eletrônico",
-    "Alarme",
-    "Sistema de câmeras",
-    "Piscina aquecida",
-    "Churrasqueira a gás",
-    "Jardim",
-    "Horta",
-    "Vista privilegiada",
-    "Arquitetura moderna",
-    "Decoração de alto padrão",
-    "Imóvel reformado",
-    "Imóvel novo",
-    "Imóvel com potencial de valorização"
-  ];
-
-  nums: number[] = [];
-
-  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
 
   estados: any[] = [];
   cidades: any[] = [];
@@ -185,10 +102,10 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit {
     private _formBuilder: FormBuilder,
     private utils: UtilsService,
     public uploadService: UploadService,
-    private storeService: StoreService
+    private storeService: StoreService,
+    public core: CoreService
 
   ) {
-    this.generateNums();
   }
 
   async ngOnInit(): Promise<void> {
@@ -229,12 +146,7 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit {
     })
   }
 
-  generateNums(){
-    for (let index = 0; index <= 100; index++) {
-      this.nums.push(index)
-    }
 
-  }
 
   async upload(files: File[]){
     this.loadingUpload = true;

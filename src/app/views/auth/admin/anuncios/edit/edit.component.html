@@ -87,7 +87,7 @@
           <mat-form-field class="w-25 m-rigth" appearance="outline">
             <mat-label>Categoria</mat-label>
             <mat-select formControlName="categoria">
-              @for (item of categorias; track $index) {
+              @for (item of core.categorias; track $index) {
               <mat-option [value]="item">{{item | uppercase}}</mat-option>
               }
             </mat-select>
@@ -96,7 +96,7 @@
           <mat-form-field class="w-50" appearance="outline">
             <mat-label>Tipo</mat-label>
             <mat-select formControlName="tipo">
-              @for (item of tipos; track $index) {
+              @for (item of core.tipos; track $index) {
               <mat-option [value]="item">{{item | uppercase}}</mat-option>
               }
             </mat-select>
@@ -150,7 +150,7 @@
           <mat-form-field class="w-25 m-rigth" appearance="outline">
             <mat-label>Suítes</mat-label>
             <mat-select formControlName="qtd_suite">
-              @for (item of nums; track $index) {
+              @for (item of core.nums; track $index) {
               <mat-option [value]="item">{{item}}</mat-option>
               }
             </mat-select>
@@ -159,7 +159,7 @@
           <mat-form-field class="w-25 m-rigth" appearance="outline">
             <mat-label>Dormitorios</mat-label>
             <mat-select formControlName="qtd_dorm">
-              @for (item of nums; track $index) {
+              @for (item of core.nums; track $index) {
               <mat-option [value]="item">{{item}}</mat-option>
               }
             </mat-select>
@@ -168,7 +168,7 @@
           <mat-form-field class="w-25 m-rigth" appearance="outline">
             <mat-label>Banheiros</mat-label>
             <mat-select formControlName="qtd_ban">
-              @for (item of nums; track $index) {
+              @for (item of core.nums; track $index) {
               <mat-option [value]="item">{{item}}</mat-option>
               }
             </mat-select>
@@ -177,7 +177,7 @@
           <mat-form-field class="w-25" appearance="outline">
             <mat-label>Vagas de garagem</mat-label>
             <mat-select formControlName="qtd_vaga">
-              @for (item of nums; track $index) {
+              @for (item of core.nums; track $index) {
               <mat-option [value]="item">{{item}}</mat-option>
               }
             </mat-select>
@@ -190,7 +190,7 @@
           <mat-form-field appearance="outline" class="m-rigth">
             <mat-label>Imóvel</mat-label>
             <mat-select formControlName="dets_imovel" multiple>
-              @for (item of areasImovel; track $index) {
+              @for (item of core.areasImovel; track $index) {
               <mat-option [value]="item">{{item}}</mat-option>
               }
             </mat-select>
@@ -199,7 +199,7 @@
           <mat-form-field appearance="outline">
             <mat-label> Área Comum</mat-label>
             <mat-select formControlName="dets_area_comum" multiple>
-              @for (item of areasComuns; track $index) {
+              @for (item of core.areasComuns; track $index) {
               <mat-option [value]="item">{{item}}</mat-option>
               }
             </mat-select>
@@ -212,7 +212,7 @@
           <mat-form-field appearance="outline" class="m-rigth">
             <mat-label> Pŕoximidades</mat-label>
             <mat-select formControlName="dets_proximidades" multiple>
-              @for (item of itensProximos; track $index) {
+              @for (item of core.itensProximos; track $index) {
               <mat-option [value]="item">{{item}}</mat-option>
               }
             </mat-select>
@@ -220,7 +220,7 @@
           <mat-form-field appearance="outline">
             <mat-label> Outros</mat-label>
             <mat-select formControlName="dets_outros" multiple>
-              @for (item of itensAdicionais; track $index) {
+              @for (item of core.itensAdicionais; track $index) {
               <mat-option [value]="item">{{item}}</mat-option>
               }
             </mat-select>

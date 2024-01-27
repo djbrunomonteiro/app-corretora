@@ -9,15 +9,18 @@ import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 
+import { register } from 'swiper/element/bundle';
+register();
+
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    CommonModule, 
-    RouterOutlet, 
-    HeaderComponent, 
+    CommonModule,
+    RouterOutlet,
+    HeaderComponent,
     FooterComponent,
-    
+
   ],
   providers: [
   ],
@@ -26,15 +29,15 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 })
 export class AppComponent implements OnInit {
   title = 'app-corretora';
-  constructor(private auth: AuthService){
-    
-    
+  constructor(private auth: AuthService) {
+
+
   }
   ngOnInit(): void {
     this.auth.isAuth()
   }
 
-  
+
 }
 
 

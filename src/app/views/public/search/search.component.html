@@ -1,0 +1,254 @@
+<div class="row ">
+    <div class="col-12 m-0">
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="filter">
+                    <div class="header p-3">
+                        <div class="d-flex justify-content-between">
+                            <h4>Filtrar</h4>
+                            <button mat-button color="warn">Limpar X</button>
+                        </div>
+
+                        <div class="d-flex flex-column mt-4">
+                            <h6 class="mb-3">O que você deseja ?</h6>
+
+                            <mat-form-field appearance="outline">
+                                <input formControlName="termo" matInput placeholder="Ex: código 3435">
+                            </mat-form-field>
+
+
+                        </div>
+                    </div>
+
+                    <div class="container p-3">
+                        <div class="d-flex flex-column mt-4">
+                            <h6 class="mb-3">Opções de Filtro</h6>
+
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Categoria</mat-label>
+                                <mat-select formControlName="categoria">
+                                    @for (item of core.categorias; track $index) {
+                                    <mat-option [value]="item">{{item | uppercase}}</mat-option>
+                                    }
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Tipo</mat-label>
+                                <mat-select formControlName="tipo">
+                                    @for (item of core.tipos; track $index) {
+                                    <mat-option [value]="item">{{item | uppercase}}</mat-option>
+                                    }
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <h6 class="mb-3 w-100">Faixa de preço</h6>
+
+                        <div class="d-flex">
+                            <mat-form-field class="w-50 m-rigth" appearance="outline">
+                                <mat-label>Mín.</mat-label>
+                                <input matInput formControlName="preco" mask="separator.2" thousandSeparator="."
+                                    decimalMarker="," [prefix]="'R$'">
+                            </mat-form-field>
+                            <mat-form-field class="w-50 m-rigth" appearance="outline">
+                                <mat-label>Máx.</mat-label>
+                                <input matInput formControlName="preco" mask="separator.2" thousandSeparator="."
+                                    decimalMarker="," [prefix]="'R$'">
+                            </mat-form-field>
+                        </div>
+
+                        <h6 class="mb-3 w-100">Área (m²)</h6>
+
+                        <div class="d-flex">
+                            <mat-form-field class="w-50 m-rigth" appearance="outline">
+                                <mat-label>Mín.</mat-label>
+                                <input matInput formControlName="preco" mask="separator.2" thousandSeparator="."
+                                    decimalMarker=",">
+                            </mat-form-field>
+                            <mat-form-field class="w-50 m-rigth" appearance="outline">
+                                <mat-label>Máx.</mat-label>
+                                <input matInput formControlName="preco" mask="separator.2" thousandSeparator="."
+                                    decimalMarker=",">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="d-flex">
+                            <div class="w-50">
+                                <h6>Dormitórios</h6>
+                                <mat-button-toggle-group #group="matButtonToggleGroup">
+                                    <mat-button-toggle value="2" aria-label="um dormitorio">
+                                        1
+                                    </mat-button-toggle> <mat-button-toggle value="1" aria-label="dois dormitorio">
+                                        2
+                                    </mat-button-toggle> <mat-button-toggle value="2" aria-label="tres dormitorio">
+                                        3
+                                    </mat-button-toggle> <mat-button-toggle value="3" aria-label="quarto dormitorio">
+                                        4
+                                    </mat-button-toggle> <mat-button-toggle value="4"
+                                        aria-label="cinco ou mais dormitorio">
+                                        5+
+                                    </mat-button-toggle>
+                                </mat-button-toggle-group>
+
+                            </div>
+
+                            <div class="w-50">
+                                <h6 class="mb-">Suítes</h6>
+                                <mat-button-toggle-group #group="matButtonToggleGroup">
+                                    <mat-button-toggle value="2" aria-label="um dormitorio">
+                                        0
+                                    </mat-button-toggle>
+
+                                    <mat-button-toggle value="2" aria-label="um dormitorio">
+                                        1
+                                    </mat-button-toggle> <mat-button-toggle value="1" aria-label="dois dormitorio">
+                                        2
+                                    </mat-button-toggle> <mat-button-toggle value="2" aria-label="tres dormitorio">
+                                        3+
+                                    </mat-button-toggle>
+                                </mat-button-toggle-group>
+                            </div>
+                        </div>
+
+
+                        <div class="d-flex my-3">
+                            <div class="w-50">
+                                <h6>Vagas</h6>
+                                <mat-button-toggle-group #group="matButtonToggleGroup">
+                                    <mat-button-toggle value="2" aria-label="um dormitorio">
+                                        Sem
+                                    </mat-button-toggle>
+
+                                    <mat-button-toggle value="2" aria-label="um dormitorio">
+                                        1
+                                    </mat-button-toggle>
+                                    <mat-button-toggle value="1" aria-label="dois dormitorio">
+                                        2
+                                    </mat-button-toggle>
+                                    <mat-button-toggle value="2" aria-label="tres dormitorio">
+                                        3+
+                                    </mat-button-toggle>
+                                </mat-button-toggle-group>
+
+                            </div>
+
+                            <div class="w-50">
+                                <h6 class="mb-">Banheiros</h6>
+                                <mat-button-toggle-group #group="matButtonToggleGroup">
+                                    <mat-button-toggle value="2" aria-label="um dormitorio">
+                                        1
+                                    </mat-button-toggle> <mat-button-toggle value="1" aria-label="dois dormitorio">
+                                        2
+                                    </mat-button-toggle> <mat-button-toggle value="2" aria-label="tres dormitorio">
+                                        3+
+                                    </mat-button-toggle>
+                                </mat-button-toggle-group>
+                            </div>
+                        </div>
+
+                        <h6 class="mb-3 w-100">Outros</h6>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label> Área Comum</mat-label>
+                            <mat-select formControlName="dets_area_comum" multiple>
+                                @for (item of core.areasComuns; track $index) {
+                                <mat-option [value]="item">{{item}}</mat-option>
+                                }
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="m-rigth">
+                            <mat-label> Pŕoximidades</mat-label>
+                            <mat-select formControlName="dets_proximidades" multiple>
+                                @for (item of core.itensProximos; track $index) {
+                                <mat-option [value]="item">{{item}}</mat-option>
+                                }
+                            </mat-select>
+                        </mat-form-field>
+
+                    </div>
+
+
+
+
+
+                </div>
+
+
+
+            </div>
+
+            <div class="col-md-9 m-0">
+                <div class="results">
+                    <div class="header">
+                        <h4>35 Resultados encontrados</h4>
+
+                        <mat-form-field class="btn-order" appearance="outline">
+                            <mat-label>Ordenar por</mat-label>
+                            <mat-select formControlName="categoria">
+                                @for (item of core.orders; track $index) {
+                                <mat-option [value]="item">{{item | uppercase}}</mat-option>
+                                }
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="container">
+
+
+                        <mat-card class="card-anuncio">
+                            <swiper-container>
+                                <swiper-slide>
+                                    <img
+                                        src="https://lh3.googleusercontent.com/6HJlMgWLnImyMddISZne3zqzQgTbHWMqEHke66SzgS3VXGd_UCluOl4tybQGkbpfHpet5uf_k23DJHN2h0Aj7y5rZ7Qs_jtGDGpCeLEe_Q">
+                                </swiper-slide> <swiper-slide>
+                                    <img
+                                        src="https://lh3.googleusercontent.com/_ZLbTsqlIwrmHXp3GEK8uUgozHiDaW1BYioeR8H1WRoZLTvx33ycL-v93l8lrISj1kmNabYUUrtY4w_FS2ikEu7HpW55YYztbAxyHC4Y2w">
+                                </swiper-slide>
+
+                            </swiper-container>
+
+
+                            <mat-card-content>
+                                <h3 class="titulo">Casa amarela em plena esquina de teste pronta para morar com tudo
+                                    dentro e mais algumas coisas</h3>
+                                <p class="cidade">São Luís / MA - Cód. 3434</p>
+                                <div class="detalhes">
+                                    <mat-chip> 30 m²</mat-chip>
+                                    <mat-chip> 3 dorm.</mat-chip>
+                                    <mat-chip> 3 ban.</mat-chip>
+                                    <mat-chip> 3 suíte</mat-chip>
+                                    <mat-chip> 2 vagas</mat-chip>
+                                </div>
+
+                                <div>
+                                    <p class="descricao">
+                                        Florida e um dos condomínios mais completos da região - Logo na entrada você se
+                                        impressiona com
+
+                                    </p>
+                                </div>
+                                <h5 class="preco">R$ 150.000</h5>
+
+                                <div class="btns">
+                                    <button mat-stroked-button color="accent">
+                                        <mat-icon>favorite</mat-icon>
+                                        Eu quero
+                                    </button>
+                                    <button mat-stroked-button color="primary">
+                                        <mat-icon>view_in_ar</mat-icon>
+                                        Visualisar
+                                    </button>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

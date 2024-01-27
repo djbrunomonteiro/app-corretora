@@ -1,37 +1,41 @@
 <div class="container-destaque">
     <div class="filter">
         <h4>Especializado em imóveis residenciais e comerciais</h4>
+        <form [formGroup]="form">
+            <div class="container">
+                <div class="opts">
+                    <mat-form-field class="w-50 m-rigth" appearance="outline">
+                        <mat-label>Interesse</mat-label>
+                        <mat-select formControlName="categoria">
+                            @for (item of core.categorias; track $index) {
+                            <mat-option [value]="item">{{item | uppercase}}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
 
-        <div class="container">
-            <div class="opts">
-                <mat-form-field appearance="outline">
-                    <mat-label>Interesse</mat-label>
-                    <mat-select>
-                        <mat-option value="primary">Compra</mat-option>
-                        <mat-option value="accent">Aluguel</mat-option>
-                    </mat-select>
-                </mat-form-field>
+                    <mat-form-field class="w-50" appearance="outline">
+                        <mat-label>Tipo</mat-label>
+                        <mat-select formControlName="tipo">
+                            @for (item of core.tipos; track $index) {
+                            <mat-option [value]="item">{{item | uppercase}}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
 
-                <mat-form-field appearance="outline">
-                    <mat-label>Tipo</mat-label>
-                    <mat-select>
-                        <mat-option value="primary">Apartamento</mat-option>
-                        <mat-option value="accent">Casa</mat-option>
-                        <mat-option value="accent">Comercial</mat-option>
-                    </mat-select>
-                </mat-form-field>
+                </div>
+                <div class="search">
+                    <mat-form-field appearance="outline">
+                        <input formControlName="termo" matInput placeholder="Procure por um bairro, condomínio ou código">
+                    </mat-form-field>
+
+                </div>
+
+                <button (click)="search()" class="w-100" mat-raised-button color="primary">PESQUISAR</button>
+
+
             </div>
-            <div class="search">
-                <mat-form-field appearance="outline">
-                    <input matInput placeholder="Procure por um bairro, condomínio ou código">
-                </mat-form-field>
+        </form>
 
-            </div>
-
-            <button class="w-100" mat-raised-button color="primary">PESQUISAR</button>
-
-
-        </div>
 
 
 
@@ -43,21 +47,24 @@
 </div>
 
 <section class="row m-0 p-0 justify-content-center ">
-    <div class="col-10 p-0 m-0">
+    <div class="col-11 p-0 m-0">
         <div class="info">
             <div class="blocos">
                 <div>
                     <h4>Os melhores imóveis</h4>
-                    <p>Escolha entre apartamentos, casas, salas, ... Considere uma visita com um dos nossos corretores</p>
+                    <p>Escolha entre apartamentos, casas, salas, ... Considere uma visita com um dos nossos corretores
+                    </p>
                 </div>
                 <div>
                     <h4>Vamos acompanhar você</h4>
-                    <p>Oferecemos a você a melhor consultoria na escolha do seu imóvel, desde a escolha da localização, tipo e características</p>
+                    <p>Oferecemos a você a melhor consultoria na escolha do seu imóvel, desde a escolha da localização,
+                        tipo e características</p>
                 </div>
                 <div>
                     <h4>Vamos acompanhar você</h4>
-                    <p>Oferecemos a você a melhor consultoria na escolha do seu imóvel, desde a escolha da localização, tipo e características</p>
-    
+                    <p>Oferecemos a você a melhor consultoria na escolha do seu imóvel, desde a escolha da localização,
+                        tipo e características</p>
+
                 </div>
 
             </div>
@@ -65,20 +72,20 @@
             <div class="container-grade">
 
                 @for (item of cards; track $index) {
-                    <div class="card-default" [ngStyle]="{'background-image': getUrl(item), 'background-size': 'cover'}" >
-                    </div>
-    
+                <div class="card-default" [ngStyle]="{'background-image': getUrl(item), 'background-size': 'cover'}">
+                </div>
+
                 }
-                <div class="btns" >
+                <div class="btns">
                     <button mat-icon-button color="primary">
                         <mat-icon>arrow_back_ios</mat-icon>
-                      </button>
-                      <button mat-icon-button color="primary">
+                    </button>
+                    <button mat-icon-button color="primary">
                         <mat-icon>arrow_forward_ios</mat-icon>
-      
-                      </button>
+
+                    </button>
                 </div>
-    
+
             </div>
         </div>
 
@@ -94,17 +101,17 @@
 
         <div class="row justify-content-start align-items-center">
             @for (item of lancamentos; track $index) {
-                <div class="col-4 border m-0 p-0 lancamento">
-                    <img [src]="item" alt="">
-                </div>            
+            <div class="col-4 border m-0 p-0 lancamento">
+                <img [src]="item" alt="">
+            </div>
 
             }
-            <div class="col-2" >
+            <div class="col-2">
 
-                  <button mat-icon-button color="primary">
+                <button mat-icon-button color="primary">
                     <mat-icon>arrow_forward_ios</mat-icon>
-  
-                  </button>
+
+                </button>
             </div>
 
         </div>
@@ -117,8 +124,9 @@
     <div class="col-10 my-5">
         <div class="row justify-content-around">
             <div class="col-4 border m-0 p-0 lancamento">
-                <img src="https://img.freepik.com/free-photo/young-happy-couple-making-agreement-with-their-financial-advisor-home-men-are-shaking-hands_637285-3839.jpg?size=626&ext=jpg&uid=R12616213&ga=GA1.1.817312106.1705960903&semt=sph" alt="">
-            </div>            
+                <img src="https://img.freepik.com/free-photo/young-happy-couple-making-agreement-with-their-financial-advisor-home-men-are-shaking-hands_637285-3839.jpg?size=626&ext=jpg&uid=R12616213&ga=GA1.1.817312106.1705960903&semt=sph"
+                    alt="">
+            </div>
 
             <div class="col-5">
                 <h4 class="titulo">Está pensando em vender ou Alugar seu imóvel com segurança? Eu posso te ajudar!</h4>
