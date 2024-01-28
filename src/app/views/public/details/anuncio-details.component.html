@@ -33,7 +33,9 @@
             </div>
             <div class="col-md-3 m-0 p-0">
                 <div class="sticky">
-                    <h3>{{item.preco | currency:'BRL'}}</h3>
+                    <h3>{{ item.preco | mask: 'separator.2': {thousandSeparator:'.', prefix: 'R$'} }}</h3>
+
+
                     @if (item.condominio) {
                     <p>Cond. {{item.condominio}}</p>
                     }
@@ -43,8 +45,8 @@
 
                     <div class="acoes">
                         <button class="whatsapp" mat-raised-button>WhatsApp</button>
-                        <button mat-raised-button>Fale Comigo</button>
-                        <button mat-raised-button>Agendar uma visita</button>
+                        <button (click)="openForm(item, 'fale')" mat-raised-button>Fale Comigo</button>
+                        <button (click)="openForm(item, 'agenda')" mat-raised-button>Agendar uma visita</button>
 
 
                     </div>

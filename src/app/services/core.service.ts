@@ -94,8 +94,11 @@ export class CoreService {
     "maior valor",
     "mais recentes",
     "menos recentes",
-
   ];
+
+  diasSemana = [
+    'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'
+  ]
 
   nums: number[] = [];
 

@@ -17,6 +17,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideEnvironmentNgxMask } from 'ngx-mask';
 import { Ng2ImgMaxService } from 'ng2-img-max';
 import { getStorage } from '@angular/fire/storage';
+import { LeadEffectsService } from './store/effects/lead-effects.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -32,7 +33,7 @@ export const appConfig: ApplicationConfig = {
         
     ]),
     provideStore(appReducers, { metaReducers, runtimeChecks: {strictActionImmutability: false, strictStateImmutability: false} }),
-    provideEffects([AnuncioEffectsService]),
+    provideEffects([AnuncioEffectsService, LeadEffectsService]),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
 ]
 };

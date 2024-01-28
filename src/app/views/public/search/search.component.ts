@@ -55,8 +55,8 @@ export class SearchComponent implements OnInit {
 
   }
 
-  goDetails(item: any){
-    this.router.navigate([`/anuncios/${item}`])
+  goDetails(url: any){
+    this.router.navigate([`/anuncios/${url}`])
 
   }
 

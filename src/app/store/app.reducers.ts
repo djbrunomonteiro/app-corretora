@@ -38,5 +38,23 @@ export class actionsReducer {
         }
     }
 
+    public static LeadReducer = (state = inititalState, action: IAction) => {
+        switch (action.type) {
+            case `[${EGroup.Lead}-${EAction.SetAllStore}]`:
+                const itens = action.props?.itens;
+                return itens ? adapter.upsertMany(itens, state) : state;
+
+            case `[${EGroup.Lead}-${EAction.SetOneStore}]`:
+                const item = action.props?.item;
+                return item ? adapter.setOne(action?.props?.item, state) : state
+
+            case `[${EGroup.Lead}-${EAction.DeleteOneStore}]`:
+                const id = action?.props?.id;
+                return id ? adapter.removeOne(id, state) : state;
+            default:
+                return state;
+        }
+    }
+
 
 }

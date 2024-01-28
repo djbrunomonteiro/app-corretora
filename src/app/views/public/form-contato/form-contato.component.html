@@ -1,0 +1,137 @@
+<div class="row m-0 p-0">
+    <div class="col-md-12 m-0 p-0">
+        @switch (tipoForm) {
+            @case ('agenda') {
+                <div class="form" [formGroup]="formAgenda">
+                    <div class="titulo">
+                        <h4>Agendar uma Visita</h4>
+                        <h5> {{anuncio?.titulo}}  
+                            @if (anuncio?.codigo) {
+                                - Cód. {{anuncio.codigo}}
+                            }
+                            | {{anuncio.end_cidade}}/{{anuncio.end_uf}}
+                            
+                        </h5>
+                    </div>
+                    <div class="inputs">
+                        <div class="row m-0 my-3">
+                            <div class="col-md-8 m-0 p-0">
+                                <p>Qual o melhor dia?</p>
+                
+                                <mat-button-toggle-group formControlName="dia_semana"  name="dia_semana" aria-label="dia de semana para visita">
+                                    @for (dia of core.diasSemana; track $index) {
+                                        <mat-button-toggle [value]="dia">{{dia}}</mat-button-toggle>
+                                    }
+                                </mat-button-toggle-group>
+                            </div>
+                            <div class="col-4  m-0 p-0">
+                                <p> Melhor horário?</p>
+        
+                                <mat-button-toggle-group formControlName="horario" name="horario" aria-label="horário de agendamento de visita">
+                                    <mat-button-toggle value="manhã">MANHÃ</mat-button-toggle>
+                                    <mat-button-toggle value="tarde">TARDE</mat-button-toggle>
+                                </mat-button-toggle-group>
+                            </div>
+        
+                        </div>
+                       
+                        <mat-form-field appearance="outline">
+                            <mat-label>Seu Nome</mat-label>
+                            <input formControlName="nome" matInput placeholder="" required>
+                        </mat-form-field>
+        
+                        <div class="row m-0 p-0 justify-content-between align-items-center">
+                            <div class="col-md-12 m-0 p-0 ">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Seu WhatsApp</mat-label>
+                                    <input formControlName="whatsapp"  matInput placeholder="">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-12  m-0 p-0">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Seu Email</mat-label>
+                                    <input formControlName="email"  matInput placeholder="">
+                                </mat-form-field>
+                            </div>
+        
+                        </div>
+                    </div>
+        
+
+                </div>
+            }
+            @default {
+                <div class="form" [formGroup]="formFale">
+                    <div class="titulo">
+                        <h4>Fale Comigo</h4>
+                    </div>
+        
+                    <div class="inputs">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Seu Nome</mat-label>
+                            <input formControlName="nome" matInput placeholder="" required>
+                        </mat-form-field>
+        
+                        <div class="row m-0 p-0 justify-content-between align-items-center">
+                            <div class="col-md-5 m-0 p-0 ">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Seu WhatsApp</mat-label>
+                                    <input formControlName="whatsapp" matInput placeholder="">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-1  m-0 p-0">
+                                <p class="text-center">ou</p>
+                            </div>
+                            <div class="col-md-5  m-0 p-0">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Seu Email</mat-label>
+                                    <input formControlName="email" matInput placeholder="">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 m-0 p-0">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Mensagem</mat-label>
+                                    <textarea formControlName="mensagem" matInput placeholder="Ex. casa próximo de tudo..."
+                                        required></textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+        
+                        <p class="p-0 m-0">Qual o melhor horário que posso entrar em contato ?</p>
+        
+                        <span class="check">
+                            <ul>
+                                <li>
+                                    <mat-checkbox [checked]="allComplete" [indeterminate]="someComplete()"
+                                    [color]="checkHorarios.color" (change)="setAll($event.checked)">
+                                    {{checkHorarios.name}}
+                                </mat-checkbox>
+                                </li>
+                                @for (opt of checkHorarios.opts; track opt) {
+                                <li>
+                                    <mat-checkbox [(ngModel)]="opt.completed" [ngModelOptions]="{standalone: true}" [color]="opt.color"
+                                        (ngModelChange)="updateAllComplete()">
+                                        {{opt.name}}
+                                    </mat-checkbox>
+                                </li>
+                                }
+                            </ul>
+                        </span>
+                    </div>
+        
+                </div>
+            }
+
+        }
+
+        <div class="btn-enviar p-3 m-3">
+            @if (loading) {
+                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                <p class="text-center">Enviando aguarde :)</p>
+            }@else {
+                <button (click)="salvar()" [disabled]="!(isValid$ | async)" class="w-100 " mat-raised-button color="primary">Enviar</button>
+            }
+
+        </div>
+    </div>
+</div>

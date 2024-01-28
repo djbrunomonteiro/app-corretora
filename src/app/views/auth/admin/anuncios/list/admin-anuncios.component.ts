@@ -33,7 +33,6 @@ export class AdminAnunciosComponent implements OnInit {
   constructor(
     private storeService: StoreService,
     public dialog: MatDialog,
-    private anunciosService: AnuncioService,
     private utils: UtilsService
   ){}
 

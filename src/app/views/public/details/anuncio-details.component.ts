@@ -8,6 +8,8 @@ import { EAction, EGroup } from '../../../store/app.actions';
 import { Observable, first } from 'rxjs';
 import { AllAnuncios, OneAnuncio } from '../../../store/selectors/anuncio.selector';
 import { ActivatedRoute } from '@angular/router';
+import { FormContatoComponent } from '../form-contato/form-contato.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-anuncio-details',
@@ -17,7 +19,8 @@ import { ActivatedRoute } from '@angular/router';
     CommonModule,
     NgxMaskDirective,
     NgxMaskPipe,
-    UrlFotosPipe
+    UrlFotosPipe,
+    FormContatoComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './anuncio-details.component.html',
@@ -29,6 +32,7 @@ export class AnuncioDetailsComponent implements OnInit {
   constructor(
     private storeService: StoreService,
     private activatedRoute: ActivatedRoute,
+    public dialog: MatDialog,
   ){}
 
   ngOnInit(): void {
@@ -45,9 +49,14 @@ export class AnuncioDetailsComponent implements OnInit {
       this.anuncio$ = this.storeService.select(OneAnuncio(url));
       this.anuncio$.subscribe(res => {
         console.log('res', res);
+        // this.openForm(res)
       } )
     })
 
+  }
+
+  openForm(anuncio?: any, tipoForm?: string){
+    const dialogRef = this.dialog.open(FormContatoComponent, {disableClose: false, data: {anuncio, tipoForm }, width: '800px', height: '80vh'} );
   }
 
 }
