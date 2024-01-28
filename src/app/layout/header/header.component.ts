@@ -3,6 +3,7 @@ import { MaterialModule } from '../../modules/material/material.module';
 import { Router, RouterModule } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -41,7 +42,10 @@ export class HeaderComponent implements OnInit {
 
 
 
-  constructor(private router: Router){}
+  constructor(
+    private router: Router,
+    public auth: AuthService
+    ){}
 
   ngOnInit(): void {
     this.currentUrl$.next(this.router.url);

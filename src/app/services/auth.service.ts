@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Auth, signInWithPopup, GoogleAuthProvider } from '@angular/fire/auth';
 import { StoreService } from './store.service';
 import { EAction, EGroup } from '../store/app.actions';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -13,7 +14,8 @@ export class AuthService {
 
   constructor(
     private auth: Auth,
-    private storeService: StoreService
+    private storeService: StoreService,
+    private router: Router
   ) {
 
     this.googleAuthProvider.setCustomParameters({
@@ -48,6 +50,12 @@ export class AuthService {
       const item = {nome: user.displayName, email: user.email, id: user.uid, foto: user.photoURL};
       this.storeService.dispatchAction({group: EGroup.User, action: EAction.SetOneStore, props: {item}})  
     });
+
+  }
+
+  logout(){
+    this.auth.signOut();
+    this.router.navigate(['/'])
 
   }
 }

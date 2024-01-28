@@ -46,6 +46,10 @@ export class UploadService {
   async getFoto(name: string, folder: string, size: string = ESize.medium) {
     const path = `${folder}/${size}/${name}`
     this.storageRef = ref(this.storage, path);
+    console.log('path', path);
+    
+    console.log(this.storageRef);
+    
     return await getDownloadURL(this.storageRef)
 
 

@@ -1,0 +1,73 @@
+.container-details{
+    img{
+        width: 100%;
+    }
+
+    .info{
+        min-height: 400px;
+        padding: 20px 20px 10px 0px;
+
+        .titulo{
+            font-weight: 600;
+            font-size: 2rem;
+
+    
+        }
+    }
+
+    .sticky{
+        background-color: #0011ffa4;
+        text-align: end;
+        width: 100%;
+        // height: 100px;
+        border-radius: 0px 10px 0px 0px;
+        display: flex;
+        justify-content: start;
+        flex-direction: column;
+        color: white;
+        text-align: start;
+        position: sticky;
+        top: 2px;
+        padding: 20px;
+        h3{
+            font-size: 1.8rem;
+            font-weight: 800;
+
+
+        }
+
+        .acoes{
+            display: flex;
+            flex-direction: column;
+            button{
+                margin: 10px;
+            }
+            .whatsapp{
+                background-color: #25D366;
+                color:rgb(63, 63, 63)
+            }
+            
+        }
+    }
+
+    .list{
+        background-color: #e3e5fca4;
+        text-align: end;
+        width: 100%;
+        // height: 100px;
+        border-radius: 0px 0px 10px 10px;
+        display: flex;
+        justify-content: start;
+        flex-direction: column;
+        color: white;
+        text-align: start;
+        // position: sticky;
+        padding: 20px;
+        h3{
+            font-size: 2rem;
+            font-weight: 800;
+
+
+        }
+    }
+}

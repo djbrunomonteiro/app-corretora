@@ -11,3 +11,11 @@ export const AllAnuncios = createSelector(
         return result
     }
 );
+
+export const OneAnuncio = (url: string) => createSelector(
+    AllAnuncios,
+    (elements) => {
+        const result = elements.filter(elem => elem.url === url)[0];
+        return result
+    }
+);

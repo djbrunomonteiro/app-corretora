@@ -72,6 +72,7 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit {
     end_logradouro: [''],
     end_numero: [''],
     end_complemento: [''],
+    url: [''],
     created_at: ['']
   });
 
@@ -143,7 +144,8 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit {
     this.filesCtrl.valueChanges.subscribe(c => {
       if(!c?.length){return;}
       this.upload(c);
-    })
+    });
+
   }
 
 
@@ -187,7 +189,7 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit {
   }
 
   salvar(){
-    const item = {...this.form.value};
+    const item = {...this.form.value, url: this.createUrl()};
     let action: MyAction;
     if(item.id){
       action = {group:EGroup.Anuncio, action: EAction.UpdateOne, props: {item}}
@@ -207,6 +209,48 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit {
       }
       
     })
+  }
+  
+  createUrl(){
+    const titulo = String(this.form.value.titulo).toLocaleLowerCase();
+    const cidade = String(this.form.value.end_cidade).toLocaleLowerCase();
+    const uf = String(this.form.value.end_uf).toLocaleLowerCase();
+    const preco = String('valor de R$' + this.form.value.preco).toLocaleLowerCase();
+    const codigo = String('código '+ this.form.value.codigo).toLocaleLowerCase();
+    const categoria = String('interessados em ' + this.form.value.categoria).toLocaleLowerCase();
+    const bairro =  this.form.value.end_bairro ? String('no bairro ' + this.form.value.end_bairro).toLocaleLowerCase() : '';
+    const tipo =  String(this.form.value.tipo).toLocaleLowerCase();
+    let result = `${titulo} ${cidade} ${uf} ${bairro} ${categoria} ${tipo} ${preco} ${codigo}`;
+    result = result.replace(/[áàãâäéèêëíìîïóòõôöúùûü]/g, (match) => {
+      switch (match) {
+        case "á": return "a";
+        case "à": return "a";
+        case "ã": return "a";
+        case "â": return "a";
+        case "ä": return "a";
+        case "é": return "e";
+        case "è": return "e";
+        case "ê": return "e";
+        case "ë": return "e";
+        case "í": return "i";
+        case "ì": return "i";
+        case "î": return "i";
+        case "ï": return "i";
+        case "ó": return "o";
+        case "ò": return "o";
+        case "õ": return "o";
+        case "ô": return "o";
+        case "ö": return "o";
+        case "ú": return "u";
+        case "ù": return "u";
+        case "û": return "u";
+        case "ü": return "u";
+        default: return match;
+      }
+    }).replace(/\s+/g, '-');
+
+    return result;
+
   }
 
 

@@ -1,0 +1,114 @@
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        @if ((anuncio$ | async); as item) {
+        <div class="row container-details">
+            <div class="col-md-9 m-0 p-0">
+                <swiper-container>
+                    @for (path of item?.fotos; track $index) {
+                    @if ((path | urlFotos: 'anuncios' | async); as src) {
+                    <swiper-slide>
+                        <img [src]="src">
+                    </swiper-slide>
+
+                    }
+                    }
+
+                </swiper-container>
+                <mat-chip-listbox aria-label="Fish selection" class="mt-3">
+                    <mat-chip-option color="accent" selected>FOTOS</mat-chip-option>
+                    <mat-chip-option color="warn">TOUR 360° GRAUS</mat-chip-option>
+                </mat-chip-listbox>
+
+                <div class="info">
+                    <h3 class="titulo">{{item.titulo}}</h3>
+                    <p class="cidade">{{item.end_cidade}} / {{item.end_uf}} - Cód. {{item.codigo}}</p>
+
+                    <p class="descricao">
+                        {{item.descricao}}
+                    </p>
+
+                    <button mat-stroked-button> <mat-icon aria-hidden="false" fontIcon="shared"></mat-icon> Compartilhar</button>
+                </div>
+
+            </div>
+            <div class="col-md-3 m-0 p-0">
+                <div class="sticky">
+                    <h3>{{item.preco | currency:'BRL'}}</h3>
+                    @if (item.condominio) {
+                    <p>Cond. {{item.condominio}}</p>
+                    }
+                    @if (item.iptu) {
+                    <p>IPTU {{item.iptu}}</p>
+                    }
+
+                    <div class="acoes">
+                        <button class="whatsapp" mat-raised-button>WhatsApp</button>
+                        <button mat-raised-button>Fale Comigo</button>
+                        <button mat-raised-button>Agendar uma visita</button>
+
+
+                    </div>
+
+                </div>
+
+                <div class="list">
+                    @if (item.dets_imovel) {
+                        <h3>Imóvel</h3>
+                        <mat-list>
+                            @for (det of item.dets_imovel; track $index) {
+                            <mat-list-item>
+                                <span matListItemTitle><mat-icon color="primary" aria-hidden="false"
+                                        fontIcon="check_box"></mat-icon> {{det}}</span>
+                            </mat-list-item>
+                            }
+                        </mat-list>
+
+                    }
+
+                    @if (item.dets_area_comum) {
+                        <h3>Área Comum</h3>
+                        <mat-list>
+                            @for (det of item.dets_area_comum; track $index) {
+                            <mat-list-item>
+                                <span matListItemTitle><mat-icon color="primary" aria-hidden="false"
+                                        fontIcon="check_box"></mat-icon> {{det}}</span>
+                            </mat-list-item>
+                            }
+                        </mat-list>
+
+                    }
+
+                    @if (item.dets_proximidades) {
+                        <h3>Proxímidades</h3>
+                        <mat-list>
+                            @for (det of item.dets_proximidades; track $index) {
+                            <mat-list-item>
+                                <span matListItemTitle><mat-icon color="primary" aria-hidden="false"
+                                        fontIcon="check_box"></mat-icon> {{det}}</span>
+                            </mat-list-item>
+                            }
+                        </mat-list>
+
+                    }
+
+                    @if (item.dets_outros) {
+                        <h3>Outros</h3>
+                        <mat-list>
+                            @for (det of item.dets_outros; track $index) {
+                            <mat-list-item>
+                                <span matListItemTitle><mat-icon color="primary" aria-hidden="false"
+                                        fontIcon="check_box"></mat-icon> {{det}}</span>
+                            </mat-list-item>
+                            }
+                        </mat-list>
+
+                    }
+
+                </div>
+
+            </div>
+        </div>
+        }
+
+    </div>
+</div>

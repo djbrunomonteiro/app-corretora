@@ -179,10 +179,10 @@
 
             </div>
 
-            <div class="col-md-9 m-0">
+            <div class="col-md-9 m-0 p-2">
                 <div class="results">
                     <div class="header">
-                        <h4>35 Resultados encontrados</h4>
+                        <h4>{{(anuncios$ | async)?.length}} Resultados encontrados</h4>
 
                         <mat-form-field class="btn-order" appearance="outline">
                             <mat-label>Ordenar por</mat-label>
@@ -196,53 +196,56 @@
 
                     <div class="container">
 
+                        @for (item of anuncios$ | async; track $index) {
+                            <mat-card class="card-anuncio">
+                                <swiper-container>
+                                    @for (path of item?.fotos; track $index) {
+                                        @if ((path | urlFotos: 'anuncios' | async); as src) {
+                                            <swiper-slide>
+                                                <img [src]="src">
+                                            </swiper-slide>
 
-                        <mat-card class="card-anuncio">
-                            <swiper-container>
-                                <swiper-slide>
-                                    <img
-                                        src="https://lh3.googleusercontent.com/6HJlMgWLnImyMddISZne3zqzQgTbHWMqEHke66SzgS3VXGd_UCluOl4tybQGkbpfHpet5uf_k23DJHN2h0Aj7y5rZ7Qs_jtGDGpCeLEe_Q">
-                                </swiper-slide> <swiper-slide>
-                                    <img
-                                        src="https://lh3.googleusercontent.com/_ZLbTsqlIwrmHXp3GEK8uUgozHiDaW1BYioeR8H1WRoZLTvx33ycL-v93l8lrISj1kmNabYUUrtY4w_FS2ikEu7HpW55YYztbAxyHC4Y2w">
-                                </swiper-slide>
+                                        }
+                                    }
+    
+                                </swiper-container>
+    
+    
+                                <mat-card-content>
+                                    <h3 class="titulo">{{item.titulo}}</h3>
+                                    <p class="cidade">{{item.end_cidade}} / {{item.end_uf}} - Cód. {{item.codigo}}</p>
+                                    <div class="detalhes">
+                                        <mat-chip> 30 m²</mat-chip>
+                                        <mat-chip> 3 dorm.</mat-chip>
+                                        <mat-chip> 3 ban.</mat-chip>
+                                        <mat-chip> 3 suíte</mat-chip>
+                                        <mat-chip> 2 vagas</mat-chip>
+                                    </div>
+    
+                                    <div>
+                                        <p class="descricao">
+                                            {{item.descricao}}
+    
+                                        </p>
+                                    </div>
+                                    <h5 class="preco">R$ 150.000</h5>
+    
+                                    <div class="btns">
+                                        <button mat-stroked-button color="accent">
+                                            <mat-icon>favorite</mat-icon>
+                                            Eu quero
+                                        </button>
+                                        <button (click)="goDetails(item.url)" mat-stroked-button color="primary">
+                                            <mat-icon>view_in_ar</mat-icon>
+                                            Visualisar
+                                        </button>
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+                        }
 
-                            </swiper-container>
 
 
-                            <mat-card-content>
-                                <h3 class="titulo">Casa amarela em plena esquina de teste pronta para morar com tudo
-                                    dentro e mais algumas coisas</h3>
-                                <p class="cidade">São Luís / MA - Cód. 3434</p>
-                                <div class="detalhes">
-                                    <mat-chip> 30 m²</mat-chip>
-                                    <mat-chip> 3 dorm.</mat-chip>
-                                    <mat-chip> 3 ban.</mat-chip>
-                                    <mat-chip> 3 suíte</mat-chip>
-                                    <mat-chip> 2 vagas</mat-chip>
-                                </div>
-
-                                <div>
-                                    <p class="descricao">
-                                        Florida e um dos condomínios mais completos da região - Logo na entrada você se
-                                        impressiona com
-
-                                    </p>
-                                </div>
-                                <h5 class="preco">R$ 150.000</h5>
-
-                                <div class="btns">
-                                    <button mat-stroked-button color="accent">
-                                        <mat-icon>favorite</mat-icon>
-                                        Eu quero
-                                    </button>
-                                    <button mat-stroked-button color="primary">
-                                        <mat-icon>view_in_ar</mat-icon>
-                                        Visualisar
-                                    </button>
-                                </div>
-                            </mat-card-content>
-                        </mat-card>
                     </div>
 
                 </div>
