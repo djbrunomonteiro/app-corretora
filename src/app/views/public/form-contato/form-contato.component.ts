@@ -50,7 +50,9 @@ export class FormContatoComponent implements OnInit, AfterViewInit {
     whatsapp: ['', Validators.required],
     email: ['', Validators.email],
     mensagem: [''],
-    horarios: [[]]
+    horarios: [[]],
+    status: ['aberto'],
+    historico: [[]],
   })
 
   formAgenda = this.fb.group({
@@ -60,7 +62,9 @@ export class FormContatoComponent implements OnInit, AfterViewInit {
     whatsapp: ['', Validators.required],
     email: ['', Validators.email],
     dia_semana: ['', Validators.required],
-    horario: ['', Validators.required]
+    horario: ['', Validators.required],
+    status: ['aberto'],
+    historico: [[]],
   });
 
   isValid$ = new BehaviorSubject<boolean>(false);
