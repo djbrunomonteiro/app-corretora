@@ -85,7 +85,7 @@ export class LeadService {
       let response: IResponse = {};
       if (this.collectionRef) {
         const ref = doc(this.firestore, 'leads', item.id);
-        const newItem = { ...item, id: ref.id, created_at: new Date().toISOString() };
+        const newItem = { ...item, id: ref.id};
         updateDoc(ref, newItem)
           .then(res => {
             response = { status: 201, error: false, results: newItem, message: 'Item atualizado com sucesso!' };

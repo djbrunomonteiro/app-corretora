@@ -3,220 +3,99 @@
   <form [formGroup]="form">
 
     <mat-stepper #stepper>
-      <mat-step [stepControl]="ctrltitulo && ctrldescricao" errorMessage="Itens requerido">
+      <mat-step>
         <ng-template matStepLabel>Formulário de Contato</ng-template>
 
-        <h3>Nome: Bruno Monteiro</h3>
-        <p>WhatsApp: (98) 970278027</p>
-        <p>Email: brunomonteiroestudiogmail.com</p>
-        <p>Mensagem: jhwkjehkwjhekwjekjwhkejhkwe</p>
+        <div class="row">
+          <div class="col-md-12">
+            <h2>Nome: {{form.value.nome}}</h2>
+            <p>WhatsApp: {{form.value.whatsapp}}</p>
+            <p>Email: {{form.value.email}}</p>
+            <p>Mensagem: {{form.value.mensagem}}</p>
+            <mat-divider class="my-3"></mat-divider>
+
+            <div class="mt-3">
 
 
-        <div>
-          <button mat-button matStepperNext>Próximo</button>
-        </div>
-      </mat-step>
+              <p>Formulário do tipo: {{form.value.tipo}}</p>
+              <h3>Opção atendimento:</h3>
+              <p>
+                @for (item of form.value.horarios; track $index) {
+                {{item}}
+                }
+              </p>
 
-      <mat-step [stepControl]="ctrlcategoria && ctrltipo && ctrlpreco" errorMessage="Itens requerido">
-        <ng-template matStepLabel>Categorização / Valores</ng-template>
-        <p>Categorização</p>
+              <h3>Agendamento de visíta:</h3>
+              @if (form.value.dia_semana) {
+              <p>Preferência Dia da Semana: {{form.value.dia_semana}}</p>
+              }@else {
+              <p>* Não informado</p>
 
-        <div class="d-flex">
-          <mat-form-field class="w-25 m-rigth" appearance="outline">
-            <mat-label>Código</mat-label>
-            <input matInput formControlName="codigo">
-          </mat-form-field>
-
-          <mat-form-field class="w-25 m-rigth" appearance="outline">
-            <mat-label>Categoria</mat-label>
-            <mat-select formControlName="categoria">
-              @for (item of core.categorias; track $index) {
-              <mat-option [value]="item">{{item | uppercase}}</mat-option>
               }
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field class="w-50" appearance="outline">
-            <mat-label>Tipo</mat-label>
-            <mat-select formControlName="tipo">
-              @for (item of core.tipos; track $index) {
-              <mat-option [value]="item">{{item | uppercase}}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-
-        </div>
-
-        <p>Valores R$</p>
-
-        <div class="d-flex">
-          <mat-form-field class="w-25 m-rigth" appearance="outline">
-            <mat-label>Preço</mat-label>
-            <input matInput formControlName="preco" mask="separator.2" thousandSeparator="." decimalMarker=","
-              [prefix]="'R$'">
-          </mat-form-field>
-
-          <mat-form-field class="w-25 m-rigth" appearance="outline">
-            <mat-label>IPTU</mat-label>
-            <input matInput formControlName="iptu" mask="separator.2" thousandSeparator="." decimalMarker=","
-              [prefix]="'R$'">
-          </mat-form-field>
-          <mat-form-field class="w-25" appearance="outline">
-            <mat-label>Condomínio</mat-label>
-            <input matInput formControlName="condominio" mask="separator.2" thousandSeparator="." decimalMarker=","
-              [prefix]="'R$'">
-          </mat-form-field>
-        </div>
 
 
-
-
-        <div>
-          <button mat-button matStepperNext>Próximo</button>
-        </div>
-      </mat-step>
-
-      <mat-step>
-        <ng-template matStepLabel>Detalhamento</ng-template>
-
-        <p>Principal</p>
-        <div class="d-flex mt-3">
-          <mat-form-field class="w-25 m-rigth" appearance="outline">
-            <mat-label>Área útil (Metros)</mat-label>
-            <input matInput placeholder="ex: 30" formControlName="area_util" mask="separator" thousandSeparator="."
-              id="area_util">
-
-          </mat-form-field>
-        </div>
-
-        <div class="d-flex mt-3">
-          <mat-form-field class="w-25 m-rigth" appearance="outline">
-            <mat-label>Suítes</mat-label>
-            <mat-select formControlName="qtd_suite">
-              @for (item of core.nums; track $index) {
-              <mat-option [value]="item">{{item}}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field class="w-25 m-rigth" appearance="outline">
-            <mat-label>Dormitorios</mat-label>
-            <mat-select formControlName="qtd_dorm">
-              @for (item of core.nums; track $index) {
-              <mat-option [value]="item">{{item}}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field class="w-25 m-rigth" appearance="outline">
-            <mat-label>Banheiros</mat-label>
-            <mat-select formControlName="qtd_ban">
-              @for (item of core.nums; track $index) {
-              <mat-option [value]="item">{{item}}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field class="w-25" appearance="outline">
-            <mat-label>Vagas de garagem</mat-label>
-            <mat-select formControlName="qtd_vaga">
-              @for (item of core.nums; track $index) {
-              <mat-option [value]="item">{{item}}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-        </div>
-
-        <p>Detalhes</p>
-
-        <div class="d-flex mt-3">
-          <mat-form-field appearance="outline" class="m-rigth">
-            <mat-label>Imóvel</mat-label>
-            <mat-select formControlName="dets_imovel" multiple>
-              @for (item of core.areasImovel; track $index) {
-              <mat-option [value]="item">{{item}}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label> Área Comum</mat-label>
-            <mat-select formControlName="dets_area_comum" multiple>
-              @for (item of core.areasComuns; track $index) {
-              <mat-option [value]="item">{{item}}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-        </div>
-
-        <div class="d-flex">
-
-
-          <mat-form-field appearance="outline" class="m-rigth">
-            <mat-label> Pŕoximidades</mat-label>
-            <mat-select formControlName="dets_proximidades" multiple>
-              @for (item of core.itensProximos; track $index) {
-              <mat-option [value]="item">{{item}}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-label> Outros</mat-label>
-            <mat-select formControlName="dets_outros" multiple>
-              @for (item of core.itensAdicionais; track $index) {
-              <mat-option [value]="item">{{item}}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div>
-          <button mat-button matStepperNext>Próximo</button>
-        </div>
-      </mat-step>
-
-      <mat-step>
-        <ng-template matStepLabel>Fotos</ng-template>
-
-        <p>Fotos 360º Graus</p>
-        <div class="d-flex mt-3">
-          <mat-form-field class="w-100" appearance="outline">
-            <mat-label>Link Tour Virtual</mat-label>
-            <input matInput formControlName="tour_virtual">
-          </mat-form-field>
-        </div>
-
-
-        <p>Fotos Padrão</p>
-
-        @if(loadingUpload){
-        Enviando imagens
-        <mat-progress-bar mode="buffer"></mat-progress-bar>
-        }@else{
-        <mat-form-field appearance="fill">
-          <mat-label>Arraste seus arquivos ou clique aqui!</mat-label>
-          <ngx-mat-dropzone>
-            <input type="file" multiple fileInput [formControl]="filesCtrl" accept="image/*" />
-          </ngx-mat-dropzone>
-          <mat-icon matSuffix color="primary">cloud_upload</mat-icon>
-        </mat-form-field>
-
-        }
-
-        <div class="d-flex">
-          @for (item of fotos$ | async; track $index) {
-          <div class="foto-container">
-            <img [src]="item" alt="" style="width: 150px; height: 150px;">
-            <button (click)="remove($index)" mat-stroked-button color="warn" class="w-100">remover</button>
+            </div>
           </div>
+
+        </div>
+
+
+
+
+
+
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Histórico de Contato</ng-template>
+        <mat-form-field class="my-3" appearance="outline">
+          <mat-label>STATUS DE ATENDIMENTO</mat-label>
+          <mat-select formControlName="status">
+            @for (item of tipo_status; track $index) {
+            <mat-option [value]="item">{{item | uppercase}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <div formArrayName="historico">
+          @for (ctrl of ctrlHistorico.controls; track $index) {
+            <div class="d-flex" [formGroupName]="$index">
+              <mat-form-field class="w-75" appearance="outline">
+                <mat-label>Descrição do contato</mat-label>
+                <input formControlName="descricao" matInput>
+              </mat-form-field>
+
+              <mat-form-field style="width: 20%;" appearance="outline">
+                <mat-label>Data</mat-label>
+                <input formControlName="date" matInput [matDatepicker]="picker">
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+
+              @if ($index >0 && $index === (ctrlHistorico.controls.length - 1)) {
+                <button (click)="removeHistorico($index)" style="width: 5%;" mat-icon-button color="warn">
+                  <mat-icon>close</mat-icon>
+                </button>              
+              }
+            </div>
           }
         </div>
-      </mat-step>
 
+
+
+
+        <button (click)="createHistorico()" mat-raised-button class="w-100" color="primary">ADD +</button>
+
+
+
+        <!-- <div>
+          <button mat-button matStepperNext>Próximo</button>
+        </div> -->
+      </mat-step>
     </mat-stepper>
 
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button (click)="salvar()" class="w-25" [disabled]="form.invalid || loadingUpload" mat-raised-button color="primary" cdkFocusInitial>SALVAR</button>
+  <button (click)="salvar()" class="w-25" mat-raised-button color="primary"
+    cdkFocusInitial>SALVAR</button>
 </mat-dialog-actions>
