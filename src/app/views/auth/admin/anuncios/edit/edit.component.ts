@@ -101,9 +101,9 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
 
     private _formBuilder: FormBuilder,
-    private utils: UtilsService,
     public uploadService: UploadService,
     private storeService: StoreService,
+    private utils: UtilsService,
     public core: CoreService
 
   ) {

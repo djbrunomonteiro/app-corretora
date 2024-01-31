@@ -6,6 +6,9 @@ import { AuthComponent } from './auth.component';
 import { AdminAnunciosComponent } from './admin/anuncios/list/admin-anuncios.component';
 import { AdminLeadsComponent } from './admin/admin-leads/admin-leads.component';
 import { AdminClientesComponent } from './admin/admin-clientes/admin-clientes.component';
+import { AdminClientesListComponent } from './admin/clientes/admin-clientes-list/admin-clientes-list.component';
+import { AdminClientesEditComponent } from './admin/clientes/admin-clientes-edit/admin-clientes-edit.component';
+import { ClienteHomeComponent } from './cliente/cliente-home/cliente-home.component';
 
 const routes: Routes = [
   {
@@ -30,8 +33,31 @@ const routes: Routes = [
       },
       {
         path: 'clientes',
-        loadComponent: () => AdminClientesComponent,
+        loadComponent: () => AdminClientesListComponent,
+      },
+      {
+        path: 'clientes/edit',
+        loadComponent: () => AdminClientesEditComponent,
+      },
+      {
+        path: 'clientes/edit/:id',
+        loadComponent: () => AdminClientesEditComponent,
       }
+    ]
+    
+  },
+  {
+    path: 'cliente',
+    component: AuthComponent,
+    children: [
+      {
+        path: '',
+        loadComponent: () => ClienteHomeComponent,
+      },
+      {
+        path: ':url',
+        loadComponent: () => ClienteHomeComponent,
+      },
     ]
     
   },

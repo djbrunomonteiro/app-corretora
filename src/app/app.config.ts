@@ -18,6 +18,7 @@ import { provideEnvironmentNgxMask } from 'ngx-mask';
 import { Ng2ImgMaxService } from 'ng2-img-max';
 import { getStorage } from '@angular/fire/storage';
 import { LeadEffectsService } from './store/effects/lead-effects.service';
+import { ClienteEffectsService } from './store/effects/cliente-effects.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -33,7 +34,11 @@ export const appConfig: ApplicationConfig = {
         
     ]),
     provideStore(appReducers, { metaReducers, runtimeChecks: {strictActionImmutability: false, strictStateImmutability: false} }),
-    provideEffects([AnuncioEffectsService, LeadEffectsService]),
+    provideEffects([
+      AnuncioEffectsService, 
+      LeadEffectsService,
+      ClienteEffectsService
+    ]),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
 ]
 };

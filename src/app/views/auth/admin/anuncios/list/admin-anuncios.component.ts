@@ -16,7 +16,10 @@ import { UtilsService } from '../../../../../services/utils.service';
 @Component({
   selector: 'app-admin-anuncios',
   standalone: true,
-  imports: [MaterialModule, CommonModule, AdminAnuncioEditComponent],
+  imports: [
+    MaterialModule, 
+    CommonModule, 
+    AdminAnuncioEditComponent],
   templateUrl: './admin-anuncios.component.html',
   styleUrl: './admin-anuncios.component.scss'
 })

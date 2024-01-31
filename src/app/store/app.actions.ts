@@ -3,7 +3,8 @@ import { Action } from '@ngrx/store';
 export enum EGroup {
     User = "User",
     Anuncio = "Anuncio",
-    Lead = "Lead"
+    Lead = "Lead",
+    Cliente = "Cliente",
 }
 
 export enum EAction {

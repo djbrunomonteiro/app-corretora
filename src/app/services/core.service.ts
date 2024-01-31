@@ -98,8 +98,9 @@ export class CoreService {
 
   diasSemana = [
     'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'
-  ]
+  ];
 
+  modalidade_finan = ['individual', 'cofinanciado', 'outro']
   nums: number[] = [];
 
   constructor() { 

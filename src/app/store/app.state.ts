@@ -5,4 +5,6 @@ export const appReducers: ActionReducerMap<any> = {
     userState: actionsReducer.UserReducer,
     anuncioState: actionsReducer.AnuncioReducer,
     leadState: actionsReducer.LeadReducer,
+    clienteState: actionsReducer.ClienteReducer,
+    
 }

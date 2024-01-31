@@ -18,6 +18,10 @@ import {MatListModule} from '@angular/material/list';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [],
@@ -40,7 +44,11 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatListModule,
     MatCheckboxModule,
     MatDividerModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatTabsModule,
+    MatRadioModule,
+    MatToolbarModule,
+    MatSidenavModule
     
   ],
   exports:[
@@ -61,7 +69,11 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatListModule,
     MatCheckboxModule,
     MatDividerModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatTabsModule,
+    MatRadioModule,
+    MatToolbarModule,
+    MatSidenavModule
   ]
 })
 export class MaterialModule { }
