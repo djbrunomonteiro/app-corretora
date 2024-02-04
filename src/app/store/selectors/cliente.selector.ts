@@ -10,6 +10,16 @@ export const AllClientes = createSelector(
     }
 );
 
+export const ClienteIsAuth =  createSelector(
+    AllClientes,
+    (elements) => {
+        const result = elements.filter(elem => elem.auth)[0];
+        console.log(result);
+        
+        return result
+    }
+);
+
 export const OneCliente = (id: string) => createSelector(
     AllClientes,
     (elements) => {

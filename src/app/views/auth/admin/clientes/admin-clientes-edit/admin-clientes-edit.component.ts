@@ -36,6 +36,7 @@ export class AdminClientesEditComponent {
     id: [''],
     nome: ['', Validators.required],
     cpf_cnpj: ['', Validators.required],
+    data_nasc: ['', Validators.required],
     whatsapp: [''],
     telefone: [''],
     email: ['', Validators.email],
@@ -131,7 +132,7 @@ export class AdminClientesEditComponent {
   }
 
   salvar(){
-    const item = {...this.form.value, url: this.createUrl()};
+    const item = {...this.form.value, data_nasc: String(this.form.value.data_nasc), url: this.createUrl()};
     console.log('itemm', item);
 
     let action: MyAction;

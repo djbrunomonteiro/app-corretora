@@ -6,8 +6,13 @@
         <mat-form-field appearance="outline" class="mt-2 w-50">
             <mat-label>CPF OU CNPJ</mat-label>
             <input formControlName="cpf_cnpj" matInput required mask="000.000.000-00 || 00.000.000/0000-00">
-          </mat-form-field>
-          <button (click)="login()" class="w-50" [disabled]="form.invalid" mat-raised-button color="primary" cdkFocusInitial>Entrar</button>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-50">
+          <mat-label>Data Nascimento</mat-label>
+          <input formControlName="data_nasc" matInput  required mask="d0/M0/0000">
+        </mat-form-field>
+
+        <button (click)="login()" class="w-50" [disabled]="form.invalid" mat-raised-button color="primary" cdkFocusInitial>Entrar</button>
     </div>
     
     <div mat-dialog-actions align="end">

@@ -11,6 +11,7 @@ import { ClienteService } from '../../../../services/cliente.service';
 import { UtilsService } from '../../../../services/utils.service';
 import { StoreService } from '../../../../services/store.service';
 import { EGroup, EAction } from '../../../../store/app.actions';
+import { AuthService } from '../../../../services/auth.service';
 
 @Component({
   selector: 'app-cliente-login',
@@ -32,7 +33,8 @@ import { EGroup, EAction } from '../../../../store/app.actions';
 export class ClienteLoginComponent {
 
   form = this._formBuilder.group({
-    cpf_cnpj: ['', Validators.required]
+    cpf_cnpj: ['', Validators.required],
+    data_nasc: ['', Validators.required],
   })
   constructor(
     public dialogRef: MatDialogRef<ClienteLoginComponent>,
@@ -40,21 +42,20 @@ export class ClienteLoginComponent {
 
     private _formBuilder: FormBuilder,
     private clienteService: ClienteService,
+    private auth: AuthService,
     private utils: UtilsService,
     private storeService: StoreService
-  ){}
+  ) { }
 
-  async login(){
-    if(!this.form.value.cpf_cnpj){return}
-    console.log('reste login', this.form.value);
-    
-    const res = await this.clienteService.authLogin(this.form.value.cpf_cnpj);
+  async login() {
+    if (this.form.invalid) { return }
+
+    const res = await this.auth.authLogin(this.form.value.cpf_cnpj, this.form.value.data_nasc);
     this.utils.showMessage(res.message);
-    if(!res.error){
-      this.dialogRef.close({...res.results, auth: true});
-
+    if (!res.error) {
+      this.dialogRef.close(res.results);
     }
-    
+
   }
 
 

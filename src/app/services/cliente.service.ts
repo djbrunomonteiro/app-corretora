@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Firestore, collection, CollectionReference, doc, setDoc, getDocs, updateDoc, deleteDoc, getDoc, query, where, limit } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IResponse } from '../models/response';
+import * as bcryptjs from 'bcryptjs'
 
 @Injectable({
   providedIn: 'root'
@@ -81,17 +82,21 @@ export class ClienteService {
       let response: IResponse = {};
       if (this.collectionRef) {
         const ref = doc(this.collectionRef);
-        const newItem = { ...item, id: ref.id, created_at: new Date().toISOString() };
-        setDoc(ref, newItem)
-          .then(res => {
-            response = { status: 201, error: false, results: newItem, message: 'Item adicionado com sucesso!' };
-            sub.next(response)
+        const senha = `${item.cpf_cnpj}${item.data_nasc}`;
+        this.createToken(senha).then(hash =>{
+          const newItem = { ...item, id: ref.id, created_at: new Date().toISOString(), hash };
+          setDoc(ref, newItem)
+            .then(res => {
+              response = { status: 201, error: false, results: newItem, message: 'Item adicionado com sucesso!' };
+              sub.next(response)
+  
+            }).catch(err => {
+              console.error(err);
+              response = { status: 401, error: true, results: undefined, message: 'Ocorreu um error ao tentar adicionar o item. Tente novamente!' }
+              sub.next(response)
+            })
 
-          }).catch(err => {
-            console.error(err);
-            response = { status: 401, error: true, results: undefined, message: 'Ocorreu um error ao tentar adicionar o item. Tente novamente!' }
-            sub.next(response)
-          })
+        })
 
       } else {
         console.error('collectionREf is undefined');
@@ -109,17 +114,21 @@ export class ClienteService {
       let response: IResponse = {};
       if (this.collectionRef) {
         const ref = doc(this.firestore, 'clientes', item.id);
-        const newItem = { ...item, id: ref.id };
-        updateDoc(ref, newItem)
-          .then(res => {
-            response = { status: 201, error: false, results: newItem, message: 'Item atualizado com sucesso!' };
-            sub.next(response)
+        const senha = `${item.cpf_cnpj}${item.data_nasc}`;
+        this.createToken(senha).then(hash =>{
+          const newItem = { ...item, id: ref.id, hash };
+          updateDoc(ref, newItem)
+            .then(res => {
+              response = { status: 201, error: false, results: newItem, message: 'Item atualizado com sucesso!' };
+              sub.next(response)
+  
+            }).catch(err => {
+              console.error(err);
+              response = { status: 401, error: true, results: undefined, message: 'Ocorreu um error ao tentar atualizar o item. Tente novamente!' }
+              sub.next(response)
+            })
 
-          }).catch(err => {
-            console.error(err);
-            response = { status: 401, error: true, results: undefined, message: 'Ocorreu um error ao tentar atualizar o item. Tente novamente!' }
-            sub.next(response)
-          })
+        })
 
       } else {
         console.error('collectionREf is undefined');
@@ -159,21 +168,17 @@ export class ClienteService {
 
   }
 
-  async authLogin(cpf_cnpj: string) {
-    return new Promise<IResponse>(async resolve =>{
-      const q = query(collection(this.firestore, 'clientes'), where("cpf_cnpj", "==", cpf_cnpj), limit(1));
-      const querySnapshot = await getDocs(q);
-      console.log('querySnapshot', );
-      if(querySnapshot.empty){
-        resolve({ status: 404, error: true, results: undefined, message: 'Cliente não encontrado!' })
-      }else{
-        await querySnapshot.forEach((doc) => {
-          resolve({ status: 201, error: false, results: doc.data(), message: 'Login com sucesso!' })
-        });
-      }
-
+  createToken(senha: string) {
+    return new Promise<string>(resolve => {
+      bcryptjs.genSalt(8, (err, salt) => {
+        bcryptjs.hash(senha, salt, async (err, hash) => {
+          resolve(hash);
+        })
+      })
     })
 
   }
+
+
 }
 

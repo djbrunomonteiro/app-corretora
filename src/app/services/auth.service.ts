@@ -3,7 +3,9 @@ import { Auth, signInWithPopup, GoogleAuthProvider } from '@angular/fire/auth';
 import { StoreService } from './store.service';
 import { EAction, EGroup } from '../store/app.actions';
 import { Router } from '@angular/router';
-
+import * as bcryptjs from 'bcryptjs'
+import { CollectionReference, Firestore, and, collection, doc, getDocs, limit, query, setDoc, where } from '@angular/fire/firestore';
+import { IResponse } from '../models/response';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +14,16 @@ export class AuthService {
 
   googleAuthProvider = new GoogleAuthProvider();
 
+  collectionRef: CollectionReference | undefined;
+
   constructor(
     private auth: Auth,
     private storeService: StoreService,
-    private router: Router
+    private router: Router,
+    private firestore: Firestore
   ) {
+
+    this.collectionRef = collection(this.firestore, 'hashs');
 
     this.googleAuthProvider.setCustomParameters({
       login_hint: 'brunomonteiroestudio@gmail.com'
@@ -27,35 +34,73 @@ export class AuthService {
     signInWithPopup(this.auth, this.googleAuthProvider)
       .then(async res => {
         const email = res.user.email
-        if(email === 'kelvinbruno15@gmail.com' || 'brunomonteiroestudio@gmail.com'){
-          const item = {nome: res?.user.displayName, email: res.user.email, id: res.user.uid, foto: res.user.photoURL};
-          this.storeService.dispatchAction({group: EGroup.User, action: EAction.SetOneStore, props: {item}})          
-        }else{
+        if (email === 'kelvinbruno15@gmail.com' || 'brunomonteiroestudio@gmail.com') {
+          const item = { nome: res?.user.displayName, email: res.user.email, id: res.user.uid, foto: res.user.photoURL };
+          this.storeService.dispatchAction({ group: EGroup.User, action: EAction.SetOneStore, props: { item } })
+        } else {
           const current = await this.auth.currentUser;
           current?.delete()
         }
-        
+
       }).catch(err => {
         console.log('houve error', err);
 
       });
 
-      
+
 
   }
 
-  isAuth(){
+  isAuth() {
     this.auth.onAuthStateChanged((user) => {
-      if (!user){return}
-      const item = {nome: user.displayName, email: user.email, id: user.uid, foto: user.photoURL};
-      this.storeService.dispatchAction({group: EGroup.User, action: EAction.SetOneStore, props: {item}})  
+      if (!user) { return }
+      const item = { nome: user.displayName, email: user.email, id: user.uid, foto: user.photoURL };
+      this.storeService.dispatchAction({ group: EGroup.User, action: EAction.SetOneStore, props: { item } })
     });
 
   }
 
-  logout(){
+  logout() {
     this.auth.signOut();
     this.router.navigate(['/'])
 
+  }
+
+
+  async authLogin(cpf_cnpj: any, data_nasc: any) {
+    console.log('cpf_cnpj', cpf_cnpj , ' data_nasc', data_nasc);
+    
+    return new Promise<IResponse>(async resolve =>{
+      const q = query(
+        collection(this.firestore, 'clientes'),
+        where("cpf_cnpj", "==", String(cpf_cnpj)),
+        where('data_nasc', '==', String(data_nasc)), 
+        limit(1));
+      const querySnapshot = await getDocs(q);
+      if(querySnapshot.empty){
+        resolve({ status: 404, error: true, results: undefined, message: 'Cliente não encontrado!' })
+      }else{
+        await querySnapshot.forEach((doc) => {
+          resolve({ status: 201, error: false, results: doc.data(), message: 'Login com sucesso!' })
+        });
+      }
+
+    });
+
+  }
+
+  existeHash(hash: string){
+    return new Promise<IResponse>(async resolve =>{
+      const q = query(collection(this.firestore, 'clientes'), where("hash", "==", hash), limit(1));
+      const querySnapshot = await getDocs(q);
+      if(querySnapshot.empty){
+        resolve({ status: 404, error: true, results: undefined, message: 'Cliente não encontrado!' })
+      }else{
+        await querySnapshot.forEach((doc) => {
+          resolve({ status: 201, error: false, results: doc.data(), message: 'Login com sucesso!' })
+        });
+      }
+
+    });
   }
 }

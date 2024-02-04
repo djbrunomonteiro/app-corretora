@@ -22,16 +22,16 @@ export class UploadService {
     private utils: UtilsService,
   ) { }
 
-
-  async uploadStorage(file: File, folder = 'anuncios') {
+  async uploadIMG(file: File, folder = 'anuncios') {
     return new Promise<string>(async resolve => {
       const filesResize = await this.gerarMultiplosTamanhos(file);
       let results = ''
       for (let index = 0; index < filesResize.length; index++) {
         const size = filesResize[index]?.size;
         const fileR = filesResize[index]?.file;
+        if(!fileR){return;}
         this.storageRef = ref(this.storage, `${folder}/${size}/${fileR?.name}`);
-        const resUpload = await uploadBytes(this.storageRef, file);
+        const resUpload = await uploadBytes(this.storageRef, fileR);
         results = resUpload?.ref.name;
       }
 
@@ -42,6 +42,32 @@ export class UploadService {
 
 
   }
+
+
+  async uploadFILE(file: File, folder = 'documentos') {
+    return new Promise<string>(async resolve => {
+      const access_token = localStorage.getItem('access_token') ?? '';
+      const custom = {access_token}
+
+      let results = '';
+      const newName = this.generateNewFileName(file);
+      this.storageRef = ref(this.storage, `${folder}/${newName}`);
+      const resUpload = await uploadBytes(this.storageRef, file, {customMetadata: custom});
+      results = resUpload?.ref.name;
+
+      resolve(results)
+
+    })
+
+
+
+  }
+
+  generateNewFileName(file: File): string {
+    const extension = file.name.split('.').pop();
+    const newName = `${Date.now()}${Math.random().toString(36).substring(7)}.${extension}`;
+    return newName;
+  };
 
   async getFoto(name: string, folder: string, size: string = ESize.medium) {
     const path = `${folder}/${size}/${name}`
@@ -54,79 +80,6 @@ export class UploadService {
 
 
   }
-
-
-  /* Realiza o upload nas subpastas (small|medium|large) da pasta principal.
-     caso ocorrá algum erro em um dos envios, vai parar o envio e retornará um objeto com error: true ;
-  */
-  async uploadImg(file: any, folder: EFolderUpload) {
-    return new Promise<any>(async (resolve) => {
-      let resEnvio;
-      const msgErro = 'Ocorreu um erro ao realizar upload da imagem. Tente novamente!'
-      const resMultiplos = await this.gerarMultiplosTamanhos(file);
-      if (!resMultiplos) { resolve({ error: true, status: 500, message: msgErro }) };
-
-      const itens = resMultiplos as any[] ?? [];
-
-      for (let index = 0; index < itens.length; index++) {
-        const elem = itens[index] as any;
-        const resFile = elem?.file as File;
-        const size = elem?.size as string;
-        const subFolder = `${folder}/${size}`;
-
-        resEnvio = await this.enviar(resFile, subFolder);
-        if (resEnvio?.error) {
-          resolve({ error: true, status: resEnvio?.status, message: msgErro })
-          break;
-        }
-      }
-
-      resolve(resEnvio)
-
-    })
-
-
-  }
-
-  enviar(file: File, folder: string) {
-    return new Promise<any>((resolve, reject) => {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('folder', folder);
-      formData.append('filename', file.name);
-
-      const result$ = this.http.post(`/uploads`, formData).pipe(
-        map((res: any) => {
-          const data = this.extractData(res);
-          const resData = { ...data, error: false }
-          return resData;
-        }),
-        catchError(this.handleError)
-      )
-
-      result$.subscribe({
-        next: (res) => {
-          resolve(res)
-        },
-        error: (err) => {
-          resolve({ status: 500, error: true, message: err })
-        }
-      })
-
-    })
-  }
-
-  uploadFile(file: any, folder: any): Observable<{}> {
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('folder', folder);
-
-    return this.http.post(`/uploads`, formData).pipe(
-      map((res: any) => this.extractData(res)),
-      catchError(this.handleError)
-    )
-  }
-
 
   /* Como default criará 2 arquivos de tamanhos diferentes mas com o mesmo name.*/
   async gerarMultiplosTamanhos(file: File) {
@@ -180,33 +133,5 @@ export class UploadService {
     })
   }
 
-  obterImagemComoFile(url: string): Observable<File> {
-    const filename = url.split('/').pop() ?? 'filename';
-    return this.http.get(url, { responseType: 'arraybuffer' }).pipe(
-      first(),
-      map((arrayBuffer: ArrayBuffer) => {
-        const blob = new Blob([arrayBuffer]);
-        const file = new File([blob], filename, { type: blob.type });
-        return file;
-      })
-    );
-  }
-
-  // if(res.hasOwnProperty('error')){return;}
-  extractData(res: Response) {
-    const body = res;
-    return body || {}
-  }
-
-  handleError(error: Response | any) {
-    let message: string;
-    if (error instanceof Response) {
-      const err = error || '';
-      message = `${error.status} - ${error.statusText} || '' ${err}`;
-    } else {
-      message = error.message ? error.message : error.toString();
-    }
-    return throwError(message);
-  }
 
 }

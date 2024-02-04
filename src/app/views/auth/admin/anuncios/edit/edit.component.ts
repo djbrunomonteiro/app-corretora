@@ -6,10 +6,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { UtilsService } from '../../../../../services/utils.service';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
-import { ImageDropzoneComponent } from '../../../../../shared/image-dropzone/image-dropzone.component';
 import { EFolderUpload } from '../../../../../enums/folders';
 import { BehaviorSubject, Observable, first } from 'rxjs';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { DropzoneCdkModule } from '@ngx-dropzone/cdk';
 import { DropzoneMaterialModule } from '@ngx-dropzone/material';
 import { UploadService } from '../../../../../services/upload.service';
@@ -157,7 +155,7 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit {
 
     for (let index = 0; index < files.length; index++) {
       const file = files[index];
-      const res = await this.uploadService.uploadStorage(file);
+      const res = await this.uploadService.uploadIMG(file);
       if(res){
         fotos.push(res);
         this.getFotos(res)
