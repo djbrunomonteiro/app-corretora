@@ -120,6 +120,9 @@ export class ClienteService {
           updateDoc(ref, newItem)
             .then(res => {
               response = { status: 201, error: false, results: newItem, message: 'Item atualizado com sucesso!' };
+              if(newItem?.auth){
+                localStorage.setItem('access_token', hash )
+              }
               sub.next(response)
   
             }).catch(err => {

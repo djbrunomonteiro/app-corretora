@@ -55,7 +55,7 @@ const routes: Routes = [
         loadComponent: () => ClienteHomeComponent,
       },
       {
-        path: ':url',
+        path: ':id',
         loadComponent: () => ClienteHomeComponent,
       },
     ]

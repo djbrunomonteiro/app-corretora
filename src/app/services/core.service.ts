@@ -100,7 +100,19 @@ export class CoreService {
     'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'
   ];
 
-  modalidade_finan = ['individual', 'cofinanciado', 'outro']
+  modalidade_finan = ['individual', 'cofinanciado', 'outro'];
+  tipo_cliente = ['principal', 'cofinanciador'];
+  tipo_arquivo= [
+    "CNH",
+    "RG",
+    "Certidão de nascimento",
+    "Certidão de casamento",
+    "Comprovante de residência",
+    "Holerites/Contracheques",
+    "Extrato bancário",
+    "Extrato FGTS",
+    "Outros"
+  ]
   nums: number[] = [];
 
   constructor() { 

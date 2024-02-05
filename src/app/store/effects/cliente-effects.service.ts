@@ -83,7 +83,7 @@ export class ClienteEffectsService {
             console.log('res add', res);
 
             if (res.status === 200 || res.status === 201) {
-              item = this.utils.paramsJsonParse(res.results)
+              item = this.utils.paramsJsonParse(res.results);
               this.storeService.dispatchAction({ group: EGroup.Cliente, action: EAction.SetOneStore, props: { item } })
             }
             return res;
@@ -106,13 +106,13 @@ export class ClienteEffectsService {
     this.actions$.pipe(
       ofType(getAction(EGroup.Cliente, EAction.UpdateOne)),
       switchMap((action: IAction) => {
-        const item = action?.props?.item;
+        let item = action?.props?.item;
         return this.clienteService.updateOne(item).pipe(
           map((res: IResponse) => {
             console.log('RESULT UPDATE', res);
 
             if (res.status === 200 || res.status === 201) {
-              const item = this.utils.paramsJsonParse(res.results)
+              item = this.utils.paramsJsonParse(res.results);
               this.storeService.dispatchAction({ group: EGroup.Cliente, action: EAction.SetOneStore, props: { item } })
             }
             return res;

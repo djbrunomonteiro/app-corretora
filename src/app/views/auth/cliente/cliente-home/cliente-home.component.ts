@@ -16,6 +16,7 @@ import { EGroup, EAction } from '../../../../store/app.actions';
 import { AuthService } from '../../../../services/auth.service';
 import { ClienteIsAuth } from '../../../../store/selectors/cliente.selector';
 import { UploadService } from '../../../../services/upload.service';
+import { AdminClientesEditComponent } from '../../admin/clientes/admin-clientes-edit/admin-clientes-edit.component';
 
 @Component({
   selector: 'app-cliente-home',
@@ -29,7 +30,8 @@ import { UploadService } from '../../../../services/upload.service';
     NgxMaskPipe,
     DropzoneCdkModule,
     DropzoneMaterialModule,
-    UrlFotosPipe
+    UrlFotosPipe,
+    AdminClientesEditComponent
   ],
   templateUrl: './cliente-home.component.html',
   styleUrl: './cliente-home.component.scss'
@@ -57,8 +59,6 @@ export class ClienteHomeComponent implements OnInit, AfterViewInit {
   ) { }
 
 
-
-
   ngOnInit(): void {
     if (!this.ignoreLoad) {
       this.checkAuth()
@@ -83,11 +83,13 @@ export class ClienteHomeComponent implements OnInit, AfterViewInit {
   }
 
   async checkAuth() {
-    console.log('checkAUth');
-
     const access_token = localStorage.getItem('access_token');
+    console.log('access_token', access_token);
+    
     if (access_token) {
       const isValid = await this.auth.existeHash(access_token);
+      console.log('isValid', isValid);
+      
       if (isValid.error) {
         this.openLogin();
       } else {

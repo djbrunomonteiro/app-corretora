@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, Input } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DropzoneCdkModule } from '@ngx-dropzone/cdk';
 import { DropzoneMaterialModule } from '@ngx-dropzone/material';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
@@ -13,6 +13,7 @@ import { Observable, first } from 'rxjs';
 import { MyAction, EGroup, EAction, IAction } from '../../../../../store/app.actions';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OneCliente } from '../../../../../store/selectors/cliente.selector';
+import { UploadService } from '../../../../../services/upload.service';
 
 @Component({
   selector: 'app-admin-clientes-edit',
@@ -32,6 +33,10 @@ import { OneCliente } from '../../../../../store/selectors/cliente.selector';
   styleUrl: './admin-clientes-edit.component.scss'
 })
 export class AdminClientesEditComponent {
+
+  @Input() cliente$: any;
+
+
   form = this._formBuilder.group({
     id: [''],
     nome: ['', Validators.required],
@@ -55,8 +60,8 @@ export class AdminClientesEditComponent {
     }),
     foto: [''],
     end_cep: [''],
-    end_uf: ['',Validators.required],
-    end_cidade: ['',Validators.required],
+    end_uf: ['', Validators.required],
+    end_cidade: ['', Validators.required],
     end_bairro: [''],
     end_logradouro: [''],
     end_numero: [''],
@@ -79,11 +84,21 @@ export class AdminClientesEditComponent {
       qtd_ban: [''],
       qtd_vaga: [''],
     }),
+    auth: [false],
+    hash: [''],
     created_at: ['']
   });
 
   estados: any[] = [];
   cidades: any[] = [];
+
+  ctrlDocumentacao = this.form.get('documentacao') as FormArray;
+  filesCtrl = new FormControl();
+
+  displayedColumns: string[] = ['index', 'tipo_cliente', 'tipo_arquivo', 'nome', 'acoes'];
+  dataSource = [];
+
+  loadingUpload = false;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -92,7 +107,8 @@ export class AdminClientesEditComponent {
     public core: CoreService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-  ){}
+    private uploadService: UploadService
+  ) { }
 
 
   async ngOnInit(): Promise<void> {
@@ -102,14 +118,31 @@ export class AdminClientesEditComponent {
       setTimeout(() => {
         this.form.patchValue({ end_uf: 'MA' })
       }, 500)
-    })
-    const id = this.activatedRoute.snapshot.paramMap.get('id');
-    if (id) {
-      this.getItem(id);
+    });
+    if (this.cliente$) {
+
+      this.cliente$.pipe(first()).subscribe((res: any) => {
+        this.form.patchValue({ ...res, auth: true });
+        for (let index = 0; index < res.documentacao.length; index++) {
+          const elem =  res.documentacao[index]
+          const grupo = this._formBuilder.group({
+            tipo_cliente: [elem?.tipo_cliente],
+            tipo_arquivo: [elem?.tipo_arquivo],
+            path: [elem?.path],
+            nome: [elem?.nome]
+          });
+          this.ctrlDocumentacao.push(grupo)          
+        };
+
+        this.dataSource = this.ctrlDocumentacao.value;
+      })
+
+    } else {
+      const id = this.activatedRoute.snapshot.paramMap.get('id');
+      if (id) {
+        this.getItem(id);
+      }
     }
-    
-
-
 
 
   }
@@ -126,32 +159,36 @@ export class AdminClientesEditComponent {
       }
     });
 
-
-
+    this.filesCtrl.valueChanges.subscribe(c => {
+      if (!c?.length) { return; }
+      this.upload(c);
+    });
 
   }
 
-  salvar(){
-    const item = {...this.form.value, data_nasc: String(this.form.value.data_nasc), url: this.createUrl()};
-    console.log('itemm', item);
+  salvar() {
+    const item = { ...this.form.value, data_nasc: String(this.form.value.data_nasc), url: this.createUrl() };
 
+    console.log('item atualizado', item);
+    
     let action: MyAction;
     let result$: Observable<IAction>;
-    if(item.id){
-      action = {group:EGroup.Cliente, action: EAction.UpdateOne, props: {item}}
+    if (item.id) {
+      action = { group: EGroup.Cliente, action: EAction.UpdateOne, props: { item } }
       result$ = this.storeService.dispatchAction(action)
       result$.pipe(first()).subscribe(res => {
         this.utils.showMessage(res?.props?.message);
       })
 
-    }else{
-      action = {group:EGroup.Cliente, action: EAction.SetOne, props: {item}}
+    } else {
+      action = { group: EGroup.Cliente, action: EAction.SetOne, props: { item } }
       result$ = this.storeService.dispatchAction(action)
       result$.pipe(first()).subscribe(res => {
         this.utils.showMessage(res?.props?.message);
-  
-        if(!res.props?.error){
-        this.router.navigate([`auth/admin/clientes`])
+
+        if (!res.props?.error) {
+
+          this.router.navigate([`auth/admin/clientes`])
         }
       })
     }
@@ -159,11 +196,11 @@ export class AdminClientesEditComponent {
 
   }
 
-  createUrl(){
+  createUrl() {
     const nome = String(this.form.value.nome).toLocaleLowerCase();
     let cpf_cnpj = String(this.form.value.cpf_cnpj).toLocaleLowerCase()
     cpf_cnpj = cpf_cnpj.slice(cpf_cnpj.length - 4);
- 
+
     let result = `${nome} ${cpf_cnpj}`;
     result = result.replace(/[áàãâäéèêëíìîïóòõôöúùûü]/g, (match) => {
       switch (match) {
@@ -197,13 +234,46 @@ export class AdminClientesEditComponent {
 
   }
 
-  getItem(id: string){
-    const result$ = this.storeService.dispatchAction({group: EGroup.Cliente, action: EAction.GetOne, params: {id}});
-    this.storeService.select(OneCliente(id)).subscribe(res =>{
-      this.form.patchValue({...res})
+  getItem(id: string) {
+    console.log('id', id);
+
+    const result$ = this.storeService.dispatchAction({ group: EGroup.Cliente, action: EAction.GetOne, params: { id } });
+    this.storeService.select(OneCliente(id)).subscribe(res => {
+      this.form.patchValue({ ...res })
     })
   }
-  
+
+  async upload(files: File[]) {
+    this.loadingUpload = true;
+
+    for (let index = 0; index < files.length; index++) {
+      const file = files[index];
+      const folder = `documentos/${this.form.value.id}`
+      const res = await this.uploadService.uploadFILE(file, folder);
+      if (res) {
+        this.addDocumento(res)
+      }
+    }
+
+    this.loadingUpload = false;
+
+
+  }
+
+  addDocumento(path: string) {
+    const nome = path.split('/')[2]
+    console.log(nome[2]);
+    console.log(this.ctrlDocumentacao);
+    const grupo = this._formBuilder.group({
+      tipo_cliente: ['principal'],
+      tipo_arquivo: ['Outros'],
+      path: [path],
+      nome: [nome]
+    })
+    this.ctrlDocumentacao.push(grupo);
+    this.dataSource = this.ctrlDocumentacao.value
+  }
+
 
 
 }

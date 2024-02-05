@@ -48,13 +48,10 @@ export class UploadService {
     return new Promise<string>(async resolve => {
       const access_token = localStorage.getItem('access_token') ?? '';
       const custom = {access_token}
-
       let results = '';
-      const newName = this.generateNewFileName(file);
-      this.storageRef = ref(this.storage, `${folder}/${newName}`);
+      this.storageRef = ref(this.storage, `${folder}/${file.name}`);
       const resUpload = await uploadBytes(this.storageRef, file, {customMetadata: custom});
-      results = resUpload?.ref.name;
-
+      results = resUpload?.ref.fullPath;
       resolve(results)
 
     })

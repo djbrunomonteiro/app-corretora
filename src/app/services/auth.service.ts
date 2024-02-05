@@ -3,7 +3,6 @@ import { Auth, signInWithPopup, GoogleAuthProvider } from '@angular/fire/auth';
 import { StoreService } from './store.service';
 import { EAction, EGroup } from '../store/app.actions';
 import { Router } from '@angular/router';
-import * as bcryptjs from 'bcryptjs'
 import { CollectionReference, Firestore, and, collection, doc, getDocs, limit, query, setDoc, where } from '@angular/fire/firestore';
 import { IResponse } from '../models/response';
 
