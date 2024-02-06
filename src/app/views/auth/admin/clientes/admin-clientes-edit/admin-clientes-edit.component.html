@@ -295,8 +295,34 @@
         <div class="col-md-10 my-3 heigth-default">
           <mat-card class="w-100 my-3">
             <mat-card-content class="p-5">
-              <a class="my-3" mat-button color="accent" href="https://www.google.com/" target="_blank">IMPORTANTE <mat-icon>info</mat-icon></a>
-              
+              <a class="my-3" mat-button [matMenuTriggerFor]="afterMenu" color="accent">IMPORTANTE <mat-icon>info</mat-icon></a>
+              <mat-menu #afterMenu="matMenu" xPosition="after" class="p-3">
+                <h6>Importante:</h6>
+                <p>Para agilização do seu processo de análise de perfil, recomenda-se o envio dos seguintes documentos:</p>
+                <p><b>Documentos pessoais</b></p>
+                <ul>
+                  <li>Documento de identidade: RG original (ou CNH válida) e CPF. </li>
+                  <li>Certidão de nascimento ou casamento:</li>
+                  <ul>
+                    <li>Solteiro(a): Certidão de nascimento.</li>
+                    <li>Casado(a): Certidão de casamento.</li>
+                    <li>Divorciado(a): Certidão de casamento com averbação do divórcio.</li>
+                    <li>Viúvo(a): Certidão de casamento e certidão de óbito do cônjuge.</li>
+                  </ul>
+                </ul>
+                <p><b>Comprovante de residência</b></p>
+                <ul>
+                  <li> Conta de luz, água, telefone, etc. (máximo de 3 meses).</li>
+                </ul>
+                <p><b>Comprovante de rendimentos</b></p>
+                <ul>
+                  <li>Empregado CLT: 3 últimos holerites ou contracheques.</li>
+                  <li>Autônomo: 6 últimos extratos bancários (com movimentação que comprove renda).</li>
+                  <li>Extrato do FGTS (opcional): Caso pretenda usar o saldo do FGTS para financiar o imóvel.</li>
+                  <li>Outros: Declaração de Imposto de Renda completa (último ano), Carnê-Leão ou outros documentos que comprovem renda.</li>
+                </ul>
+              </mat-menu>
+
               @if (loadingUpload) {
                 <p> Enviando arquivos, aguarde.</p>
                 <mat-progress-bar mode="buffer"></mat-progress-bar>
@@ -317,54 +343,7 @@
             </mat-card-content>
           </mat-card>
 
-          <!-- <mat-card class="w-100">
-            <mat-card-content>
-              <h6>Importante:</h6>
-              <p>Para agilização do seu processo de análise de perfil, recomenda-se o envio dos seguintes documentos:</p>
-              <mat-accordion>
-                <mat-expansion-panel>
-                  <mat-expansion-panel-header>
-                    <mat-panel-title>
-                      Documentos pessoais
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <ul>
-                    <li>Documento de identidade: RG original (ou CNH válida) e CPF. </li>
-                    <li>Certidão de nascimento ou casamento:</li>
-                    <ul>
-                      <li>Solteiro(a): Certidão de nascimento.</li>
-                      <li>Casado(a): Certidão de casamento.</li>
-                      <li>Divorciado(a): Certidão de casamento com averbação do divórcio.</li>
-                      <li>Viúvo(a): Certidão de casamento e certidão de óbito do cônjuge.</li>
-                    </ul>
-                  </ul>
-                </mat-expansion-panel>                
-                <mat-expansion-panel>
-                  <mat-expansion-panel-header>
-                    <mat-panel-title>
-                      Comprovante de residência:
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <ul>
-                    <li> Conta de luz, água, telefone, etc. (máximo de 3 meses).</li>
-                  </ul>
-                </mat-expansion-panel>
-                <mat-expansion-panel>
-                  <mat-expansion-panel-header>
-                    <mat-panel-title>
-                      Comprovante de renda:
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <ul>
-                    <li>Empregado CLT: 3 últimos holerites ou contracheques.</li>
-                    <li>Autônomo: 6 últimos extratos bancários (com movimentação que comprove renda).</li>
-                    <li>Extrato do FGTS (opcional): Caso pretenda usar o saldo do FGTS para financiar o imóvel.</li>
-                    <li>Outros: Declaração de Imposto de Renda completa (último ano), Carnê-Leão ou outros documentos que comprovem renda.</li>
-                  </ul>
-                </mat-expansion-panel>
-              </mat-accordion>
-            </mat-card-content>
-          </mat-card> -->
+
 
 
 
