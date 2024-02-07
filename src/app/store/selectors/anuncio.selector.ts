@@ -21,10 +21,13 @@ export const OneAnuncio = (url: string) => createSelector(
     }
 );
 
-export const favoritosAnuncio = (id: string) => createSelector(
+export const favoritosAnuncio = (id?: string) => createSelector(
     OneCliente(id),
     AllAnuncios,
     (cliente, anuncios) => {
+        console.log('cli', cliente);
+        
+        if(!cliente){return []}
         const favoritos = cliente.favoritos as string[] ?? [];
         const result = favoritos.map(fav => {
             const res = anuncios.filter(anun => anun.id === fav)[0];

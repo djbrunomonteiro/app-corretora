@@ -20,7 +20,7 @@ export const ClienteIsAuth =  createSelector(
     }
 );
 
-export const OneCliente = (id: string) => createSelector(
+export const OneCliente = (id?: string) => createSelector(
     AllClientes,
     (elements) => {
         const result = elements.filter(elem => elem.id === id)[0];

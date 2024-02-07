@@ -124,6 +124,8 @@ export class AdminClientesEditComponent implements OnInit, AfterViewInit {
 
 
   async ngOnInit(): Promise<void> {
+    console.log('issss');
+    
 
     this.utils.getLocalidades().subscribe((res: any) => {
       this.estados = res?.estados;
@@ -163,9 +165,10 @@ export class AdminClientesEditComponent implements OnInit, AfterViewInit {
 
     });
 
-    this.favoritos$ = this.storeService.select(favoritosAnuncio(this.clienteService.clienteAuth.id));
-    this.recomendados$ = this.storeService.select(recomendadosAnuncio(this.clienteService.clienteAuth.id));
-
+    if(this.form.value.id){
+      this.favoritos$ = this.storeService.select(favoritosAnuncio(this.form.value.id));
+      this.recomendados$ = this.storeService.select(recomendadosAnuncio(this.form.value.id));
+    }
 
   }
 
