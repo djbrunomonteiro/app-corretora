@@ -4,6 +4,8 @@ import { Router, RouterModule } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import { StoreService } from '../../services/store.service';
+import { ClienteIsAuth } from '../../store/selectors/cliente.selector';
 
 @Component({
   selector: 'app-header',
@@ -38,13 +40,17 @@ export class HeaderComponent implements OnInit {
       icon: '',
       url: 'clientes'
     }
-  ]
+  ];
+
+
+  cliente$ = this.storeService.select(ClienteIsAuth)
 
 
 
   constructor(
     private router: Router,
-    public auth: AuthService
+    public auth: AuthService,
+    private storeService: StoreService
     ){}
 
   ngOnInit(): void {

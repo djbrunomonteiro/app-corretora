@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, CollectionReference, doc, setDoc, getDocs, updateDoc, deleteDoc, getDoc, query, where, limit } from '@angular/fire/firestore';
+import { Firestore, collection, CollectionReference, doc, setDoc, getDocs, updateDoc, deleteDoc, getDoc, query, where, limit, arrayUnion } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IResponse } from '../models/response';
 import * as bcryptjs from 'bcryptjs'
+import { StoreService } from './store.service';
+import { ClienteIsAuth } from '../store/selectors/cliente.selector';
+import { EAction, EGroup } from '../store/app.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +14,14 @@ export class ClienteService {
 
   collectionRef: CollectionReference | undefined;
 
+  clienteAuth: any;
+
   constructor(
-    private firestore: Firestore
+    private firestore: Firestore,
+    private storeService: StoreService
   ) {
     this.collectionRef = collection(this.firestore, 'clientes');
+    this.storeService.select(ClienteIsAuth).subscribe(res => this.clienteAuth = res);
   }
 
 
@@ -43,8 +50,6 @@ export class ClienteService {
       console.log('id', ref.path);
 
       getDoc(ref).then(res => {
-        console.log('res get one', res.exists());
-
         response = { status: 200, error: false, results: res.data(), message: 'Itens obtidos com sucesso!' };
         sub.next(response)
       }).catch(err => {
@@ -67,10 +72,6 @@ export class ClienteService {
         res.forEach(async (doc) => {
           await itens.push(doc.data())
         });
-
-        console.log(itens);
-
-
         resolve(itens)
       });
     })
@@ -140,8 +141,6 @@ export class ClienteService {
       }
 
     })
-
-
   }
 
   deleteOne(id: any) {
@@ -180,6 +179,39 @@ export class ClienteService {
       })
     })
 
+  }
+
+  addFavorito(id: string){
+
+    return new Observable<IResponse>(sub => {
+      let response: IResponse = {};
+      if (this.collectionRef) {
+        const ref = doc(this.firestore, 'clientes', this.clienteAuth.id);
+
+        updateDoc(ref, {favoritos: arrayUnion(id)})
+        .then(res => {
+          console.log('atualizadoo', res);
+          let favoritos = this.clienteAuth.favoritos as string[] ?? [];
+          favoritos.push(id);
+          const item = {...this.clienteAuth, favoritos}
+          this.storeService.dispatchAction({group: EGroup.Cliente, action: EAction.UpdateOneStore, params:{id: this.clienteAuth.id}, props: {item}})
+          
+          response = { status: 201, error: false, results: res, message: 'Item favoritado com sucesso!' };
+          sub.next(response)
+
+        }).catch(err => {
+          console.error(err);
+          response = { status: 401, error: true, results: undefined, message: 'Ocorreu um error ao tentar atualizar o item. Tente novamente!' }
+          sub.next(response)
+        })
+
+      } else {
+        console.error('collectionREf is undefined');
+        response = { status: 401, error: true, results: undefined, message: 'Error ao adicionar item. Tente novamente!' };
+        sub.next(response)
+      }
+
+    })
   }
 
 

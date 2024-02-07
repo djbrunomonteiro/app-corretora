@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DropzoneCdkModule } from '@ngx-dropzone/cdk';
 import { DropzoneMaterialModule } from '@ngx-dropzone/material';
@@ -32,7 +32,7 @@ import { UploadService } from '../../../../../services/upload.service';
   templateUrl: './admin-clientes-edit.component.html',
   styleUrl: './admin-clientes-edit.component.scss'
 })
-export class AdminClientesEditComponent {
+export class AdminClientesEditComponent implements OnInit, AfterViewInit {
 
   @Input() cliente$: any;
 
@@ -84,6 +84,8 @@ export class AdminClientesEditComponent {
       qtd_ban: [''],
       qtd_vaga: [''],
     }),
+    favoritos: [[]],
+    recomendados: [[]],
     auth: [false],
     hash: [''],
     created_at: ['']
@@ -99,6 +101,8 @@ export class AdminClientesEditComponent {
   dataSource = [];
 
   loadingUpload = false;
+
+  tabIndex = 0;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -144,6 +148,13 @@ export class AdminClientesEditComponent {
       }
     }
 
+    this.activatedRoute.queryParams.pipe(first()).subscribe((q: any) =>{
+      if(q?.favorito){
+        this.tabIndex = 5
+      }
+
+    });
+
 
   }
 
@@ -163,6 +174,8 @@ export class AdminClientesEditComponent {
       if (!c?.length) { return; }
       this.upload(c);
     });
+
+
 
   }
 

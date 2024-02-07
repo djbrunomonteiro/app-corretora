@@ -57,6 +57,7 @@ export class actionsReducer {
     }
 
     public static ClienteReducer = (state = inititalState, action: IAction) => {
+        let id: any;
         switch (action.type) {
             case `[${EGroup.Cliente}-${EAction.SetAllStore}]`:
                 const itens = action.props?.itens;
@@ -67,8 +68,14 @@ export class actionsReducer {
                 return item ? adapter.setOne(action?.props?.item, state) : state
 
             case `[${EGroup.Cliente}-${EAction.DeleteOneStore}]`:
-                const id = action?.props?.id;
+                id = action?.props?.id;
                 return id ? adapter.removeOne(id, state) : state;
+
+            case `[${EGroup.Cliente}-${EAction.UpdateOneStore}]`:
+                id = action?.params?.id;
+                const changes = action?.props?.item;
+                return changes ? adapter.updateOne({id, changes}, state) : state;
+
             default:
                 return state;
         }

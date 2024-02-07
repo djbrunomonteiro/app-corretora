@@ -1,6 +1,6 @@
 <!-- <h5 mat-dialog-title class="mt-3">Editor de Cliente</h5> -->
 <form [formGroup]="form">
-  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center" backgroundColor="primary">
+  <mat-tab-group [(selectedIndex)]="tabIndex" mat-stretch-tabs="false" mat-align-tabs="center" backgroundColor="primary">
     <mat-tab label="Dados Pessoais">
       <div class="row m-0 justify-content-center">
         <div class="col-md-8 my-3 heigth-default">
@@ -425,7 +425,7 @@
         </div>
       </div>
     </mat-tab>
-    <mat-tab label="Acompanhamento">
+    <mat-tab label="Seus favoritos">
       <div class="row m-0 justify-content-center">
         <div class="col-md-8 my-3 heigth-default">
           <p>Categorização</p>

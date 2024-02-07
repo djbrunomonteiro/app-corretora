@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { MaterialModule } from '../../../modules/material/material.module';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreService } from '../../../services/core.service';
 import { NavigationExtras, Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
+import { StoreService } from '../../../services/store.service';
+import { EAction, EGroup } from '../../../store/app.actions';
 
 @Component({
   selector: 'app-home',
@@ -38,8 +41,9 @@ export class HomeComponent {
   constructor(
     private fb: FormBuilder,
     public core: CoreService,
-    private router: Router
+    private router: Router,
   ){}
+
 
   getUrl(url: string) {
     return `url(${url})`;
@@ -51,6 +55,8 @@ export class HomeComponent {
     this.router.navigate(['buscar'], {queryParams} )
     
   }
+
+
 
 
 }

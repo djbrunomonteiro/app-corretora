@@ -3,7 +3,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { MaterialModule } from '../../../../modules/material/material.module';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { CoreService } from '../../../../services/core.service';
 import { StoreService } from '../../../../services/store.service';
 import { UtilsService } from '../../../../services/utils.service';
@@ -44,6 +44,7 @@ export class ClienteHomeComponent implements OnInit, AfterViewInit {
 
   filesCtrl = new FormControl();
   showFiller = false;
+  queryParams:NavigationExtras = {};
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -60,6 +61,8 @@ export class ClienteHomeComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit(): void {
+    this.activatedRoute.queryParams.subscribe(q => this.queryParams = q);
+
     if (!this.ignoreLoad) {
       this.checkAuth()
     }
@@ -84,8 +87,7 @@ export class ClienteHomeComponent implements OnInit, AfterViewInit {
 
   async checkAuth() {
     const access_token = localStorage.getItem('access_token');
-    console.log('access_token', access_token);
-    
+
     if (access_token) {
       const isValid = await this.auth.existeHash(access_token);
       console.log('isValid', isValid);
@@ -117,7 +119,7 @@ export class ClienteHomeComponent implements OnInit, AfterViewInit {
   setClienteAuth(item: any) {
     if (!item) { return }
     this.storeService.dispatchAction({ group: EGroup.Cliente, action: EAction.SetOneStore, props: { item } });
-    this.router.navigate([`/auth/cliente/${item.id}`]);
+    this.router.navigate([`/auth/cliente/${item.id}`], {queryParams: this.queryParams});
     localStorage.setItem('access_token', item.hash)
 
   }

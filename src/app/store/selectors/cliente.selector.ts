@@ -27,3 +27,11 @@ export const OneCliente = (id: string) => createSelector(
         return result
     }
 );
+
+export const isFavorito = (id: string) => createSelector(
+    ClienteIsAuth,
+    (element) => {
+        if(!element){return false;}
+        return element.favoritos?.includes(id)
+    }
+);
