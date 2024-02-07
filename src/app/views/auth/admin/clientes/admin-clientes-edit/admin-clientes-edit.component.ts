@@ -14,6 +14,9 @@ import { MyAction, EGroup, EAction, IAction } from '../../../../../store/app.act
 import { ActivatedRoute, Router } from '@angular/router';
 import { OneCliente } from '../../../../../store/selectors/cliente.selector';
 import { UploadService } from '../../../../../services/upload.service';
+import { favoritosAnuncio, recomendadosAnuncio } from '../../../../../store/selectors/anuncio.selector';
+import { ClienteService } from '../../../../../services/cliente.service';
+import { CardAnuncioComponent } from '../../../../../shared/card-anuncio/card-anuncio.component';
 
 @Component({
   selector: 'app-admin-clientes-edit',
@@ -27,7 +30,8 @@ import { UploadService } from '../../../../../services/upload.service';
     NgxMaskPipe,
     DropzoneCdkModule,
     DropzoneMaterialModule,
-    UrlFotosPipe
+    UrlFotosPipe,
+    CardAnuncioComponent
   ],
   templateUrl: './admin-clientes-edit.component.html',
   styleUrl: './admin-clientes-edit.component.scss'
@@ -104,6 +108,9 @@ export class AdminClientesEditComponent implements OnInit, AfterViewInit {
 
   tabIndex = 0;
 
+  favoritos$!: Observable<any[]>;
+  recomendados$!: Observable<any[]>;
+
   constructor(
     private _formBuilder: FormBuilder,
     private storeService: StoreService,
@@ -111,7 +118,8 @@ export class AdminClientesEditComponent implements OnInit, AfterViewInit {
     public core: CoreService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private uploadService: UploadService
+    private uploadService: UploadService,
+    private clienteService: ClienteService
   ) { }
 
 
@@ -154,6 +162,9 @@ export class AdminClientesEditComponent implements OnInit, AfterViewInit {
       }
 
     });
+
+    this.favoritos$ = this.storeService.select(favoritosAnuncio(this.clienteService.clienteAuth.id));
+    this.recomendados$ = this.storeService.select(recomendadosAnuncio(this.clienteService.clienteAuth.id));
 
 
   }

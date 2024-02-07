@@ -1,0 +1,54 @@
+@if (item) {
+    <mat-card class="card-anuncio">
+        <swiper-container>
+            @for (path of item?.fotos; track $index) {
+                @if ((path | urlFotos: 'anuncios' | async); as src) {
+                <swiper-slide>
+                    <img [src]="src">
+                </swiper-slide>
+                }
+            }
+    
+        </swiper-container>
+    
+    
+        <mat-card-content>
+            <h3 class="titulo">{{item.titulo}}</h3>
+            <p class="cidade">{{item.end_cidade}} / {{item.end_uf}} - Cód. {{item.codigo}}</p>
+            <div class="detalhes">
+                <mat-chip> 30 m²</mat-chip>
+                <mat-chip> 3 dorm.</mat-chip>
+                <mat-chip> 3 ban.</mat-chip>
+                <mat-chip> 3 suíte</mat-chip>
+                <mat-chip> 2 vagas</mat-chip>
+            </div>
+    
+            <div>
+                <p class="descricao">
+                    {{item.descricao}}
+    
+                </p>
+            </div>
+            <h5 class="preco">R$ 150.000</h5>
+    
+            <div class="btns">
+                @if (item.id | isFavorito$ | async) {
+                    <button (click)="goFavorito(item.id)" mat-stroked-button color="accent">
+                        <mat-icon>task_alt</mat-icon>
+                        Favoritado
+                    </button>
+                }@else {
+                    <button (click)="addFavorito(item.id)" mat-stroked-button color="accent">
+                        <mat-icon>favorite</mat-icon>
+                        Eu quero
+                    </button>
+                }
+    
+                <button (click)="goDetails(item.url)" mat-stroked-button color="primary">
+                    <mat-icon>view_in_ar</mat-icon>
+                    Visualisar
+                </button>
+            </div>
+        </mat-card-content>
+    </mat-card>
+}

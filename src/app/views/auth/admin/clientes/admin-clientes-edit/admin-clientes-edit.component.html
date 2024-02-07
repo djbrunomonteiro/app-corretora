@@ -426,10 +426,32 @@
       </div>
     </mat-tab>
     <mat-tab label="Seus favoritos">
-      <div class="row m-0 justify-content-center">
-        <div class="col-md-8 my-3 heigth-default">
-          <p>Categorização</p>
-        </div>
+      <h6 class="m-3">Seus favoritos</h6>
+      <div class="row m-0 justify-content-start">
+        @for (item of favoritos$ | async; track $index) {
+          <div class="col-md-3 my-3">
+            <app-card-anuncio [item]="item" />
+          </div>
+        }@empty {
+          <div class="col-md-3 my-3">
+            <p>*Sem itens em favoritos</p>
+          </div>
+        }
+      </div>
+
+      <mat-divider></mat-divider>
+      
+      <h6 class="m-3">Seus recomendados</h6>
+      <div class="row m-0 justify-content-start">
+        @for (item of recomendados$ | async; track $index) {
+          <div class="col-md-3 my-3">
+            <app-card-anuncio [item]="item" />
+          </div>
+        }@empty {
+          <div class="col-md-3 my-3">
+            <p>*Sem itens em recomendados</p>
+          </div>
+        }
       </div>
     </mat-tab>
   </mat-tab-group>

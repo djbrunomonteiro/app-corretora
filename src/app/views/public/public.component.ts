@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { StoreService } from '../../services/store.service';
 import { EAction, EGroup } from '../../store/app.actions';
@@ -8,12 +8,16 @@ import { EAction, EGroup } from '../../store/app.actions';
   templateUrl: './public.component.html',
   styleUrl: './public.component.scss'
 })
-export class PublicComponent implements AfterViewInit {
+export class PublicComponent implements OnInit, AfterViewInit {
 
   constructor(
     private auth: AuthService,
     private storeService: StoreService
   ){}
+
+  ngOnInit(): void {
+    this.storeService.dispatchAction({group: EGroup.Anuncio, action: EAction.GetAll});
+  }
 
   ngAfterViewInit(): void {
     this.checkAuth();
