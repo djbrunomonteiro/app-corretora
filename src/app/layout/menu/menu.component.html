@@ -1,1 +1,35 @@
-<p>menu works!</p>
+<mat-nav-list class="p-3">
+    <div class="cliente">
+        <h5 class="p-3">MENU DO CLIENTE</h5>
+        @if(clienteService.clienteAuth){
+            @for (item of clienteMenu; track $index) {
+                <a mat-list-item (click)="goCliente(item)">
+                  <span matListItemTitle>{{item.title}}</span>
+                  <span matLine>{{item.subtitle}}</span>
+                </a>
+            }
+        }@else {
+            <a (click)="goCliente(undefined)" mat-list-item>
+                <span matListItemTitle>ÁREA DO CLIENTE</span>
+                <span matLine>acesse a área de cliente</span>
+              </a>
+
+        }
+
+    </div>
+
+    <div class="empresa">
+        <h5 class="p-3">SOBRE TELMA MONTEIRO</h5>
+
+        @for (item of empresaMenu; track $index) {
+            <a mat-list-item>
+                <span matListItemTitle><mat-icon aria-hidden="false" class="mx-3" [fontIcon]="item.icon"></mat-icon> {{item.title}}</span>
+            </a>
+        }
+        
+    </div>
+
+   
+
+    
+  </mat-nav-list>

@@ -17,6 +17,7 @@ import { UploadService } from '../../../../../services/upload.service';
 import { favoritosAnuncio, recomendadosAnuncio } from '../../../../../store/selectors/anuncio.selector';
 import { ClienteService } from '../../../../../services/cliente.service';
 import { CardAnuncioComponent } from '../../../../../shared/card-anuncio/card-anuncio.component';
+import { ETabs } from '../../../../../enums/tabs';
 
 @Component({
   selector: 'app-admin-clientes-edit',
@@ -158,10 +159,26 @@ export class AdminClientesEditComponent implements OnInit, AfterViewInit {
       }
     }
 
-    this.activatedRoute.queryParams.pipe(first()).subscribe((q: any) =>{
-      if(q?.favorito){
-        this.tabIndex = 5
+    this.activatedRoute.queryParams.subscribe((q: any) =>{
+      switch(q?.tab){
+        case ETabs.favorito:
+          this.tabIndex = 5
+          break;
+        case ETabs.agendamento:
+          this.tabIndex = 4
+          break;
+        case ETabs.upload:
+          this.tabIndex = 3
+          break;
+        case ETabs.preferencia:
+          this.tabIndex = 2
+          break;
+        default:
+          this.tabIndex = 0
+          break;
+
       }
+
 
     });
 
@@ -191,13 +208,11 @@ export class AdminClientesEditComponent implements OnInit, AfterViewInit {
 
 
 
+
   }
 
   salvar() {
     const item = { ...this.form.value, data_nasc: String(this.form.value.data_nasc), url: this.createUrl() };
-
-    console.log('item atualizado', item);
-    
     let action: MyAction;
     let result$: Observable<IAction>;
     if (item.id) {
@@ -212,9 +227,7 @@ export class AdminClientesEditComponent implements OnInit, AfterViewInit {
       result$ = this.storeService.dispatchAction(action)
       result$.pipe(first()).subscribe(res => {
         this.utils.showMessage(res?.props?.message);
-
         if (!res.props?.error) {
-
           this.router.navigate([`auth/admin/clientes`])
         }
       })

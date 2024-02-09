@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { StoreService } from '../../services/store.service';
 import { ClienteIsAuth } from '../../store/selectors/cliente.selector';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { MenuComponent } from '../menu/menu.component';
 
 @Component({
   selector: 'app-header',
@@ -18,6 +20,8 @@ export class HeaderComponent implements OnInit {
 
   readonly currentUrl$ = new BehaviorSubject<string>('');
   isAdmin$ = new BehaviorSubject<boolean>(true);
+
+  
 
   menuAdmin = [
     {
@@ -45,18 +49,23 @@ export class HeaderComponent implements OnInit {
 
   cliente$ = this.storeService.select(ClienteIsAuth)
 
-
+  showFiller = false;
 
   constructor(
     private router: Router,
     public auth: AuthService,
-    private storeService: StoreService
+    private storeService: StoreService,
+    private _bottomSheet: MatBottomSheet
     ){}
 
   ngOnInit(): void {
     this.currentUrl$.next(this.router.url);
     this.isAdmin$.next(this.router.url.includes('admin'))
     console.log(this.currentUrl$.value);
+  }
+
+  openBottomSheet(): void {
+    this._bottomSheet.open(MenuComponent, {panelClass: 'menu-container'});
   }
 
 }

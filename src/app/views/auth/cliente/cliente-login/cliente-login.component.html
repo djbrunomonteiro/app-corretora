@@ -12,8 +12,13 @@
           <input formControlName="data_nasc" matInput  required mask="d0/M0/0000">
         </mat-form-field>
 
-        <button (click)="login()" class="w-50" [disabled]="form.invalid" mat-raised-button color="primary" cdkFocusInitial>Entrar</button>
+        <button (click)="login()" class="w-50 p-4" [disabled]="form.invalid" mat-raised-button color="primary" cdkFocusInitial>Entrar</button>
+
+        <button (click)="login()" class="w-50 my-5" mat-button color="accent">Deseja criar uma conta ?</button>
+
     </div>
+
+
     
     <div mat-dialog-actions align="end">
         <button mat-button mat-dialog-close color="warn">Cancelar e Voltar a Home</button>

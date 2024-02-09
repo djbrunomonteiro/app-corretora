@@ -53,7 +53,7 @@ export class CardAnuncioComponent implements OnInit {
   }
 
   goFavorito(id: string){
-    const queryParams = {favorito: id} as NavigationExtras
+    const queryParams = {tab: 'favorito', id} as NavigationExtras
     this.router.navigate([`auth/cliente/${this.clienteService.clienteAuth.id}`], {queryParams})
   }
 

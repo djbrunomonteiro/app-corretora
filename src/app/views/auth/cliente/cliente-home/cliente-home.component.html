@@ -3,14 +3,12 @@
       @if ((cliente$ | async); as cliente) {
         <mat-drawer-container class="drawer-container" autosize>
           <mat-drawer #drawer class="sidenav" mode="side" color="primary">
-            <p>Auto-resizing sidenav</p>
-
+            <button (click)="auth.logout()" mat-stroked-button color="accent"><mat-icon>logout</mat-icon> LOGOUT</button>
           </mat-drawer>
-        
 
           <mat-toolbar color="primary">
               <button (click)="drawer.toggle()" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-                <mat-icon>menu</mat-icon>
+                <mat-icon>settings</mat-icon>
               </button>
               <span>Bem vindo(a) {{cliente.nome}}</span>
           </mat-toolbar>

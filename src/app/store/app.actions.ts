@@ -31,7 +31,9 @@ export enum EAction {
     DeleteOne = "DeleteOne",
     DeleteOneStore = "DeleteOneStore",
     DeleteOneSucess = "DeleteOneSucess",
-    DeleteOneError = "DeleteOneError"
+    DeleteOneError = "DeleteOneError",
+
+    Clear = "Clear"
 
 }
 

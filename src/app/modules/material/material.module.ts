@@ -24,6 +24,11 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatMenuModule} from '@angular/material/menu';
+import {
+  MatBottomSheet,
+  MatBottomSheetModule,
+  MatBottomSheetRef,
+} from '@angular/material/bottom-sheet';
 
 @NgModule({
   declarations: [],
@@ -52,7 +57,8 @@ import {MatMenuModule} from '@angular/material/menu';
     MatToolbarModule,
     MatSidenavModule,
     MatExpansionModule,
-    MatMenuModule
+    MatMenuModule,
+    MatBottomSheetModule
     
   ],
   exports:[
@@ -79,7 +85,8 @@ import {MatMenuModule} from '@angular/material/menu';
     MatToolbarModule,
     MatSidenavModule,
     MatExpansionModule,
-    MatMenuModule
+    MatMenuModule,
+    MatBottomSheetModule
   ]
 })
 export class MaterialModule { }

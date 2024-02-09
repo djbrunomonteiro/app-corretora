@@ -18,6 +18,7 @@ import { ClienteIsAuth } from '../../../../store/selectors/cliente.selector';
 import { UploadService } from '../../../../services/upload.service';
 import { AdminClientesEditComponent } from '../../admin/clientes/admin-clientes-edit/admin-clientes-edit.component';
 
+
 @Component({
   selector: 'app-cliente-home',
   standalone: true,
@@ -49,7 +50,7 @@ export class ClienteHomeComponent implements OnInit, AfterViewInit {
   constructor(
     private _formBuilder: FormBuilder,
     private storeService: StoreService,
-    private auth: AuthService,
+    public auth: AuthService,
     private utils: UtilsService,
     public core: CoreService,
     private router: Router,
@@ -62,7 +63,6 @@ export class ClienteHomeComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(q => this.queryParams = q);
-
     if (!this.ignoreLoad) {
       this.checkAuth()
     }

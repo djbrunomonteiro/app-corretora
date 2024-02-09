@@ -15,6 +15,8 @@ export class actionsReducer {
             case `[${EGroup.User}-${EAction.SetOneStore}]`:
                 const item = action.props?.item;
                 return item ? adapter.setOne(action?.props?.item, state) : state
+            case `[${EGroup.User}-${EAction.Clear}]`:
+                return adapter.removeAll(inititalState)
             default:
                 return state;
         }
@@ -33,6 +35,8 @@ export class actionsReducer {
             case `[${EGroup.Anuncio}-${EAction.DeleteOneStore}]`:
                 const id = action?.props?.id;
                 return id ? adapter.removeOne(id, state) : state;
+            case `[${EGroup.Anuncio}-${EAction.Clear}]`:
+                return adapter.removeAll(inititalState)
             default:
                 return state;
         }
@@ -51,6 +55,8 @@ export class actionsReducer {
             case `[${EGroup.Lead}-${EAction.DeleteOneStore}]`:
                 const id = action?.props?.id;
                 return id ? adapter.removeOne(id, state) : state;
+            case `[${EGroup.Lead}-${EAction.Clear}]`:
+                return adapter.removeAll(inititalState)
             default:
                 return state;
         }
@@ -75,6 +81,8 @@ export class actionsReducer {
                 id = action?.params?.id;
                 const changes = action?.props?.item;
                 return changes ? adapter.updateOne({id, changes}, state) : state;
+            case `[${EGroup.Cliente}-${EAction.Clear}]`:
+                return adapter.removeAll(inititalState)
 
             default:
                 return state;

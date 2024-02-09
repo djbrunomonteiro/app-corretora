@@ -19,7 +19,7 @@ export class AuthService {
     private auth: Auth,
     private storeService: StoreService,
     private router: Router,
-    private firestore: Firestore
+    private firestore: Firestore,
   ) {
 
     this.collectionRef = collection(this.firestore, 'hashs');
@@ -61,7 +61,11 @@ export class AuthService {
 
   logout() {
     this.auth.signOut();
-    this.router.navigate(['/'])
+    this.router.navigate(['/']);
+    localStorage.clear();
+    this.storeService.dispatchAction({group: EGroup.Cliente, action:EAction.Clear})
+    this.storeService.dispatchAction({group: EGroup.Lead, action:EAction.Clear})
+    this.storeService.dispatchAction({group: EGroup.User, action:EAction.Clear})
 
   }
 
