@@ -89,5 +89,32 @@ export class actionsReducer {
         }
     }
 
+    public static AgendamentoReducer = (state = inititalState, action: IAction) => {
+        let id: any;
+        switch (action.type) {
+            case `[${EGroup.Agendamento}-${EAction.SetAllStore}]`:
+                const itens = action.props?.itens;
+                return itens ? adapter.upsertMany(itens, state) : state;
+
+            case `[${EGroup.Agendamento}-${EAction.SetOneStore}]`:
+                const item = action.props?.item;
+                return item ? adapter.setOne(action?.props?.item, state) : state
+
+            case `[${EGroup.Agendamento}-${EAction.DeleteOneStore}]`:
+                id = action?.props?.id;
+                return id ? adapter.removeOne(id, state) : state;
+
+            case `[${EGroup.Agendamento}-${EAction.UpdateOneStore}]`:
+                id = action?.params?.id;
+                const changes = action?.props?.item;
+                return changes ? adapter.updateOne({id, changes}, state) : state;
+            case `[${EGroup.Agendamento}-${EAction.Clear}]`:
+                return adapter.removeAll(inititalState)
+
+            default:
+                return state;
+        }
+    }
+
 
 }

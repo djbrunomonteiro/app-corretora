@@ -1,4 +1,5 @@
-<form [formGroup]="form">
+@if(template === EClientetemplate.login){
+  <form [formGroup]="form">
     <div class="container-login">
         <h3>Bem vindo(a), por motivo de segurança</h3>
         <p>Informe seu CPF OU CNPJ cadastrado para continuar</p>
@@ -14,14 +15,15 @@
 
         <button (click)="login()" class="w-50 p-4" [disabled]="form.invalid" mat-raised-button color="primary" cdkFocusInitial>Entrar</button>
 
-        <button (click)="login()" class="w-50 my-5" mat-button color="accent">Deseja criar uma conta ?</button>
+        <button (click)="ctrlTemplate(EClientetemplate.cadastro)" class="w-50 my-5" mat-button color="accent">Deseja criar uma conta ?</button>
 
     </div>
 
-
-    
     <div mat-dialog-actions align="end">
         <button mat-button mat-dialog-close color="warn">Cancelar e Voltar a Home</button>
       </div>
 
 </form>
+}@else {
+  <app-cliente-cadastro (templateEvent)="ctrlTemplate($event)"></app-cliente-cadastro>
+}

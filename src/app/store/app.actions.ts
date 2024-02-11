@@ -5,6 +5,7 @@ export enum EGroup {
     Anuncio = "Anuncio",
     Lead = "Lead",
     Cliente = "Cliente",
+    Agendamento = "Agendamento",
 }
 
 export enum EAction {

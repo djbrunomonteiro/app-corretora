@@ -9,7 +9,7 @@ import { EGroup, EAction } from '../../../store/app.actions';
 import { AllAnuncios } from '../../../store/selectors/anuncio.selector';
 import { UrlFotosPipe } from '../../../pipes/url-fotos.pipe';
 import { FavoritoPipe } from '../../../pipes/favorito.pipe';
-import { CardAnuncioComponent } from '../../../shared/card-anuncio/card-anuncio.component';
+import { CardAnuncioComponent } from '../../shared/card-anuncio/card-anuncio.component';
 
 
 @Component({
@@ -46,7 +46,6 @@ export class SearchComponent implements OnInit {
     result$.pipe(first()).subscribe((r) =>{
       this.anuncios$ = this.storeService.select(AllAnuncios);
       this.anuncios$.subscribe(res => {
-        console.log('res', res);
       } )
     })
 

@@ -8,8 +8,9 @@ import { EAction, EGroup } from '../../../store/app.actions';
 import { Observable, first } from 'rxjs';
 import { AllAnuncios, OneAnuncio } from '../../../store/selectors/anuncio.selector';
 import { ActivatedRoute } from '@angular/router';
-import { FormContatoComponent } from '../form-contato/form-contato.component';
+import { FormContatoComponent } from '../../shared/form-contato/form-contato.component';
 import { MatDialog } from '@angular/material/dialog';
+import { AgendamentoComponent } from '../../shared/agendamento/agendamento.component';
 
 @Component({
   selector: 'app-anuncio-details',
@@ -39,6 +40,7 @@ export class AnuncioDetailsComponent implements OnInit {
     const url = this.activatedRoute.snapshot.paramMap.get('url');
     if (!url) { return };
     this.getItem(url);
+    
   }
 
   getItem(url: string){
@@ -48,15 +50,21 @@ export class AnuncioDetailsComponent implements OnInit {
       
       this.anuncio$ = this.storeService.select(OneAnuncio(url));
       this.anuncio$.subscribe(res => {
-        console.log('res', res);
-        // this.openForm(res)
+        // console.log('res', res);
+        // this.openContato(res)
       } )
     })
 
   }
 
-  openForm(anuncio?: any, tipoForm?: string){
-    const dialogRef = this.dialog.open(FormContatoComponent, {disableClose: false, data: {anuncio, tipoForm }, width: '800px', height: '80vh'} );
+  openContato(anuncio?: any){
+    const dialogRef = this.dialog.open(FormContatoComponent, {disableClose: false, data: {anuncio}, minWidth: '50vw', height: '90vh'} );
+  }
+
+  agendar(anuncio: any){
+    if(!anuncio){return;};
+    const dialogRef = this.dialog.open(AgendamentoComponent, {disableClose: false, data: {anuncio },  minWidth: '50vw', height: '90vh'} );
+
   }
 
 }

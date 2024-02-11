@@ -1,0 +1,50 @@
+<table mat-table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="cliente">
+        <th mat-header-cell *matHeaderCellDef> Cliente </th>
+        <td mat-cell *matCellDef="let element"> {{element.nome_cliente}} </td>
+    </ng-container>
+    <ng-container matColumnDef="codigo">
+        <th mat-header-cell *matHeaderCellDef> Cód. anuncio</th>
+        <td mat-cell *matCellDef="let element"> {{element.cod_anuncio}}</td>
+    </ng-container>
+    <ng-container matColumnDef="anuncio">
+        <th mat-header-cell *matHeaderCellDef> Anúncio </th>
+        <td mat-cell *matCellDef="let element"> {{element.titulo_anuncio}}</td>
+    </ng-container>
+    <ng-container matColumnDef="dias">
+        <th mat-header-cell *matHeaderCellDef> Dias </th>
+        <td mat-cell *matCellDef="let element">
+            @for (dia of element.dias; track $index) {
+                {{dia}}
+            }
+         </td>
+    </ng-container>
+
+    <ng-container matColumnDef="horas">
+        <th mat-header-cell *matHeaderCellDef> Horas </th>
+        <td mat-cell *matCellDef="let element">
+            @for (hora of element.horarios; track $index) {
+                {{hora}}
+            }
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="acoes">
+        <th mat-header-cell *matHeaderCellDef> Açoes </th>
+        <td mat-cell *matCellDef="let element"> {{element.valor}} </td>
+    </ng-container>
+
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<mat-paginator [pageSizeOptions]="[10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+</mat-paginator>

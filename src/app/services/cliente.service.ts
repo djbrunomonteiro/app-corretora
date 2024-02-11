@@ -47,8 +47,6 @@ export class ClienteService {
     return new Observable<IResponse>(sub => {
       let response: IResponse = {};
       const ref = doc(this.firestore, 'clientes', id);
-      console.log('id', ref.path);
-
       getDoc(ref).then(res => {
         response = { status: 200, error: false, results: res.data(), message: 'Itens obtidos com sucesso!' };
         sub.next(response)
@@ -190,7 +188,6 @@ export class ClienteService {
 
         updateDoc(ref, {favoritos: arrayUnion(id)})
         .then(res => {
-          console.log('atualizadoo', res);
           let favoritos = this.clienteAuth.favoritos as string[] ?? [];
           favoritos.push(id);
           const item = {...this.clienteAuth, favoritos}

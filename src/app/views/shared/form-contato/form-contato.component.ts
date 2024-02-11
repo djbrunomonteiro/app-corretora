@@ -9,6 +9,8 @@ import { StoreService } from '../../../services/store.service';
 import { UtilsService } from '../../../services/utils.service';
 import { EAction, EGroup } from '../../../store/app.actions';
 import { BehaviorSubject, first } from 'rxjs';
+import { ClienteService } from '../../../services/cliente.service';
+import { ClienteIsAuth } from '../../../store/selectors/cliente.selector';
 
 @Component({
   selector: 'app-form-contato',
@@ -20,12 +22,11 @@ import { BehaviorSubject, first } from 'rxjs';
     ReactiveFormsModule,
     NgxMaskDirective,
     NgxMaskPipe,
-
   ],
   templateUrl: './form-contato.component.html',
   styleUrl: './form-contato.component.scss'
 })
-export class FormContatoComponent implements OnInit, AfterViewInit {
+export class FormContatoComponent implements OnInit {
 
   checkHorarios: any = {
     name: 'Todos',
@@ -41,33 +42,20 @@ export class FormContatoComponent implements OnInit, AfterViewInit {
   allComplete: boolean = false;
 
   anuncio: any;
-  tipoForm = '';
 
-  formFale = this.fb.group({
+
+  form = this.fb.group({
     id_anuncio: [''],
     id_cliente: [''],
     nome: ['', Validators.required],
     whatsapp: ['', Validators.required],
-    email: ['', Validators.email],
+    email: [''],
     mensagem: [''],
-    horarios: [[]],
+    horarios: ['', Validators.required],
     status: ['aberto'],
     historico: [[]],
   })
 
-  formAgenda = this.fb.group({
-    id_anuncio: [''],
-    id_cliente: [''],
-    nome: ['', Validators.required],
-    whatsapp: ['', Validators.required],
-    email: ['', Validators.email],
-    dia_semana: ['', Validators.required],
-    horario: ['', Validators.required],
-    status: ['aberto'],
-    historico: [[]],
-  });
-
-  isValid$ = new BehaviorSubject<boolean>(false);
   loading = false;
 
   constructor(
@@ -76,39 +64,28 @@ export class FormContatoComponent implements OnInit, AfterViewInit {
     private utils: UtilsService,
     private storeService: StoreService,
     public core: CoreService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private clienteService: ClienteService
 
   ) {
   }
 
 
   ngOnInit(): void {
-    console.log(this.data);
-
     this.anuncio = this.data?.anuncio;
-    this.tipoForm = this.data.tipoForm;
-    this.formAgenda.patchValue({id_anuncio: this.anuncio.id});
-    this.formFale.patchValue({id_anuncio: this.anuncio.id});
+    this.storeService.select(ClienteIsAuth).subscribe(res => {
+      if(res){
+        this.form.patchValue({
+          id_anuncio: this.anuncio.id,
+          id_cliente: res.id,
+          nome: res.nome,
+          whatsapp: res.whatsapp,
+          email: res.email,
+        })
+      }
+    });
 
   }
-
-  ngAfterViewInit(): void {
-    if (this.tipoForm === 'fale') {
-      this.setAll(true);
-      this.isValid$.next(this.formFale.valid);
-
-      this.formFale.valueChanges.subscribe(_ =>{
-        this.isValid$.next(this.formFale.valid);
-      })
-      
-    }else{
-      this.isValid$.next(this.formAgenda.valid);
-      this.formAgenda.valueChanges.subscribe(_ =>{
-        this.isValid$.next(this.formAgenda.valid);
-      })
-    }
-  }
-
 
 
   updateAllComplete() {
@@ -133,25 +110,16 @@ export class FormContatoComponent implements OnInit, AfterViewInit {
   salvar() {
     this.loading = true;
     let item: any;
-    switch (this.tipoForm) {
-      case 'agenda':
-        item = this.formAgenda.value;
-        break
-      default:
-        item = this.formFale.value;
 
-        let horarios = this.checkHorarios?.opts?.filter((elem: any) => elem.completed).map((elem: any )=> elem.name);
-        horarios = horarios.length ? horarios : ['Manhã', 'Tarde']
-        item = {...item, horarios}
-        break;
+    let horarios = this.checkHorarios?.opts?.filter((elem: any) => elem.completed).map((elem: any )=> elem.name);
+    horarios = horarios.length ? horarios : ['Manhã', 'Tarde']
+    item = {...item, horarios}
 
-    }
-
-    item = {...item, tipo: this.tipoForm}
+    item = this.form.value;
 
     const result$ = this.storeService.dispatchAction({ group: EGroup.Lead, action: EAction.SetOne, props: { item } })
     result$.pipe(first()).subscribe(act =>{
-      this.utils.showMessage(act.props?.message);
+      this.utils.showMessage(act.props?.message, undefined, {duration: 5000});
       this.loading = true;
       if(!act.props?.error){
         this.dialogRef.close();

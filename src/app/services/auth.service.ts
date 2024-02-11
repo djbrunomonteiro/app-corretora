@@ -71,8 +71,6 @@ export class AuthService {
 
 
   async authLogin(cpf_cnpj: any, data_nasc: any) {
-    console.log('cpf_cnpj', cpf_cnpj , ' data_nasc', data_nasc);
-    
     return new Promise<IResponse>(async resolve =>{
       const q = query(
         collection(this.firestore, 'clientes'),

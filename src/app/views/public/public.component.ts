@@ -29,8 +29,7 @@ export class PublicComponent implements OnInit, AfterViewInit {
 
     if (access_token) {
       const isValid = await this.auth.existeHash(access_token);
-      console.log('isValid', isValid);
-      
+
       if (!isValid.error) {
         const item = isValid.results;
         this.setClienteAuth({ ...item, auth: true })

@@ -10,7 +10,7 @@ import { Observable, first } from 'rxjs';
 import { AllAnuncios } from '../../../../../store/selectors/anuncio.selector';
 import { AdminAnuncioEditComponent } from '../edit/edit.component';
 import { MatDialog } from '@angular/material/dialog';
-import { AlertConfirmComponent } from '../../../../../shared/alert-confirm/alert-confirm.component';
+import { AlertConfirmComponent } from '../../../../shared/alert-confirm/alert-confirm.component';
 import { UtilsService } from '../../../../../services/utils.service';
 
 @Component({
@@ -52,12 +52,8 @@ export class AdminAnunciosComponent implements OnInit {
   getItens(){
     const result$ = this.storeService.dispatchAction({group: EGroup.Anuncio, action: EAction.GetAll});
     result$.pipe(first()).subscribe((r) =>{
-      console.log('chamouu ?', r);
-      
       this.anuncios$ = this.storeService.select(AllAnuncios);
       this.anuncios$.subscribe(res => {
-        console.log('res', res);
-        
         if(res?.length){
           this.dataSource = new MatTableDataSource<any>(res); 
         }

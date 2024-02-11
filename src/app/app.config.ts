@@ -19,6 +19,7 @@ import { Ng2ImgMaxService } from 'ng2-img-max';
 import { getStorage } from '@angular/fire/storage';
 import { LeadEffectsService } from './store/effects/lead-effects.service';
 import { ClienteEffectsService } from './store/effects/cliente-effects.service';
+import { AgendamentoEffectsService } from './store/effects/agendamento-effects.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -37,7 +38,8 @@ export const appConfig: ApplicationConfig = {
     provideEffects([
       AnuncioEffectsService, 
       LeadEffectsService,
-      ClienteEffectsService
+      ClienteEffectsService,
+      AgendamentoEffectsService
     ]),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
 ]

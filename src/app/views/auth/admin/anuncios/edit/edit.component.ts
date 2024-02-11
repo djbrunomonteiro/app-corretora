@@ -167,9 +167,6 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit {
     this.loadingUpload = false;
     this.form.patchValue({fotos})
 
-    console.log('fotos', fotos);
-    
-
 
   }
 
@@ -198,8 +195,6 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit {
 
     const result$ = this.storeService.dispatchAction(action)
     result$.pipe(first()).subscribe(res => {
-      console.log('res dispacth', res);
-      
       this.utils.showMessage(res?.props?.message);
 
       if(!res.props?.error){

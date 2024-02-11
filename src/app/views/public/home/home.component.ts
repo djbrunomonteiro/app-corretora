@@ -50,7 +50,6 @@ export class HomeComponent {
   }
 
   search(){
-    console.log('search');
     const queryParams = { categoria: this.form.value.categoria, tipo: this.form.value.tipo, termo: this.form.value.termo } as NavigationExtras
     this.router.navigate(['buscar'], {queryParams} )
     

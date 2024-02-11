@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, Component, Input, OnInit } from '@angular/core';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
-import { MaterialModule } from '../../modules/material/material.module';
-import { FavoritoPipe } from '../../pipes/favorito.pipe';
-import { UrlFotosPipe } from '../../pipes/url-fotos.pipe';
+import { MaterialModule } from '../../../modules/material/material.module';
+import { FavoritoPipe } from '../../../pipes/favorito.pipe';
+import { UrlFotosPipe } from '../../../pipes/url-fotos.pipe';
 import { Router, NavigationExtras } from '@angular/router';
 import { first } from 'rxjs';
-import { ClienteService } from '../../services/cliente.service';
-import { CoreService } from '../../services/core.service';
-import { UtilsService } from '../../services/utils.service';
+import { ClienteService } from '../../../services/cliente.service';
+import { CoreService } from '../../../services/core.service';
+import { UtilsService } from '../../../services/utils.service';
 
 @Component({
   selector: 'app-card-anuncio',
@@ -37,7 +37,6 @@ export class CardAnuncioComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
-    console.log('---->>', this.item);
     
   }
 

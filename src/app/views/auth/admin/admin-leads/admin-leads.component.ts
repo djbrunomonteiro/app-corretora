@@ -5,7 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Observable, first } from 'rxjs';
 import { StoreService } from '../../../../services/store.service';
 import { UtilsService } from '../../../../services/utils.service';
-import { AlertConfirmComponent } from '../../../../shared/alert-confirm/alert-confirm.component';
+import { AlertConfirmComponent } from '../../../shared/alert-confirm/alert-confirm.component';
 import { EGroup, EAction } from '../../../../store/app.actions';
 import { AllAnuncios } from '../../../../store/selectors/anuncio.selector';
 import { AdminAnuncioEditComponent } from '../anuncios/edit/edit.component';
@@ -56,12 +56,8 @@ export class AdminLeadsComponent implements OnInit, AfterViewInit {
   getItens(){
     const result$ = this.storeService.dispatchAction({group: EGroup.Lead, action: EAction.GetAll});
     result$.pipe(first()).subscribe((r) =>{
-      console.log('chamouu ?', r);
-      
       this.leads$ = this.storeService.select(AllLeads);
       this.leads$.subscribe(res => {
-        console.log('leads', res);
-        
         if(res?.length){
           this.dataSource = new MatTableDataSource<any>(res); 
         }

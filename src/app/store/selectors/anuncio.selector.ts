@@ -7,7 +7,7 @@ export const AllAnuncios = createSelector(
     anuncioState,
     (elements) => {
         const result = Object.values(elements.entities);
-        console.log('result', result);
+        
         
         return result
     }
@@ -25,8 +25,6 @@ export const favoritosAnuncio = (id?: string) => createSelector(
     OneCliente(id),
     AllAnuncios,
     (cliente, anuncios) => {
-        console.log('cli', cliente);
-        
         if(!cliente){return []}
         const favoritos = cliente.favoritos as string[] ?? [];
         const result = favoritos.map(fav => {

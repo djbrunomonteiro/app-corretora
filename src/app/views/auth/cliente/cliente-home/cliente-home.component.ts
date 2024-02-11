@@ -16,7 +16,7 @@ import { EGroup, EAction } from '../../../../store/app.actions';
 import { AuthService } from '../../../../services/auth.service';
 import { ClienteIsAuth } from '../../../../store/selectors/cliente.selector';
 import { UploadService } from '../../../../services/upload.service';
-import { AdminClientesEditComponent } from '../../admin/clientes/admin-clientes-edit/admin-clientes-edit.component';
+import { AdminClientesEditComponent } from '../edit/admin-clientes-edit.component';
 
 
 @Component({
@@ -78,7 +78,7 @@ export class ClienteHomeComponent implements OnInit, AfterViewInit {
   }
 
   openLogin(item?: string) {
-    const dialogRef = this.dialog.open(ClienteLoginComponent, { disableClose: true, data: item, minWidth: 1000, minHeight: 700 });
+    const dialogRef = this.dialog.open(ClienteLoginComponent, { disableClose: true, data: item, minWidth: '50vw', height: '90vh' });
     dialogRef.afterClosed().subscribe(cliente => {
       if (!cliente) { this.router.navigate(['/']) }
       this.setClienteAuth(cliente);
@@ -90,8 +90,6 @@ export class ClienteHomeComponent implements OnInit, AfterViewInit {
 
     if (access_token) {
       const isValid = await this.auth.existeHash(access_token);
-      console.log('isValid', isValid);
-      
       if (isValid.error) {
         this.openLogin();
       } else {
@@ -108,7 +106,6 @@ export class ClienteHomeComponent implements OnInit, AfterViewInit {
   }
 
   getDados(id: string) {
-    console.log(id);
 
   }
 
@@ -131,8 +128,6 @@ export class ClienteHomeComponent implements OnInit, AfterViewInit {
     for (let index = 0; index < files.length; index++) {
       const file = files[index];
       const res = await this.uploadService.uploadFILE(file);
-      console.log(res);
-      
       if(res){
 
 

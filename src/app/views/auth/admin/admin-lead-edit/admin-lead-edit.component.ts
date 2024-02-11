@@ -109,10 +109,6 @@ export class AdminLeadEditComponent {
           
         }
       }
-
-      console.log('value form', this.form.value);
-      console.log('this.data', this.data);
-
     }
   }
 

@@ -25,8 +25,6 @@ export class LeadEffectsService {
       switchMap(() => {
         return this.leadService.getAll().pipe(
           map((res: IResponse) => {
-            console.log('resss', res);
-
             if (res.status === 200) {
               const itens = this.utils.paramsJsonParse(res.results) as any[]
               this.storeService.dispatchAction({ group: EGroup.Lead, action: EAction.SetAllStore, props: { itens } })
@@ -52,8 +50,6 @@ export class LeadEffectsService {
         let item = action?.props?.item as any;
         return this.leadService.addOne(item).pipe(
           map((res: IResponse) => {
-            console.log('res add', res);
-
             if (res.status === 200 || res.status === 201) {
               item = this.utils.paramsJsonParse(res.results)
               this.storeService.dispatchAction({ group: EGroup.Lead, action: EAction.SetOneStore, props: { item } })

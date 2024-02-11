@@ -6,7 +6,7 @@ export const AllLeads = createSelector(
     leadState,
     (elements) => {
         const result = Object.values(elements.entities);
-        console.log('result', result);
+        
         
         return result
     }

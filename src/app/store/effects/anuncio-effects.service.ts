@@ -25,8 +25,6 @@ export class AnuncioEffectsService {
       switchMap(() => {
         return this.anuncioService.getAll().pipe(
           map((res: IResponse) => {
-            console.log('resss', res);
-
             if (res.status === 200) {
               const itens = this.utils.paramsJsonParse(res.results) as any[]
               this.storeService.dispatchAction({ group: EGroup.Anuncio, action: EAction.SetAllStore, props: { itens } })
@@ -52,8 +50,6 @@ export class AnuncioEffectsService {
         let item = action?.props?.item as any;
         return this.anuncioService.addOne(item).pipe(
           map((res: IResponse) => {
-            console.log('res add', res);
-
             if (res.status === 200 || res.status === 201) {
               item = this.utils.paramsJsonParse(res.results)
               this.storeService.dispatchAction({ group: EGroup.Anuncio, action: EAction.SetOneStore, props: { item } })
@@ -81,8 +77,6 @@ export class AnuncioEffectsService {
         const item = action?.props?.item;
         return this.anuncioService.updateOne(item).pipe(
           map((res: IResponse) => {
-            console.log('RESULT UPDATE', res);
-
             if (res.status === 200 || res.status === 201) {
               const item = this.utils.paramsJsonParse(res.results)
               this.storeService.dispatchAction({ group: EGroup.Anuncio, action: EAction.SetOneStore, props: { item } })

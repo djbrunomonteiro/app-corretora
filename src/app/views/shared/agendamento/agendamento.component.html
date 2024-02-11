@@ -1,0 +1,75 @@
+@if (anuncio) {
+<form [formGroup]="form">
+    <div class="row m-0 p-0 justify-content-center align-items-center container-default">
+        <div class="col-md-8">
+            <div class="anuncio my-5">
+                <h5>Agendar uma Visita para</h5>
+                <h3> {{anuncio?.titulo}}
+                    @if (anuncio?.codigo) {
+                    - Cód. {{anuncio.codigo}}
+                    }
+                    | {{anuncio.end_cidade}}/{{anuncio.end_uf}}
+        
+                </h3>
+            </div>
+
+            @if (clienteService.clienteAuth) {
+                <div class="my-3">
+                    <p class="my-3"> {{clienteService.clienteAuth?.nome}},</p>
+
+                    <p class="my-3"><b>Quais são os melhores dias?</b></p>
+    
+                    <mat-button-toggle-group formControlName="dias" name="dia_semana"
+                        aria-label="dia de semana para visita" multiple>
+                        @for (dia of core.diasSemana; track $index) {
+                        <mat-button-toggle [value]="dia">{{dia}}</mat-button-toggle>
+                        }
+                    </mat-button-toggle-group>
+                    
+                    <p class="my-3"><b>Preferência de horário?</b> </p>
+                    <mat-button-toggle-group formControlName="horarios" name="horario"
+                        aria-label="horário de agendamento de visita" multiple>
+                        <mat-button-toggle value="manhã">MANHÃ</mat-button-toggle>
+                        <mat-button-toggle value="tarde">TARDE</mat-button-toggle>
+                    </mat-button-toggle-group>
+                </div>
+                
+                <div class="my-3">
+                    @if (loading) {
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                    <p class="text-center">Enviando aguarde :)</p>
+                    }@else {
+                    <button (click)="salvar()" [disabled]="form.invalid" class="w-100 p-3 my-3" mat-raised-button color="primary">SOLICITAR AGENDAMENTO <mat-icon aria-hidden="false" aria-label="event_available" fontIcon="event_available" iconPositionEnd></mat-icon></button>
+                    }
+    
+                </div>
+
+                <div class="my-3">
+                    <p>* Entraremos em contato através dos dados cadastrados para confirmar a data e o horário.</p>
+                </div>
+                }@else { 
+    
+                <div class="notAuth">
+                    <p>Para realizar agendamentos e visitas, é imprescindível possuir uma conta de cliente. Se você já
+                        possui uma conta, basta efetuar o login para acessar sua área exclusiva.</p>
+                    <button (click)="openLogin()" class="w-100 p-3 my-4" mat-raised-button color="primary">
+                        FAZER LOGIN
+                    </button>
+                    <p>Se ainda não tem uma conta conosco, não se preocupe! É rápido e fácil criar uma. </p>
+                    <button (click)="openLogin(undefined, clienteTemplate.cadastro)" class="w-100 p-3 my-2" mat-stroked-button color="accent">
+                        CRIAR UMA CONTA
+                    </button>
+                </div>
+                }
+
+        </div>
+    </div>
+
+
+    <div mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close color="warn">Cancelar</button>
+    </div>
+
+</form>
+
+}

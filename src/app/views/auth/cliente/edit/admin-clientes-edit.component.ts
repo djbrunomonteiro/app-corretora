@@ -1,23 +1,27 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DropzoneCdkModule } from '@ngx-dropzone/cdk';
 import { DropzoneMaterialModule } from '@ngx-dropzone/material';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
-import { MaterialModule } from '../../../../../modules/material/material.module';
-import { UrlFotosPipe } from '../../../../../pipes/url-fotos.pipe';
-import { CoreService } from '../../../../../services/core.service';
-import { StoreService } from '../../../../../services/store.service';
-import { UtilsService } from '../../../../../services/utils.service';
+import { MaterialModule } from '../../../../modules/material/material.module';
+import { UrlFotosPipe } from '../../../../pipes/url-fotos.pipe';
+import { CoreService } from '../../../../services/core.service';
+import { StoreService } from '../../../../services/store.service';
+import { UtilsService } from '../../../../services/utils.service';
 import { Observable, first } from 'rxjs';
-import { MyAction, EGroup, EAction, IAction } from '../../../../../store/app.actions';
+import { MyAction, EGroup, EAction, IAction } from '../../../../store/app.actions';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OneCliente } from '../../../../../store/selectors/cliente.selector';
-import { UploadService } from '../../../../../services/upload.service';
-import { favoritosAnuncio, recomendadosAnuncio } from '../../../../../store/selectors/anuncio.selector';
-import { ClienteService } from '../../../../../services/cliente.service';
-import { CardAnuncioComponent } from '../../../../../shared/card-anuncio/card-anuncio.component';
-import { ETabs } from '../../../../../enums/tabs';
+import { OneCliente } from '../../../../store/selectors/cliente.selector';
+import { UploadService } from '../../../../services/upload.service';
+import { favoritosAnuncio, recomendadosAnuncio } from '../../../../store/selectors/anuncio.selector';
+import { ClienteService } from '../../../../services/cliente.service';
+import { CardAnuncioComponent } from '../../../shared/card-anuncio/card-anuncio.component';
+import { ETabs } from '../../../../enums/tabs';
+import { ListAnuncioRecentesComponent } from '../../../shared/list-anuncio-recentes/list-anuncio-recentes.component';
+import { CentralAjudaComponent } from '../../../shared/central-ajuda/central-ajuda.component';
+import { ClienteDuvidaComponent } from '../../../shared/cliente-duvida/cliente-duvida.component';
+import { ListAgendamentosComponent } from '../../../shared/list-agendamentos/list-agendamentos.component';
 
 @Component({
   selector: 'app-admin-clientes-edit',
@@ -32,24 +36,30 @@ import { ETabs } from '../../../../../enums/tabs';
     DropzoneCdkModule,
     DropzoneMaterialModule,
     UrlFotosPipe,
-    CardAnuncioComponent
+    CardAnuncioComponent,
+    ListAnuncioRecentesComponent,
+    CentralAjudaComponent,
+    ClienteDuvidaComponent,
+    ListAgendamentosComponent
   ],
+  
   templateUrl: './admin-clientes-edit.component.html',
   styleUrl: './admin-clientes-edit.component.scss'
 })
 export class AdminClientesEditComponent implements OnInit, AfterViewInit {
 
   @Input() cliente$: any;
-
+  @Input() isCadastroPublic: boolean = false;
+  @Output()resCadastroPublicEvent = new EventEmitter<any>();
 
   form = this._formBuilder.group({
     id: [''],
     nome: ['', Validators.required],
     cpf_cnpj: ['', Validators.required],
     data_nasc: ['', Validators.required],
-    whatsapp: [''],
+    whatsapp: ['', Validators.required],
     telefone: [''],
-    email: ['', Validators.email],
+    email: [''],
     profissao: [''],
     renda: [''],
     cofinanciado: ['nao'],
@@ -112,6 +122,31 @@ export class AdminClientesEditComponent implements OnInit, AfterViewInit {
   favoritos$!: Observable<any[]>;
   recomendados$!: Observable<any[]>;
 
+  folders: any[] = [
+    {
+      name: 'Photos',
+      updated: new Date('1/1/16'),
+    },
+    {
+      name: 'Recipes',
+      updated: new Date('1/17/16'),
+    },
+    {
+      name: 'Work',
+      updated: new Date('1/28/16'),
+    },
+  ];
+  notes: any[] = [
+    {
+      name: 'Vacation Itinerary',
+      updated: new Date('2/20/16'),
+    },
+    {
+      name: 'Kitchen Remodel',
+      updated: new Date('1/18/16'),
+    },
+  ];
+
   constructor(
     private _formBuilder: FormBuilder,
     private storeService: StoreService,
@@ -125,9 +160,6 @@ export class AdminClientesEditComponent implements OnInit, AfterViewInit {
 
 
   async ngOnInit(): Promise<void> {
-    console.log('issss');
-    
-
     this.utils.getLocalidades().subscribe((res: any) => {
       this.estados = res?.estados;
       setTimeout(() => {
@@ -228,7 +260,16 @@ export class AdminClientesEditComponent implements OnInit, AfterViewInit {
       result$.pipe(first()).subscribe(res => {
         this.utils.showMessage(res?.props?.message);
         if (!res.props?.error) {
-          this.router.navigate([`auth/admin/clientes`])
+          
+          if(!this.isCadastroPublic && !this.cliente$){
+            this.router.navigate([`auth/admin/clientes`]);
+          }else if(this.cliente$){
+            this.router.navigate([`auth/cliente`]);
+          }else{
+            const updateItem = res.props?.item as any;
+            if(!updateItem){return;}
+            this.resCadastroPublicEvent.emit(updateItem);
+          }
         }
       })
     }
@@ -275,8 +316,6 @@ export class AdminClientesEditComponent implements OnInit, AfterViewInit {
   }
 
   getItem(id: string) {
-    console.log('id', id);
-
     const result$ = this.storeService.dispatchAction({ group: EGroup.Cliente, action: EAction.GetOne, params: { id } });
     this.storeService.select(OneCliente(id)).subscribe(res => {
       this.form.patchValue({ ...res })
@@ -302,8 +341,6 @@ export class AdminClientesEditComponent implements OnInit, AfterViewInit {
 
   addDocumento(path: string) {
     const nome = path.split('/')[2]
-    console.log(nome[2]);
-    console.log(this.ctrlDocumentacao);
     const grupo = this._formBuilder.group({
       tipo_cliente: ['principal'],
       tipo_arquivo: ['Outros'],

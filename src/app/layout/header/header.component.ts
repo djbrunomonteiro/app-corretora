@@ -61,7 +61,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.currentUrl$.next(this.router.url);
     this.isAdmin$.next(this.router.url.includes('admin'))
-    console.log(this.currentUrl$.value);
   }
 
   openBottomSheet(): void {

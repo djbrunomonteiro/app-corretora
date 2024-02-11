@@ -44,10 +44,6 @@ export class AnuncioService {
         res.forEach(async (doc) => {
           await itens.push(doc.data())
         });
-
-        console.log(itens);
-        
-
         resolve(itens)
       });
     })

@@ -1,7 +1,7 @@
 <div class="row m-0">
     <div class="col-12">
       @if ((cliente$ | async); as cliente) {
-        <mat-drawer-container class="drawer-container" autosize>
+        <!-- <mat-drawer-container class="drawer-container" autosize>
           <mat-drawer #drawer class="sidenav" mode="side" color="primary">
             <button (click)="auth.logout()" mat-stroked-button color="accent"><mat-icon>logout</mat-icon> LOGOUT</button>
           </mat-drawer>
@@ -13,8 +13,8 @@
               <span>Bem vindo(a) {{cliente.nome}}</span>
           </mat-toolbar>
 
-          <app-admin-clientes-edit [cliente$]="cliente$"></app-admin-clientes-edit>
-        </mat-drawer-container>
+        </mat-drawer-container> -->
+        <app-admin-clientes-edit [cliente$]="cliente$"></app-admin-clientes-edit>
       }@else {
         <div class="loading">
           <h3>Aguarde carregando dados...</h3>

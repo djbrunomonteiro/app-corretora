@@ -42,10 +42,6 @@ export class LeadService {
         res.forEach(async (doc) => {
           await itens.push(doc.data())
         });
-
-        console.log(itens);
-        
-
         resolve(itens)
       });
     })
@@ -60,18 +56,18 @@ export class LeadService {
         const newItem = { ...item, id: ref.id, created_at: new Date().toISOString() };
         setDoc(ref, newItem)
           .then(res => {
-            response = { status: 201, error: false, results: newItem, message: 'Item adicionado com sucesso!' };
+            response = { status: 201, error: false, results: newItem, message: 'Solicitação de contato enviado com sucesso! Aguarde que responderemos em breve.' };
             sub.next(response)
 
           }).catch(err => {
             console.error(err);
-            response = { status: 401, error: true, results: undefined, message: 'Ocorreu um error ao tentar adicionar o item. Tente novamente!' }
+            response = { status: 401, error: true, results: undefined, message: 'Ocorreu um error ao enviar. Tente novamente!' }
             sub.next(response)
           })
 
       } else {
         console.error('collectionREf is undefined');
-        response = { status: 401, error: true, results: undefined, message: 'Error ao adicionar item. Tente novamente!' };
+        response = { status: 401, error: true, results: undefined, message: 'Ocorreu um error ao enviar. Tente novamente!' };
         sub.next(response)
       }
 
