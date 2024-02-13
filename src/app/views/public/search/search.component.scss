@@ -1,131 +1,139 @@
-.filter{
-    border: 1px solid rgb(216, 216, 216);
-    border-radius: 15px;
-    // min-height: 500px;
-    width: 100%;
-    margin: 10px 0px;
 
+.title-filter{
     h4{
-        font-weight: 800;
+        font-weight: 700;
+        width: 50%;
+    }
+    mat-form-field{
+        width: 25%;
     }
 
-    .header{
-        margin: 0px;
-        border-radius: 15px 15px 0px 0px;
-    }
-    .container{
-        margin: 0px;
-        background-color: #f7f4f4d5;
-        height: 100%;
-        border-radius: 0px 0px 15px 15px;
-    }
 }
 
-.results{
-    min-height: 500px;
-    margin: 0xp;
-    padding: 0px;
-    .header{
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-        flex-wrap: wrap;
+
+@media only screen and (max-width: 600px) {
+    .title-filter{
+        margin-top: 15px;
         h4{
-            font-weight: 800;
-        }
-        .btn-order{
-            width: 250px;
 
+            width: 100% !important;;
         }
+        mat-form-field{
+            width: 100% !important;
+        }
+        
+    
     }
-    .container{
-        display: flex;
-        // justify-content: spac;
-        flex-wrap: wrap;
-        padding: 0px;
 
 
-        .card-anuncio{
-            width: 400px;
-            margin: 0px 15px 15px 0px !important;
-            p{
-                padding: 0px;
-                margin: 3px;
-                max-width: 100%;
-                @supports (-webkit-line-clamp: 2) {
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: initial;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 2;
-                    -webkit-box-orient: vertical;
-                  }
-            }
-            swiper-container{
-                width: 100%;
-                height: 300px;
-                border-radius: 5px 5px 0px 0px;
+  }
+
+
+// .results{
+//     min-height: 500px;
+//     margin: 0xp;
+//     padding: 0px;
+//     .header{
+//         width: 100%;
+//         display: flex;
+//         justify-content: space-between;
+//         align-items: baseline;
+//         flex-wrap: wrap;
+//         h4{
+//             font-weight: 800;
+//         }
+//         .btn-order{
+//             width: 250px;
+
+//         }
+//     }
+//     .container{
+//         display: flex;
+//         // justify-content: spac;
+//         flex-wrap: wrap;
+//         padding: 0px;
+
+
+//         .card-anuncio{
+//             width: 400px;
+//             margin: 0px 15px 15px 0px !important;
+//             p{
+//                 padding: 0px;
+//                 margin: 3px;
+//                 max-width: 100%;
+//                 @supports (-webkit-line-clamp: 2) {
+//                     overflow: hidden;
+//                     text-overflow: ellipsis;
+//                     white-space: initial;
+//                     display: -webkit-box;
+//                     -webkit-line-clamp: 2;
+//                     -webkit-box-orient: vertical;
+//                   }
+//             }
+//             swiper-container{
+//                 width: 100%;
+//                 height: 300px;
+//                 border-radius: 5px 5px 0px 0px;
         
-                img{
-                    width: 100%;
-                    border-radius: 5px 5px 0px 0px;
-                    height: 100%;
-                }
-            }
-            .titulo{
-                font-weight: 600;
-                font-size: 1rem;
-                margin-top: 10px;
-                @supports (-webkit-line-clamp: 2) {
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: initial;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 2;
-                    -webkit-box-orient: vertical;
-                  }
+//                 img{
+//                     width: 100%;
+//                     border-radius: 5px 5px 0px 0px;
+//                     height: 100%;
+//                 }
+//             }
+//             .titulo{
+//                 font-weight: 600;
+//                 font-size: 1rem;
+//                 margin-top: 10px;
+//                 @supports (-webkit-line-clamp: 2) {
+//                     overflow: hidden;
+//                     text-overflow: ellipsis;
+//                     white-space: initial;
+//                     display: -webkit-box;
+//                     -webkit-line-clamp: 2;
+//                     -webkit-box-orient: vertical;
+//                   }
         
-            }
-            .cidade{
-                font-size: 0.8rem;
-                font-weight: 600;
-                color: rgb(161, 161, 161);
-            }
-            .detalhes{
-                margin-top: 10px;
-                display: flex;
-                flex-wrap: wrap;
-                mat-chip{
-                    margin: 3px 3px 3px 0px;
-                    font-size: 0.8rem;
-                    font-weight: 600;
-                    color: rgb(87, 87, 87);
-                }
+//             }
+//             .cidade{
+//                 font-size: 0.8rem;
+//                 font-weight: 600;
+//                 color: rgb(161, 161, 161);
+//             }
+//             .detalhes{
+//                 margin-top: 10px;
+//                 display: flex;
+//                 flex-wrap: wrap;
+//                 mat-chip{
+//                     margin: 3px 3px 3px 0px;
+//                     font-size: 0.8rem;
+//                     font-weight: 600;
+//                     color: rgb(87, 87, 87);
+//                 }
         
-            }
+//             }
         
-            .descricao{
-                margin-top: 15px;
-                margin-bottom: 5px;
-                font-size: 1rem;
-                font-weight: 300;
-                color: rgb(161, 161, 161);
-                height: 50px;
+//             .descricao{
+//                 margin-top: 15px;
+//                 margin-bottom: 5px;
+//                 font-size: 1rem;
+//                 font-weight: 300;
+//                 color: rgb(161, 161, 161);
+//                 height: 50px;
         
-            }
-            .preco{
-                margin-top: 15px;
-                font-weight: 800;
-                height: 30px;
-            }
-            .btns{
-                margin-top: 25px;
-                height: 50px;
-                display: flex;
-                justify-content: space-between;
-            }
-        }
-    }
-}
+//             }
+//             .preco{
+//                 margin-top: 15px;
+//                 font-weight: 800;
+//                 height: 30px;
+//             }
+//             .btns{
+//                 margin-top: 25px;
+//                 height: 50px;
+//                 display: flex;
+//                 justify-content: space-between;
+//             }
+//         }
+//     }
+// }
 

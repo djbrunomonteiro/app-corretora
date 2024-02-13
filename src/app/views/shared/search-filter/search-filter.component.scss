@@ -1,0 +1,22 @@
+.filter{
+    border: 1px solid rgb(216, 216, 216);
+    border-radius: 15px;
+    // min-height: 500px;
+    width: 100%;
+    margin: 10px 0px;
+
+    h4{
+        font-weight: 800;
+    }
+
+    .header{
+        margin: 0px;
+        border-radius: 15px 15px 0px 0px;
+    }
+    .container{
+        margin: 0px;
+        background-color: #f7f4f4d5;
+        height: 100%;
+        border-radius: 0px 0px 15px 15px;
+    }
+}

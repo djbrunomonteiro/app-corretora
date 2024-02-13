@@ -1,5 +1,5 @@
 .card-anuncio{
-    width: 400px;
+    width: 21vw;
     margin: 0px 15px 15px 0px !important;
     p{
         padding: 0px;
@@ -78,3 +78,12 @@
         justify-content: space-between;
     }
 }
+
+
+@media only screen and (max-width: 600px) {
+    .card-anuncio{
+        width: 100%;
+        margin: 0px 15px 15px 0px !important;
+    }
+    
+  }

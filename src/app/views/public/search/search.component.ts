@@ -10,6 +10,7 @@ import { AllAnuncios } from '../../../store/selectors/anuncio.selector';
 import { UrlFotosPipe } from '../../../pipes/url-fotos.pipe';
 import { FavoritoPipe } from '../../../pipes/favorito.pipe';
 import { CardAnuncioComponent } from '../../shared/card-anuncio/card-anuncio.component';
+import { SearchFilterComponent } from '../../shared/search-filter/search-filter.component';
 
 
 @Component({
@@ -22,7 +23,8 @@ import { CardAnuncioComponent } from '../../shared/card-anuncio/card-anuncio.com
     NgxMaskPipe,
     UrlFotosPipe,
     FavoritoPipe,
-    CardAnuncioComponent
+    CardAnuncioComponent,
+    SearchFilterComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './search.component.html',

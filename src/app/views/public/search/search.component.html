@@ -1,209 +1,25 @@
-<div class="row ">
-    <div class="col-12 m-0">
-
-        <div class="row">
-            <div class="col-md-3">
-                <div class="filter">
-                    <div class="header p-3">
-                        <div class="d-flex justify-content-between">
-                            <h4>Filtrar</h4>
-                            <button mat-button color="warn">Limpar X</button>
-                        </div>
-
-                        <div class="d-flex flex-column mt-4">
-                            <h6 class="mb-3">O que você deseja ?</h6>
-
-                            <mat-form-field appearance="outline">
-                                <input formControlName="termo" matInput placeholder="Ex: código 3435">
-                            </mat-form-field>
-
-
-                        </div>
-                    </div>
-
-                    <div class="container p-3">
-                        <div class="d-flex flex-column mt-4">
-                            <h6 class="mb-3">Opções de Filtro</h6>
-
-                            <mat-form-field class="w-100" appearance="outline">
-                                <mat-label>Categoria</mat-label>
-                                <mat-select formControlName="categoria">
-                                    @for (item of core.categorias; track $index) {
-                                    <mat-option [value]="item">{{item | uppercase}}</mat-option>
-                                    }
-                                </mat-select>
-                            </mat-form-field>
-
-                            <mat-form-field class="w-100" appearance="outline">
-                                <mat-label>Tipo</mat-label>
-                                <mat-select formControlName="tipo">
-                                    @for (item of core.tipos; track $index) {
-                                    <mat-option [value]="item">{{item | uppercase}}</mat-option>
-                                    }
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                        <h6 class="mb-3 w-100">Faixa de preço</h6>
-
-                        <div class="d-flex">
-                            <mat-form-field class="w-50 m-rigth" appearance="outline">
-                                <mat-label>Mín.</mat-label>
-                                <input matInput formControlName="preco" mask="separator.2" thousandSeparator="."
-                                    decimalMarker="," [prefix]="'R$'">
-                            </mat-form-field>
-                            <mat-form-field class="w-50 m-rigth" appearance="outline">
-                                <mat-label>Máx.</mat-label>
-                                <input matInput formControlName="preco" mask="separator.2" thousandSeparator="."
-                                    decimalMarker="," [prefix]="'R$'">
-                            </mat-form-field>
-                        </div>
-
-                        <h6 class="mb-3 w-100">Área (m²)</h6>
-
-                        <div class="d-flex">
-                            <mat-form-field class="w-50 m-rigth" appearance="outline">
-                                <mat-label>Mín.</mat-label>
-                                <input matInput formControlName="preco" mask="separator.2" thousandSeparator="."
-                                    decimalMarker=",">
-                            </mat-form-field>
-                            <mat-form-field class="w-50 m-rigth" appearance="outline">
-                                <mat-label>Máx.</mat-label>
-                                <input matInput formControlName="preco" mask="separator.2" thousandSeparator="."
-                                    decimalMarker=",">
-                            </mat-form-field>
-                        </div>
-
-                        <div class="d-flex">
-                            <div class="w-50">
-                                <h6>Dormitórios</h6>
-                                <mat-button-toggle-group #group="matButtonToggleGroup">
-                                    <mat-button-toggle value="2" aria-label="um dormitorio">
-                                        1
-                                    </mat-button-toggle> <mat-button-toggle value="1" aria-label="dois dormitorio">
-                                        2
-                                    </mat-button-toggle> <mat-button-toggle value="2" aria-label="tres dormitorio">
-                                        3
-                                    </mat-button-toggle> <mat-button-toggle value="3" aria-label="quarto dormitorio">
-                                        4
-                                    </mat-button-toggle> <mat-button-toggle value="4"
-                                        aria-label="cinco ou mais dormitorio">
-                                        5+
-                                    </mat-button-toggle>
-                                </mat-button-toggle-group>
-
-                            </div>
-
-                            <div class="w-50">
-                                <h6 class="mb-">Suítes</h6>
-                                <mat-button-toggle-group #group="matButtonToggleGroup">
-                                    <mat-button-toggle value="2" aria-label="um dormitorio">
-                                        0
-                                    </mat-button-toggle>
-
-                                    <mat-button-toggle value="2" aria-label="um dormitorio">
-                                        1
-                                    </mat-button-toggle> <mat-button-toggle value="1" aria-label="dois dormitorio">
-                                        2
-                                    </mat-button-toggle> <mat-button-toggle value="2" aria-label="tres dormitorio">
-                                        3+
-                                    </mat-button-toggle>
-                                </mat-button-toggle-group>
-                            </div>
-                        </div>
-
-
-                        <div class="d-flex my-3">
-                            <div class="w-50">
-                                <h6>Vagas</h6>
-                                <mat-button-toggle-group #group="matButtonToggleGroup">
-                                    <mat-button-toggle value="2" aria-label="um dormitorio">
-                                        Sem
-                                    </mat-button-toggle>
-
-                                    <mat-button-toggle value="2" aria-label="um dormitorio">
-                                        1
-                                    </mat-button-toggle>
-                                    <mat-button-toggle value="1" aria-label="dois dormitorio">
-                                        2
-                                    </mat-button-toggle>
-                                    <mat-button-toggle value="2" aria-label="tres dormitorio">
-                                        3+
-                                    </mat-button-toggle>
-                                </mat-button-toggle-group>
-
-                            </div>
-
-                            <div class="w-50">
-                                <h6 class="mb-">Banheiros</h6>
-                                <mat-button-toggle-group #group="matButtonToggleGroup">
-                                    <mat-button-toggle value="2" aria-label="um dormitorio">
-                                        1
-                                    </mat-button-toggle> <mat-button-toggle value="1" aria-label="dois dormitorio">
-                                        2
-                                    </mat-button-toggle> <mat-button-toggle value="2" aria-label="tres dormitorio">
-                                        3+
-                                    </mat-button-toggle>
-                                </mat-button-toggle-group>
-                            </div>
-                        </div>
-
-                        <h6 class="mb-3 w-100">Outros</h6>
-
-                        <mat-form-field appearance="outline">
-                            <mat-label> Área Comum</mat-label>
-                            <mat-select formControlName="dets_area_comum" multiple>
-                                @for (item of core.areasComuns; track $index) {
-                                <mat-option [value]="item">{{item}}</mat-option>
-                                }
-                            </mat-select>
-                        </mat-form-field>
-
-                        <mat-form-field appearance="outline" class="m-rigth">
-                            <mat-label> Pŕoximidades</mat-label>
-                            <mat-select formControlName="dets_proximidades" multiple>
-                                @for (item of core.itensProximos; track $index) {
-                                <mat-option [value]="item">{{item}}</mat-option>
-                                }
-                            </mat-select>
-                        </mat-form-field>
-
-                    </div>
-
-
-
-
-
-                </div>
-
-
-
-            </div>
-
-            <div class="col-md-9 m-0 p-2">
-                <div class="results">
-                    <div class="header">
-                        <h4>{{(anuncios$ | async)?.length}} Resultados encontrados</h4>
-
-                        <mat-form-field class="btn-order" appearance="outline">
-                            <mat-label>Ordenar por</mat-label>
-                            <mat-select formControlName="categoria">
-                                @for (item of core.orders; track $index) {
-                                <mat-option [value]="item">{{item | uppercase}}</mat-option>
-                                }
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-
-                    <div class="container">
-                        @for (item of anuncios$ | async; track $index) {
-                            <app-card-anuncio [item]="item" />
-                        }
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
-
+<div class="row justify-content-between m-0 p-2">
+    <div class="col-md-3">
+        <app-search-filter/>
     </div>
+
+    <div class="col-md-9">
+        <div class="d-md-flex justify-content-between align-items-center title-filter">
+            <h4 >{{(anuncios$ | async)?.length}} Resultados encontrados</h4>
+            <mat-form-field appearance="outline">
+                <mat-label>Ordenar por</mat-label>
+                <mat-select formControlName="categoria">
+                    @for (item of core.orders; track $index) {
+                    <mat-option [value]="item">{{item | uppercase}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="d-md-flex flex-wrap justify-content-start">
+            @for (item of anuncios$ | async; track $index) {
+                <app-card-anuncio [item]="item" />
+            }
+        </div>
+    </div>
+
 </div>
