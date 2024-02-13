@@ -1,0 +1,41 @@
+<form [formGroup]="form">
+    <div class="row m-0">
+        <div class="col-md-12 my-4">
+            <h4 class="text-center">Especializado em imóveis residenciais e comerciais</h4>
+        </div>
+
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Interesse</mat-label>
+                <mat-select formControlName="categoria">
+                    @for (item of core.categorias; track $index) {
+                    <mat-option [value]="item">{{item | uppercase}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Tipo</mat-label>
+                <mat-select formControlName="tipo">
+                    @for (item of core.tipos; track $index) {
+                    <mat-option [value]="item">{{item | uppercase}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+    </div>
+    <div class="container">
+        <div class="search">
+            <mat-form-field appearance="outline">
+                <input formControlName="termo" matInput placeholder="Procure por um bairro, condomínio ou código">
+            </mat-form-field>
+        </div>
+
+        <button (click)="search()" class="w-100" mat-raised-button color="primary">PESQUISAR</button>
+
+
+    </div>
+</form>

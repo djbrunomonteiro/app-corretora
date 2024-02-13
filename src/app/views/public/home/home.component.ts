@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 import { MaterialModule } from '../../../modules/material/material.module';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -7,11 +7,26 @@ import { NavigationExtras, Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { StoreService } from '../../../services/store.service';
 import { EAction, EGroup } from '../../../store/app.actions';
+import { SearchHomeComponent } from '../../shared/search-home/search-home.component';
+import { UrlFotosPipe } from '../../../pipes/url-fotos.pipe';
+import { SlidesHomeComponent } from '../../shared/slides-home/slides-home.component';
+import { BannerVenderHomeComponent } from '../../shared/banner-vender-home/banner-vender-home.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MaterialModule, CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    MaterialModule, 
+    CommonModule, 
+    FormsModule, 
+    ReactiveFormsModule,
+    SearchHomeComponent,
+    UrlFotosPipe,
+    SlidesHomeComponent,
+    BannerVenderHomeComponent
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -21,21 +36,15 @@ export class HomeComponent {
     tipo: ['apartamento'],
     categoria: ['comprar'],
     termo: ['']
-
-
   })
 
-  cards = [
-    'https://lh3.googleusercontent.com/neYXGptDhUp7FdKhugzdsW19TbJ_MYRGd5p9nhUMTpZ294blh6eke8TGioOSFF5_LIsxgKA5RG8GWKzeVewyjXb2wrb9dlfECegqoXEImg=s0',
-    'https://lh3.googleusercontent.com/BLUv8K8PVW-E5XPTI8MqUO_X9v_f5uzVjAVWuu-W3OOXtLneoLh2ZfCfq-yygq63kJVRMO99P_7sFniZPo2Z7FLW5nvSEixuv9bLC42R=s0',
-    'https://lh3.googleusercontent.com/neYXGptDhUp7FdKhugzdsW19TbJ_MYRGd5p9nhUMTpZ294blh6eke8TGioOSFF5_LIsxgKA5RG8GWKzeVewyjXb2wrb9dlfECegqoXEImg=s0',
-    'https://lh3.googleusercontent.com/neYXGptDhUp7FdKhugzdsW19TbJ_MYRGd5p9nhUMTpZ294blh6eke8TGioOSFF5_LIsxgKA5RG8GWKzeVewyjXb2wrb9dlfECegqoXEImg=s0',
-    'https://lh3.googleusercontent.com/neYXGptDhUp7FdKhugzdsW19TbJ_MYRGd5p9nhUMTpZ294blh6eke8TGioOSFF5_LIsxgKA5RG8GWKzeVewyjXb2wrb9dlfECegqoXEImg=s0',
-  ]  
+
   lancamentos = [
     'https://lh3.googleusercontent.com/qINDSbuGxqeXZJB5n6X1RlfdS2HhX79OS4BrCvdtasvbvKFkoKMYpPqqXCVMpMzYevz-Z7Yra2T6v6kLD5_XSXcEvEeEapr5dhpBNNsqZQ=s0',
     'https://lh3.googleusercontent.com/BLUv8K8PVW-E5XPTI8MqUO_X9v_f5uzVjAVWuu-W3OOXtLneoLh2ZfCfq-yygq63kJVRMO99P_7sFniZPo2Z7FLW5nvSEixuv9bLC42R=s0',
   ];
+
+
 
 
   constructor(
@@ -49,11 +58,6 @@ export class HomeComponent {
     return `url(${url})`;
   }
 
-  search(){
-    const queryParams = { categoria: this.form.value.categoria, tipo: this.form.value.tipo, termo: this.form.value.termo } as NavigationExtras
-    this.router.navigate(['buscar'], {queryParams} )
-    
-  }
 
 
 

@@ -8,12 +8,15 @@
                   <span matLine>{{item.subtitle}}</span>
                 </a>
             }
+
+            <a mat-list-item >
+                <span matListItemTitle style="color: red;">Sair da conta</span>
+              </a>
         }@else {
             <a (click)="goCliente(undefined)" mat-list-item>
                 <span matListItemTitle>ÁREA DO CLIENTE</span>
                 <span matLine>acesse a área de cliente</span>
               </a>
-
         }
 
     </div>

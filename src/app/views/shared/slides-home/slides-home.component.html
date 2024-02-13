@@ -1,0 +1,25 @@
+<section class="slides">
+    <swiper-container  [slidesPerView]="3" [spaceBetween]="10" [centeredSlides]="true" [breakpoints]="breakpoints">
+        @for (path of cards; track $index) {
+            <swiper-slide class="slide">
+                <img [src]="path" style="width: 100%;">
+            </swiper-slide>
+        <!-- @if ((path | urlFotos: 'anuncios' | async); as src) {
+    
+        } -->
+        }
+    
+    </swiper-container>
+    <swiper-container class="my-3" [spaceBetween]="10" [roundLengths]="true" [allowSlidePrev]="true" [breakpoints]="breakpoints">
+        @for (path of cards; track $index) {
+            <swiper-slide class="slide">
+                <img [src]="path" style="width: 100%; ">
+            </swiper-slide>
+        <!-- @if ((path | urlFotos: 'anuncios' | async); as src) {
+    
+        } -->
+        }
+    
+    </swiper-container>
+
+</section>

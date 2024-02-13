@@ -10,10 +10,12 @@
 html,
 body {
     height: 100%;
+    margin: 0px !important;
+
 }
 
 body {
-    margin: 0;
+    margin: 0px !important;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
@@ -21,15 +23,19 @@ mat-form-field {
     width: 100%;
 }
 
-.m-rigth{
+.m-rigth {
     margin-right: 10px;
 }
 
-.mat-mdc-menu-panel{
+.mat-mdc-menu-panel {
     max-width: 500px !important;
 }
 
-.menu-container{
+.mat-bottom-sheet-container{
+    max-height: 90vh !important;
+}
+
+.menu-container {
     // position: relative !important;
     // right: 10px;
     min-height: 80vh;
