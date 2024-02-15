@@ -29,6 +29,7 @@ import {
   MatBottomSheetModule,
   MatBottomSheetRef,
 } from '@angular/material/bottom-sheet';
+import {MatRippleModule} from '@angular/material/core';
 
 @NgModule({
   declarations: [],
@@ -58,7 +59,8 @@ import {
     MatSidenavModule,
     MatExpansionModule,
     MatMenuModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
+    MatRippleModule
     
   ],
   exports:[
@@ -86,7 +88,8 @@ import {
     MatSidenavModule,
     MatExpansionModule,
     MatMenuModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
+    MatRippleModule
   ]
 })
 export class MaterialModule { }

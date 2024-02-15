@@ -10,6 +10,7 @@ import { PeriodicElement } from '../../auth/admin/admin-home/admin-home.componen
 import { Observable } from 'rxjs';
 import { StoreService } from '../../../services/store.service';
 import { AllAnuncios } from '../../../store/selectors/anuncio.selector';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-anuncio-recentes',
@@ -35,7 +36,10 @@ export class ListAnuncioRecentesComponent implements OnInit {
 
   anuncios$!: Observable<any[]>
 
-  constructor(private storeService: StoreService){}
+  constructor(
+    private storeService: StoreService,
+    private router: Router
+    ){}
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -47,6 +51,11 @@ export class ListAnuncioRecentesComponent implements OnInit {
       this.dataSource = new MatTableDataSource<any>(res); 
 
     } )
+  }
+
+  goDetails(url: any){
+    this.router.navigate([`/anuncios/${url}`])
+
   }
 
 

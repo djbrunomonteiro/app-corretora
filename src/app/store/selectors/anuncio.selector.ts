@@ -1,6 +1,7 @@
 import * as fromAppReducer from '../app.reducers';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { ClienteIsAuth, OneCliente } from './cliente.selector';
+import { UtilsService } from '../../services/utils.service';
 export const anuncioState = createFeatureSelector<fromAppReducer.AppState>('anuncioState');
 
 export const AllAnuncios = createSelector(
@@ -9,6 +10,15 @@ export const AllAnuncios = createSelector(
         const result = Object.values(elements.entities);
         
         
+        return result
+    }
+);
+
+export const UltimosAnuncios = (start = 0, end = 8) => createSelector(
+    AllAnuncios,
+    (elements) => {
+        let result = UtilsService.prototype.ordenarItens(elements, 'created_at');
+        result = result.filter((_, i) => i >= start && i <= end)
         return result
     }
 );

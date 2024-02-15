@@ -1,4 +1,29 @@
-<table mat-table [dataSource]="dataSource">
+
+<div class="row m-0">
+    @for (item of anuncios$ | async; track $index) {
+        <div class="col-md-6 m-0 p-0">
+            <div (click)="goDetails(item.url)" class=" grupo-item shadow-sm" matRipple>
+                <div class="foto">
+                    @if ((item.fotos[0] | urlFotos: 'anuncios' | async); as src) {
+                        <img [src]="src">
+                    }
+                </div>
+                <div class="titulo">
+                    <h6>{{item.titulo}}</h6>
+                    <p>{{item.end_cidade}} / {{item.end_uf}}</p>
+                    <p>{{item.preco}}</p>
+                </div>
+            </div>
+
+        </div>
+    }
+
+
+
+</div>
+
+
+<!-- <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="foto">
         <th mat-header-cell *matHeaderCellDef>Fotos</th>
         <td mat-cell *matCellDef="let element" style="width: 100px;">
@@ -39,4 +64,4 @@
 </table>
 
 <mat-paginator [pageSizeOptions]="[10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
-</mat-paginator>
+</mat-paginator> -->
