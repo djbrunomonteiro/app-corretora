@@ -13,9 +13,9 @@
         </div>
         <button class="w-100" mat-raised-button color="primary">Pesquisar</button>
         @if (openFilter) {
-            <button (click)="ctrlFilter(false)" class="w-100 my-2" mat-stroked-button color="warn">Fechar</button>
+            <button (click)="ctrlFilter(false)" class="w-100 my-2" mat-stroked-button color="warn">Ocultar Filtros</button>
         }@else {
-            <button (click)="ctrlFilter(true)" class="w-100 my-2" mat-stroked-button color="primary">Filtros</button>
+            <button (click)="ctrlFilter(true)" class="w-100 my-2" mat-stroked-button color="primary">Exibir Filtros</button>
         }
     </div>
 

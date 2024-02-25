@@ -24,6 +24,9 @@ export interface IAnuncio {
     end_numero?: string,
     end_bairro?: string,
     end_complemento?: string,
+    url?: string,
+    status?: string,
     created_at?: string
 
 }
+

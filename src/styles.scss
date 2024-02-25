@@ -3,6 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap');
 @import './assets/theme/variables.scss';
 
+
 * {
     font-family: 'Montserrat', sans-serif;
 }
@@ -40,4 +41,8 @@ mat-form-field {
     // right: 10px;
     min-height: 80vh;
     // bottom: 5px;
+}
+
+.cursor-pointer{
+    cursor: pointer;
 }

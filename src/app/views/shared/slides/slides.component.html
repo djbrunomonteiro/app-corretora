@@ -1,7 +1,7 @@
 <section class="slides">
-    <swiper-container [breakpoints]="breakpoints" navigation="true" pagination="true" slidesOffsetAfter="0.5">
-        @for (item of slides1; track $index) {
-            <swiper-slide class="slide">
+    <swiper-container [breakpoints]="breakpoints"  navigation="true" pagination="true" slidesOffsetAfter="0.5">
+        @for (item of slides; track $index) {
+            <swiper-slide (click)="openAnuncio(item.url)"  class="slide cursor-pointer">
                 @if ((item.fotos[0] | urlFotos: 'anuncios' | async); as src) {
                     <img [src]="src" style="width: 100%;">
                 }
@@ -15,8 +15,8 @@
         }
 
     </swiper-container>
-    <div class="d-flex justify-content-center">
-        <button class="w-50 p-4" mat-stroked-button color="primary">Ver Mais Anúncios</button>
+    <div class="d-flex justify-content-center my-2">
+        <button class="w-100 w-md-50 p-4" mat-stroked-button color="primary">Ver Mais Anúncios</button>
     </div>
 
 </section>

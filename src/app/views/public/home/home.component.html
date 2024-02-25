@@ -1,5 +1,5 @@
-<div class="row m-0 p-0 justify-content-center align-items-center">
-    <div class="col-md-6">
+<div class="row m-0 p-0 justify-content-between align-items-center">
+    <div class="col-md-8">
         <app-search-home></app-search-home>
     </div>
     <div class="col-md-3 corretor">
@@ -8,42 +8,49 @@
 </div>
 
 <section class="row m-0 p-0 justify-content-center">
-    <div class="col-md-10">
+    <div class="col-md-12">
         <div class="d-md-flex">
-            <div class="bl-card m-2">
+            <div class="bl-card mx-2">
                 <h4>Os melhores imóveis</h4>
                 <p>Escolha entre apartamentos, casas, salas, ... Considere uma visita com um dos nossos corretores
                 </p>
             </div>  
 
-            <div class="bl-card m-2">
+            <div class="bl-card mx-2">
                 <h4>Os melhores imóveis</h4>
                 <p>Escolha entre apartamentos, casas, salas, ... Considere uma visita com um dos nossos corretores
                 </p>
             </div>
             
-            <div class="bl-card m-2">
+            <div class="bl-card mx-2">
                 <h4>Os melhores imóveis</h4>
                 <p>Escolha entre apartamentos, casas, salas, ... Considere uma visita com um dos nossos corretores
                 </p>
             </div>
         </div>
-
     </div>
 
 </section>
 
-<div class=" align-items-center p-3">
-    <h2>Lançamentos</h2>
-    <mat-divider></mat-divider>
-    <p>confira os ultimos publicados</p>
-</div>
 
-<app-slides-home/>
+
+<section class="row m-0 p-0 justify-content-center my-3">
+    <div class="col-md-12">
+        @for (item of slidesConfig; track $index) {
+            <div class=" align-items-center p-3">
+                <h2>{{item.titulo}}</h2>
+                <mat-divider></mat-divider>
+            </div>
+            <app-slides [slidesConfig]="item"/>
+        }
+    </div>
+
+</section>
+
 
 
 <section class="row m-0 p-0 my-3 justify-content-center align-items-center">
-    <div class="col-md-10">
+    <div class="col-md-12">
         <app-banner-vender-home/>
     </div>
 </section> 

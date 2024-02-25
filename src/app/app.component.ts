@@ -3,13 +3,9 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
-import { environment } from '../environments/environment.development';
-import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { AuthService } from './services/auth.service';
-import { HttpClientModule } from '@angular/common/http';
-import { NgxDropzoneModule } from 'ngx-dropzone';
-
 import { register } from 'swiper/element/bundle';
+
 register();
 
 @Component({

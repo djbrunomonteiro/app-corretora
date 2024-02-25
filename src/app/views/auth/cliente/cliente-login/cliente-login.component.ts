@@ -53,7 +53,7 @@ export class ClienteLoginComponent implements OnInit{
   ) { 
   }
   ngOnInit(): void {
-    if(this.data.template){
+    if(this.data?.template){
       this.ctrlTemplate(this.data.template)
     }
   }

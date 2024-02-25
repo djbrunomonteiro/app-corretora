@@ -8,6 +8,7 @@ import { StoreService } from '../../services/store.service';
 import { ClienteIsAuth } from '../../store/selectors/cliente.selector';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MenuComponent } from '../menu/menu.component';
+import { userData } from '../../store/selectors/user.selector';
 
 @Component({
   selector: 'app-header',
@@ -27,22 +28,22 @@ export class HeaderComponent implements OnInit {
     {
       titulo: 'Home',
       icon: '',
-      url: 'home'
+      url: '/auth/admin/home'
     },
     {
       titulo: 'Leads',
       icon: '',
-      url: 'leads'
+      url: '/auth/admin/leads'
     },
     {
       titulo: 'Anúncios',
       icon: '',
-      url: 'anuncios'
+      url: '/auth/admin/anuncios'
     },
     {
       titulo: 'Clientes',
       icon: '',
-      url: 'clientes'
+      url: '/auth/admin/clientes'
     }
   ];
 
@@ -60,7 +61,8 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUrl$.next(this.router.url);
-    this.isAdmin$.next(this.router.url.includes('admin'))
+    this.isAdmin$.next(this.router.url.includes('admin'));
+    
   }
 
   openBottomSheet(): void {

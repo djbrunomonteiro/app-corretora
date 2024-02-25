@@ -1,0 +1,45 @@
+.slides{
+    
+    .slide{
+        height: 300px;
+        width: 100%;
+        border-radius: 10px;
+        img{
+            border-radius: 10px;
+            height: 300px !important;
+            width: 100%;
+        }
+
+        .titulo-container{
+            position: absolute;
+            bottom: 0px;
+            background-color: rgba(42, 41, 112, 0.349);
+            color: white;
+            width: 100%;
+            padding: 10px;
+            font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            border-radius: 0px 0px 10px 10px;
+            .titulo{
+                padding: 0px;
+                width: 100%;
+            }
+            .subtitulo{
+                padding: 0px;
+                width: 100%;
+                font-weight: 300;
+            }
+            
+        }
+
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .slides{
+        padding: 20px;
+
+    }
+    
+  }

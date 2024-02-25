@@ -4,6 +4,11 @@ import { HomeComponent } from './home/home.component';
 import { PublicComponent } from './public.component';
 import { SearchComponent } from './search/search.component';
 import { AnuncioDetailsComponent } from './details/anuncio-details.component';
+import { QuemSouComponent } from './quem-sou/quem-sou.component';
+import { ParceirosComponent } from './parceiros/parceiros.component';
+import { DepoimentosComponent } from './depoimentos/depoimentos.component';
+import { PoliticaPrivacidadeComponent } from './politica-privacidade/politica-privacidade.component';
+import { ContatosComponent } from './contatos/contatos.component';
 
 const routes: Routes = [
   {
@@ -22,6 +27,26 @@ const routes: Routes = [
       {
         path: 'anuncios/:url',
         loadComponent: () => AnuncioDetailsComponent
+      },
+      {
+        path: 'quem-sou',
+        loadComponent: () => QuemSouComponent
+      },
+      {
+        path: 'contatos',
+        loadComponent: () => ContatosComponent
+      },
+      {
+        path: 'parceiros',
+        loadComponent: () => ParceirosComponent
+      },
+      {
+        path: 'depoimentos',
+        loadComponent: () => DepoimentosComponent
+      },
+      {
+        path: 'politica-de-privacidade',
+        loadComponent: () => PoliticaPrivacidadeComponent
       }
     ]
   }

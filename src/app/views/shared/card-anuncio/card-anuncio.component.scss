@@ -1,5 +1,6 @@
 .card-anuncio{
-    width: 21vw;
+    width: 100%;
+    min-height: 600px;
     margin: 0px 15px 15px 0px !important;
     p{
         padding: 0px;
@@ -80,10 +81,9 @@
 }
 
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
     .card-anuncio{
-        width: 100%;
-        margin: 0px 15px 15px 0px !important;
+        margin: 0px 0px 0px 0px !important;
     }
     
   }

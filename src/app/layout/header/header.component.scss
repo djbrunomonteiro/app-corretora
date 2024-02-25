@@ -27,8 +27,21 @@
     .menu {
         display: flex;
         align-items: center;
+        justify-content: center;
         .btn-icon{
             margin: 0px 20px 0px 20px;
+        }
+        nav{
+            ul{
+                display: flex;
+                list-style-type: none;
+                margin: 0px;
+                padding: 0px;
+                li{
+                    margin: 0px 2px 0px 2px;
+                }
+            }
+
         }
     }
 }

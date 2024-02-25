@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { switchMap, map } from 'rxjs';
 import { IResponse } from '../../models/response';
 import { StoreService } from '../../services/store.service';
 import { UtilsService } from '../../services/utils.service';
 import { getAction, EGroup, EAction, appActions, IAction } from '../app.actions';
 import { ClienteService } from '../../services/cliente.service';
+import { AuthService } from '../../services/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,8 @@ export class ClienteEffectsService {
     private actions$: Actions,
     private utils: UtilsService,
     private storeService: StoreService,
-    private clienteService: ClienteService
+    private clienteService: ClienteService,
+    private auth: AuthService
   ) { }
 
   getAll = createEffect(() =>
@@ -78,6 +80,7 @@ export class ClienteEffectsService {
           map((res: IResponse) => {
             if (res.status === 200 || res.status === 201) {
               item = this.utils.paramsJsonParse(res.results);
+              if(!this.auth.userData$.value){item = {...item, auth: true}}
               this.storeService.dispatchAction({ group: EGroup.Cliente, action: EAction.SetOneStore, props: { item } })
             }
             return res;

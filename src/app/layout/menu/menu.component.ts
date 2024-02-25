@@ -3,16 +3,19 @@ import { MaterialModule } from '../../modules/material/material.module';
 import { CommonModule } from '@angular/common';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { IMenu } from '../../models/menu';
-import { NavigationExtras, Router } from '@angular/router';
+import { NavigationExtras, Router, RouterModule } from '@angular/router';
 import { ClienteService } from '../../services/cliente.service';
 import { ETabs } from '../../enums/tabs';
+import { CoreService } from '../../services/core.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
   imports: [
     CommonModule,
-    MaterialModule
+    MaterialModule,
+    RouterModule
   ],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss'
@@ -55,34 +58,40 @@ export class MenuComponent {
     {
       title: 'Quem sou',
       iconlabel: 'icon face',
-      icon: 'face_4'
+      icon: 'face_4',
+      url: 'quem-sou'
     },
     {
       title: 'Contatos',
       iconlabel: 'perm_phone_msg',
-      icon: 'perm_phone_msg'
+      icon: 'perm_phone_msg',
+      url: 'contatos'
     },
     {
       title: 'Depoimentos',
       iconlabel: 'comment',
-      icon: 'comment'
+      icon: 'comment',
+      url: 'depoimentos'
     },
     {
       title: 'Parceiros',
       iconlabel: 'group icon',
-      icon: 'group'
+      icon: 'group',
+      url: 'parceiros'
     },
     {
       title: 'Politica de privacidade',
       iconlabel: 'report icon',
-      icon: 'report'
+      icon: 'report',
+      url: 'politica-de-privacidade'
     },
   ]
 
   constructor(
-    private _bottomSheetRef: MatBottomSheetRef<MenuComponent>,
+    public _bottomSheetRef: MatBottomSheetRef<MenuComponent>,
     private router: Router,
-    public clienteService: ClienteService
+    public clienteService: ClienteService,
+    public authService: AuthService
     ) { }
 
   openLink(event: MouseEvent): void {
@@ -98,6 +107,11 @@ export class MenuComponent {
       this.router.navigate([`auth/cliente`]);
     }
     
+    this._bottomSheetRef.dismiss();
+  }
+
+  goAdmin(item: any){
+    this.router.navigate([`/${item.url}`]);
     this._bottomSheetRef.dismiss();
   }
 

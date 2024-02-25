@@ -3,14 +3,13 @@ import { MaterialModule } from '../../../modules/material/material.module';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreService } from '../../../services/core.service';
-import { NavigationExtras, Router } from '@angular/router';
-import { AuthService } from '../../../services/auth.service';
-import { StoreService } from '../../../services/store.service';
-import { EAction, EGroup } from '../../../store/app.actions';
+import { Router } from '@angular/router';
 import { SearchHomeComponent } from '../../shared/search-home/search-home.component';
 import { UrlFotosPipe } from '../../../pipes/url-fotos.pipe';
-import { SlidesHomeComponent } from '../../shared/slides-home/slides-home.component';
 import { BannerVenderHomeComponent } from '../../shared/banner-vender-home/banner-vender-home.component';
+import { SlidesComponent } from '../../shared/slides/slides.component';
+import { IConfigSlides } from '../../../models/configslides';
+import { ESlides } from '../../../enums/slides';
 
 @Component({
   selector: 'app-home',
@@ -22,7 +21,7 @@ import { BannerVenderHomeComponent } from '../../shared/banner-vender-home/banne
     ReactiveFormsModule,
     SearchHomeComponent,
     UrlFotosPipe,
-    SlidesHomeComponent,
+    SlidesComponent,
     BannerVenderHomeComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -36,15 +35,13 @@ export class HomeComponent {
     tipo: ['apartamento'],
     categoria: ['comprar'],
     termo: ['']
-  })
+  });
 
-
-  lancamentos = [
-    'https://lh3.googleusercontent.com/qINDSbuGxqeXZJB5n6X1RlfdS2HhX79OS4BrCvdtasvbvKFkoKMYpPqqXCVMpMzYevz-Z7Yra2T6v6kLD5_XSXcEvEeEapr5dhpBNNsqZQ=s0',
-    'https://lh3.googleusercontent.com/BLUv8K8PVW-E5XPTI8MqUO_X9v_f5uzVjAVWuu-W3OOXtLneoLh2ZfCfq-yygq63kJVRMO99P_7sFniZPo2Z7FLW5nvSEixuv9bLC42R=s0',
-  ];
-
-
+  slidesConfig: IConfigSlides[] = [
+    {titulo: 'Apartamentos', tipo: ESlides.apartamento, start: 0, end: 10},
+    {titulo: 'Casas', tipo: ESlides.casa, start: 0, end: 10},
+    {titulo: 'Empreendimentos Comerciais', tipo: ESlides.comercial, start: 0, end: 10},
+  ]
 
 
   constructor(
@@ -57,9 +54,6 @@ export class HomeComponent {
   getUrl(url: string) {
     return `url(${url})`;
   }
-
-
-
 
 
 }

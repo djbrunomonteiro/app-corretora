@@ -5,6 +5,8 @@ import { EAction, EGroup } from '../store/app.actions';
 import { Router } from '@angular/router';
 import { CollectionReference, Firestore, and, collection, doc, getDocs, limit, query, setDoc, where } from '@angular/fire/firestore';
 import { IResponse } from '../models/response';
+import { userData } from '../store/selectors/user.selector';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +16,9 @@ export class AuthService {
   googleAuthProvider = new GoogleAuthProvider();
 
   collectionRef: CollectionReference | undefined;
+
+  userData$ = new BehaviorSubject<any>(undefined);
+
 
   constructor(
     private auth: Auth,
@@ -26,7 +31,8 @@ export class AuthService {
 
     this.googleAuthProvider.setCustomParameters({
       login_hint: 'brunomonteiroestudio@gmail.com'
-    })
+    });
+    this.storeService.select(userData).subscribe(res => this.userData$.next(res))
   }
 
   loginAdmin() {
@@ -82,7 +88,9 @@ export class AuthService {
         resolve({ status: 404, error: true, results: undefined, message: 'Cliente não encontrado!' })
       }else{
         await querySnapshot.forEach((doc) => {
-          resolve({ status: 201, error: false, results: doc.data(), message: 'Login com sucesso!' })
+          let results = doc.data();
+          results = {...results, auth: true}
+          resolve({ status: 201, error: false, results, message: 'Login com sucesso!' })
         });
       }
 
