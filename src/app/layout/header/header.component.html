@@ -1,38 +1,39 @@
-<div class="header">
-    <div routerLink="/" class="logo">
-        <span class="titulo">Telma Monteiro</span>
-        <span class="creci">CRECI 6489</span>
-    </div>
-    <div class="menu">
-        @if((auth.userData$ | async)){
-            <nav>
-                <ul>
-                    @for (item of menuAdmin; track $index) {
-                        <li><a  mat-stroked-button [routerLink]="item.url" color="primary" class="p-4">{{item.titulo}}</a></li>
+<div class="header-container">
+    <div class="header">
+        <div routerLink="/" class="logo">
+            <span class="titulo">Telma Monteiro</span>
+            <span class="creci">CRECI 6489</span>
+        </div>
+        <div class="menu">
+            @if((auth.userData$ | async)){
+                <nav>
+                    <ul>
+                        @for (item of menuAdmin; track $index) {
+                            <li><a  mat-stroked-button [routerLink]="item.url" color="primary" class="p-4">{{item.titulo}}</a></li>
+                        }
+        
+                    </ul>
+                </nav>
+            }@else {
+        
+                <button  mat-stroked-button [routerLink]="'auth/cliente'" color="primary">
+                    @if((cliente$ | async); as cliente){
+                        Bem vindo(a) {{cliente?.nome}}
+                    }@else {
+                        ÁREA DO CLIENTE
                     }
+                   
+                </button>
+        
+            }
     
-                </ul>
-            </nav>
-        }@else {
-    
-            <button  mat-stroked-button [routerLink]="'auth/cliente'" color="primary">
-                @if((cliente$ | async); as cliente){
-                    Bem vindo(a) {{cliente?.nome}}
-                }@else {
-                    ÁREA DO CLIENTE
-                }
-               
+        
+            <button class="btn-icon" (click)="openBottomSheet()" mat-mini-fab color="primary">
+                <mat-icon>menu</mat-icon>
             </button>
     
-        }
-
-    
-        <button class="btn-icon" (click)="openBottomSheet()" mat-mini-fab color="primary">
-            <mat-icon>menu</mat-icon>
-        </button>
+        </div>
 
     </div>
-
-
 </div>
 

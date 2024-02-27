@@ -10,6 +10,8 @@ import { BannerVenderHomeComponent } from '../../shared/banner-vender-home/banne
 import { SlidesComponent } from '../../shared/slides/slides.component';
 import { IConfigSlides } from '../../../models/configslides';
 import { ESlides } from '../../../enums/slides';
+import { BannerPrincipalComponent } from '../../shared/banner-principal/banner-principal.component';
+import { IMenu } from '../../../models/menu';
 
 @Component({
   selector: 'app-home',
@@ -22,7 +24,8 @@ import { ESlides } from '../../../enums/slides';
     SearchHomeComponent,
     UrlFotosPipe,
     SlidesComponent,
-    BannerVenderHomeComponent
+    BannerVenderHomeComponent,
+    BannerPrincipalComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   
@@ -38,9 +41,37 @@ export class HomeComponent {
   });
 
   slidesConfig: IConfigSlides[] = [
-    {titulo: 'Apartamentos', tipo: ESlides.apartamento, start: 0, end: 10},
-    {titulo: 'Casas', tipo: ESlides.casa, start: 0, end: 10},
-    {titulo: 'Empreendimentos Comerciais', tipo: ESlides.comercial, start: 0, end: 10},
+    {titulo: 'Apartamentos', subtitulo: 'Padrão, Duplex, Garden e Loft...', tipo: ESlides.apartamento,  start: 0, end: 10},
+    {titulo: 'Casas', subtitulo: 'Em Condominios, Soltas, Alto padrão, Vila...', tipo: ESlides.casa, start: 0, end: 10},
+    {titulo: 'Empreendimentos Comerciais', subtitulo: 'Lojas, Salas, Escritórios, Galpões...', tipo: ESlides.comercial, start: 0, end: 10},
+  ]
+
+  empresaMenu: IMenu[] = [
+    {
+      title: 'Quem sou',
+      iconlabel: 'icon face',
+      icon: 'face_4',
+      url: 'quem-sou'
+    },
+    {
+      title: 'Whatsapp',
+      iconlabel: 'perm_phone_msg',
+      icon: 'perm_phone_msg',
+      url: 'contatos'
+    },    
+    {
+      title: 'Instagram',
+      iconlabel: 'perm_phone_msg',
+      icon: 'perm_phone_msg',
+      url: 'contatos'
+    },    {
+      title: 'Facebook',
+      iconlabel: 'perm_phone_msg',
+      icon: 'perm_phone_msg',
+      url: 'contatos'
+    },
+
+
   ]
 
 
