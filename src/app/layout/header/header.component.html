@@ -1,5 +1,5 @@
-<div class="header-container">
-    <div class="header">
+@if(utils.widthSize.value > 820){
+    <div class="desktop">
         <div routerLink="/" class="logo">
             <span class="titulo">Telma Monteiro</span>
             <span class="creci">CRECI 6489</span>
@@ -33,7 +33,19 @@
             </button>
     
         </div>
-
     </div>
-</div>
+}@else {
+    <div class="mobile">
+        <div routerLink="/" class="logo">
+            <span class="titulo">Telma Monteiro</span>
+            <span class="creci">CRECI 6489</span>
+        </div>
+        <button class="btn-icon" (click)="openBottomSheet()" mat-mini-fab color="primary">
+            <mat-icon>menu</mat-icon>
+        </button>
+    </div>
+}
+
+
+
 

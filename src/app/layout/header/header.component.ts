@@ -9,6 +9,7 @@ import { ClienteIsAuth } from '../../store/selectors/cliente.selector';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MenuComponent } from '../menu/menu.component';
 import { userData } from '../../store/selectors/user.selector';
+import { UtilsService } from '../../services/utils.service';
 
 @Component({
   selector: 'app-header',
@@ -22,7 +23,6 @@ export class HeaderComponent implements OnInit {
   readonly currentUrl$ = new BehaviorSubject<string>('');
   isAdmin$ = new BehaviorSubject<boolean>(true);
 
-  
 
   menuAdmin = [
     {
@@ -56,12 +56,14 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     public auth: AuthService,
     private storeService: StoreService,
-    private _bottomSheet: MatBottomSheet
+    private _bottomSheet: MatBottomSheet,
+    public utils: UtilsService
     ){}
 
   ngOnInit(): void {
     this.currentUrl$.next(this.router.url);
     this.isAdmin$.next(this.router.url.includes('admin'));
+
     
   }
 

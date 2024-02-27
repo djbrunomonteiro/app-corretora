@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { AuthService } from './services/auth.service';
 import { register } from 'swiper/element/bundle';
+import { UtilsService } from './services/utils.service';
 
 register();
 
@@ -25,12 +26,23 @@ register();
 })
 export class AppComponent implements OnInit {
   title = 'app-corretora';
-  constructor(private auth: AuthService) {
+  constructor(
+    private auth: AuthService,
+    private utils: UtilsService
+    ) {
 
 
   }
   ngOnInit(): void {
-    this.auth.isAuth()
+    this.auth.isAuth();
+    this.utils.widthSize.next(window.innerWidth);
+    this.utils.heigthSize.next(window.innerHeight);
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onWindowResize(){
+    this.utils.widthSize.next(window.innerWidth);
+    this.utils.heigthSize.next(window.innerHeight);
   }
 
 

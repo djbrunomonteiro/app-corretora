@@ -1,8 +1,44 @@
-.teste{
+.container-default{
     background-color: #F5F5F7;
-    position: relative !important;
-    bottom: -100;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    .search{
+        width: 50%;
+    }
+    .foto{
+        display: flex;
+        align-items: center;
+        // width:50%;
+        ;
+        img{
+            height: 550px;
+        }
 
-    // background-image: url(../../../../assets/imgs/teste5.jpg);
+    }
+}
 
+@media (max-width: 540px) {
+    .container-default{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        .search{
+            width: 80%;
+        }
+        .foto{
+            display: flex;
+            align-items: center;
+            // width:50%;
+            ;
+            img{
+                height: 350px;
+            }
+    
+        }
+    }
+    
 }

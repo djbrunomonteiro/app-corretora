@@ -1,7 +1,8 @@
+import { Platform } from '@angular/cdk/platform';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HostListener, Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
-import { Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,11 +10,16 @@ import { Observable, map } from 'rxjs';
 export class UtilsService {
 
   url: string = 'assets/estados-cidades-br.json';
+  widthSize = new BehaviorSubject<number>(0);
+  heigthSize = new BehaviorSubject<number>(0);
+
 
   constructor(
     private http: HttpClient,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
   ) { }
+
+
 
   showMessage(message: string = '', action: string = 'X', config: MatSnackBarConfig = {horizontalPosition: 'center', verticalPosition: 'bottom', duration: 3000}){
     this._snackBar.open(message, action, config);

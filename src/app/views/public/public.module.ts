@@ -8,6 +8,7 @@ import { HeaderComponent } from '../../layout/header/header.component';
 import { FooterComponent } from '../../layout/footer/footer.component';
 import { TitlePageComponent } from '../shared/title-page/title-page.component';
 import { BannerPrincipalComponent } from '../shared/banner-principal/banner-principal.component';
+import { TabsComponent } from '../shared/tabs/tabs.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { BannerPrincipalComponent } from '../shared/banner-principal/banner-prin
     HeaderComponent,
     FooterComponent,
     TitlePageComponent,
-    BannerPrincipalComponent
+    BannerPrincipalComponent,
+    TabsComponent
   ]
 })
 export class PublicModule { }
