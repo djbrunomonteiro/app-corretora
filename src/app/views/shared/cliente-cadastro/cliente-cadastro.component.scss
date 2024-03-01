@@ -1,9 +1,17 @@
-.container-cadastro{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 700px;
+@media (max-width: 960px) {
+    .container-default{
+        height: 90vh !important;
+        height: auto;
+        h3{
+            font-size: 1rem;
+        }
 
-    
+        .back-btn{
+            position: sticky !important;
+            bottom: 0px;
+            left: 0px !important;
+        }
+
+
+    }
 }

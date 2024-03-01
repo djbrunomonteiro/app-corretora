@@ -2,9 +2,9 @@
 <app-banner-principal/>
 <section class="sub-menu">
     @for (item of empresaMenu; track $index) {
-        <button mat-raised-button class="m-2">
+        <a [href]="item.url" [target]="item.target" mat-raised-button class="m-2">
             <mat-icon aria-hidden="false" [fontIcon]="item.icon"></mat-icon> {{item.title}}
-        </button>
+        </a>
     }
 </section>
 

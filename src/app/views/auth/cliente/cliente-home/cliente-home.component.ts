@@ -78,7 +78,7 @@ export class ClienteHomeComponent implements OnInit, AfterViewInit {
   }
 
   openLogin(item?: string) {
-    const dialogRef = this.dialog.open(ClienteLoginComponent, { disableClose: true, data: item, minWidth: '50vw', height: '90vh' });
+    const dialogRef = this.dialog.open(ClienteLoginComponent, { disableClose: true, data: item, minWidth: '50vw'});
     dialogRef.afterClosed().subscribe(cliente => {
       if (!cliente) { this.router.navigate(['/']) }
       this.setClienteAuth(cliente);

@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { HostListener, Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { BehaviorSubject, Observable, map } from 'rxjs';
+import {Clipboard} from '@angular/cdk/clipboard';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -17,10 +19,19 @@ export class UtilsService {
   constructor(
     private http: HttpClient,
     private _snackBar: MatSnackBar,
+    private clipboard: Clipboard,
   ) { }
 
+  copyText(txt: string = '') {
+    if(!txt){return}
+    this.clipboard.copy(txt);
+    this.showMessage('Copiado para a área de transferência', 'X', {horizontalPosition: 'center', verticalPosition: 'top', duration: 3000});
 
+  }
 
+  openLinkInNewTab(url: string) {
+    window.open(url,'_blank');
+  }
   showMessage(message: string = '', action: string = 'X', config: MatSnackBarConfig = {horizontalPosition: 'center', verticalPosition: 'bottom', duration: 3000}){
     this._snackBar.open(message, action, config);
   }

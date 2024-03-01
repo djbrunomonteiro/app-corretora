@@ -1,1 +1,26 @@
-<p>contatos works!</p>
+
+<div class="row m-0 justify-content-center align-items-center">
+    <div class="col-md-10 ">
+        <div class="container">
+            <div class="area-info">
+                <h6>Sinta-se à vontade para nos contatar sempre que precisar.</h6>
+                <div class="d-flex flex-column my-3">
+                    @for (item of contatos; track $index) {
+                        <div>
+                            <p class="p-0 m-0"><b>{{item.title}}</b> </p>
+                            <button (click)="utils.copyText(item.value)" class="my-3 me-3 w-25" color="primary" mat-stroked-button>Copiar</button>
+                            <a [href]="item.url" mat-stroked-button class="my-3 w-25" color="warn"  target="_blank">Abrir</a>
+                        </div>
+                    }
+                </div>
+
+            </div>
+            <div class="foto">
+                <img src="../../../../assets/imgs/teste6.png" alt="">
+            </div>
+
+        </div>
+
+    </div>
+</div>
+

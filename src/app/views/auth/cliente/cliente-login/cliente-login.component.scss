@@ -4,5 +4,17 @@
     justify-content: center;
     align-items: center;
     min-height: 700px;
-    
+}
+
+@media (max-width: 960px) {
+    .container-login{
+        min-height: 500px;
+        padding: 15px;
+        h3{
+            font-size: 1.2rem;
+        }
+        mat-form-field, button{
+            width: 100% !important;
+        }
+    }
 }

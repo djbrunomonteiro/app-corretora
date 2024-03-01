@@ -17,7 +17,7 @@
         </div>
         <div class="row">
             @for (item of anuncios$ | async; track $index) {
-            <div class="col-lg-4">
+            <div class="col-lg-4 my-2">
                 <app-card-anuncio [item]="item" />
             </div>
             }

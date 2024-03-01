@@ -1,12 +1,14 @@
 <form [formGroup]="form">
-    <div class="m-3 text-center">
-        <h3>ÁREA DE CADASTRO DE CLIENTE</h3>
-        <p>Siga as etapas a seguir para uma experiência personalizada.</p>
-    </div>
-    <app-admin-clientes-edit [isCadastroPublic]="isCadastroPublic" (resCadastroPublicEvent)="getResCadastro($event)"></app-admin-clientes-edit>
+    <div class="container-default">
+        <div class=" m-3 text-center">
+            <h3>ÁREA DE CADASTRO DE CLIENTE</h3>
+        </div>
+        <app-admin-clientes-edit [isCadastroPublic]="isCadastroPublic" (resCadastroPublicEvent)="getResCadastro($event)"></app-admin-clientes-edit>
+    
+        <div class="back-btn" mat-dialog-actions align="end">
+            <button  (click)="templateEvent.emit(templateEmiter)" mat-button color="warn">Voltar para login</button>
+        </div>
 
-    <div mat-dialog-actions align="end">
-        <button (click)="templateEvent.emit(templateEmiter)" mat-button color="warn">Voltar para login</button>
-      </div>
+    </div>
 
 </form>

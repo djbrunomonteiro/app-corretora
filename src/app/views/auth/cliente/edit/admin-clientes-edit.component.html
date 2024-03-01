@@ -114,7 +114,7 @@
 
           <p>Endereço</p>
 
-          <div class="d-flex">
+          <div class="d-sm-flex">
             @if (!isCadastroPublic) {
             <mat-form-field class="w-25 m-rigth" appearance="outline">
               <mat-label>CEP</mat-label>
@@ -185,7 +185,6 @@
           <p>Categorização</p>
 
           <div class="d-flex">
-
             <mat-form-field class="w-50" appearance="outline">
               <mat-label>Interesse</mat-label>
               <mat-select formControlName="categoria">
@@ -223,7 +222,7 @@
           </div>
 
           <p>Localidade</p>
-          <div class="d-flex">
+          <div class="d-sm-flex">
             <mat-form-field class="w-25 m-rigth" appearance="outline">
               <mat-label>UF</mat-label>
               <mat-select formControlName="uf">
@@ -254,43 +253,47 @@
 
           </div>
 
-          <div class="d-flex mt-3">
-            <mat-form-field class="w-25 m-rigth" appearance="outline">
-              <mat-label>Suítes</mat-label>
-              <mat-select formControlName="qtd_suite">
-                @for (item of core.nums; track $index) {
-                <mat-option [value]="item">{{item}}</mat-option>
-                }
-              </mat-select>
-            </mat-form-field>
+          @if (!isCadastroPublic) {
+            <div class="d-flex mt-3">
+              <mat-form-field class="w-25 m-rigth" appearance="outline">
+                <mat-label>Suítes</mat-label>
+                <mat-select formControlName="qtd_suite">
+                  @for (item of core.nums; track $index) {
+                  <mat-option [value]="item">{{item}}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+  
+              <mat-form-field class="w-25 m-rigth" appearance="outline">
+                <mat-label>Dormitorios</mat-label>
+                <mat-select formControlName="qtd_dorm">
+                  @for (item of core.nums; track $index) {
+                  <mat-option [value]="item">{{item}}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+  
+              <mat-form-field class="w-25 m-rigth" appearance="outline">
+                <mat-label>Banheiros</mat-label>
+                <mat-select formControlName="qtd_ban">
+                  @for (item of core.nums; track $index) {
+                  <mat-option [value]="item">{{item}}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+  
+              <mat-form-field class="w-25" appearance="outline">
+                <mat-label>Vagas de garagem</mat-label>
+                <mat-select formControlName="qtd_vaga">
+                  @for (item of core.nums; track $index) {
+                  <mat-option [value]="item">{{item}}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
 
-            <mat-form-field class="w-25 m-rigth" appearance="outline">
-              <mat-label>Dormitorios</mat-label>
-              <mat-select formControlName="qtd_dorm">
-                @for (item of core.nums; track $index) {
-                <mat-option [value]="item">{{item}}</mat-option>
-                }
-              </mat-select>
-            </mat-form-field>
+          }
 
-            <mat-form-field class="w-25 m-rigth" appearance="outline">
-              <mat-label>Banheiros</mat-label>
-              <mat-select formControlName="qtd_ban">
-                @for (item of core.nums; track $index) {
-                <mat-option [value]="item">{{item}}</mat-option>
-                }
-              </mat-select>
-            </mat-form-field>
-
-            <mat-form-field class="w-25" appearance="outline">
-              <mat-label>Vagas de garagem</mat-label>
-              <mat-select formControlName="qtd_vaga">
-                @for (item of core.nums; track $index) {
-                <mat-option [value]="item">{{item}}</mat-option>
-                }
-              </mat-select>
-            </mat-form-field>
-          </div>
 
           <button (click)="salvar()" [disabled]="form.invalid" class="w-100 p-3" mat-raised-button
           color="primary">Salvar

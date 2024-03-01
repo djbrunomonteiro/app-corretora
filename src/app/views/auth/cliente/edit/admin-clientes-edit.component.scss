@@ -10,3 +10,10 @@
 .nome_arquivo{
     width: 400px;
 }
+
+@media (max-width: 960px) {
+    mat-form-field{
+        width: 100% !important;
+    }
+
+}

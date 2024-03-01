@@ -2,10 +2,10 @@
   <form [formGroup]="form">
     <div class="container-login">
         <h3>Bem vindo(a), por motivo de segurança</h3>
-        <p>Informe seu CPF OU CNPJ cadastrado para continuar</p>
+        <p>Informe seu CPF cadastrado para continuar</p>
     
         <mat-form-field appearance="outline" class="mt-2 w-50">
-            <mat-label>CPF OU CNPJ</mat-label>
+            <mat-label>CPF</mat-label>
             <input formControlName="cpf_cnpj" matInput required mask="000.000.000-00 || 00.000.000/0000-00">
         </mat-form-field>
         <mat-form-field appearance="outline" class="w-50">
@@ -20,7 +20,7 @@
     </div>
 
     <div mat-dialog-actions align="end">
-        <button mat-button mat-dialog-close color="warn">Cancelar e Voltar a Home</button>
+        <button mat-button mat-dialog-close color="warn">Cancelar</button>
       </div>
 
 </form>

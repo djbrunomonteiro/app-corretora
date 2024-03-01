@@ -5,12 +5,11 @@
             <div class="col-md-9 m-0 p-0">
                 <swiper-container>
                     @for (path of item?.fotos; track $index) {
-                    @if ((path | urlFotos: 'anuncios' | async); as src) {
-                    <swiper-slide>
-                        <img [src]="src">
-                    </swiper-slide>
-
-                    }
+                        @if ((path | urlFotos: 'anuncios' | async); as src) {
+                            <swiper-slide>
+                                <img [src]="src">
+                            </swiper-slide>
+                        }
                     }
 
                 </swiper-container>

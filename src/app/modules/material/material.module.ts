@@ -30,6 +30,7 @@ import {
   MatBottomSheetRef,
 } from '@angular/material/bottom-sheet';
 import {MatRippleModule} from '@angular/material/core';
+import {ClipboardModule} from '@angular/cdk/clipboard';
 
 @NgModule({
   declarations: [],
@@ -60,7 +61,8 @@ import {MatRippleModule} from '@angular/material/core';
     MatExpansionModule,
     MatMenuModule,
     MatBottomSheetModule,
-    MatRippleModule
+    MatRippleModule,
+    ClipboardModule
     
   ],
   exports:[
@@ -89,7 +91,8 @@ import {MatRippleModule} from '@angular/material/core';
     MatExpansionModule,
     MatMenuModule,
     MatBottomSheetModule,
-    MatRippleModule
+    MatRippleModule,
+    ClipboardModule
   ]
 })
 export class MaterialModule { }
