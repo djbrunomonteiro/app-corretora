@@ -16,20 +16,20 @@
             <h3 class="titulo">{{item.titulo}}</h3>
             <p class="cidade">{{item.end_cidade}} / {{item.end_uf}} - Cód. {{item.codigo}}</p>
             <div class="detalhes">
-                <mat-chip> 30 m²</mat-chip>
-                <mat-chip> 3 dorm.</mat-chip>
-                <mat-chip> 3 ban.</mat-chip>
-                <mat-chip> 3 suíte</mat-chip>
-                <mat-chip> 2 vagas</mat-chip>
+                @if (item.area_util) {<mat-chip> {{item.area_util}}m² </mat-chip>}
+                @if (item.qtd_dorm) {<mat-chip> {{item.qtd_dorm}} dorm. </mat-chip>}
+                @if (item.qtd_ban) {<mat-chip> {{item.qtd_ban}} ban. </mat-chip>}
+                @if (item.qtd_suite) {<mat-chip> {{item.qtd_suite}} suíte </mat-chip>}
+                @if (item.qtd_vaga) {<mat-chip> {{item.qtd_vaga}} vaga(s) </mat-chip>}
             </div>
     
             <div>
                 <p class="descricao">
                     {{item.descricao}}
-    
+
                 </p>
             </div>
-            <h5 class="preco">R$ 150.000</h5>
+            <h5 class="preco">{{item.preco | mask: 'separator.2': {thousandSeparator:'.', prefix: 'R$'} }}</h5>
     
             <div class="btns">
                 @if (item.id | isFavorito$ | async) {
@@ -40,7 +40,7 @@
                 }@else {
                     <button (click)="addFavorito(item.id)" mat-stroked-button color="accent">
                         <mat-icon>favorite</mat-icon>
-                        Eu quero
+                        Favoritar
                     </button>
                 }
     

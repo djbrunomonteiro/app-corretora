@@ -31,6 +31,7 @@ import {
 } from '@angular/material/bottom-sheet';
 import {MatRippleModule} from '@angular/material/core';
 import {ClipboardModule} from '@angular/cdk/clipboard';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [],
@@ -62,7 +63,8 @@ import {ClipboardModule} from '@angular/cdk/clipboard';
     MatMenuModule,
     MatBottomSheetModule,
     MatRippleModule,
-    ClipboardModule
+    ClipboardModule,
+    ScrollingModule
     
   ],
   exports:[
@@ -92,7 +94,8 @@ import {ClipboardModule} from '@angular/cdk/clipboard';
     MatMenuModule,
     MatBottomSheetModule,
     MatRippleModule,
-    ClipboardModule
+    ClipboardModule,
+    ScrollingModule
   ]
 })
 export class MaterialModule { }

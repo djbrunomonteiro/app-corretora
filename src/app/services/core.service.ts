@@ -89,7 +89,7 @@ export class CoreService {
   ];
 
   orders = [
-    "mais relevantes",
+    // "mais relevantes",
     "menor valor",
     "maior valor",
     "mais recentes",

@@ -37,6 +37,8 @@ export class CardAnuncioComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
+    console.log(this.item);
+    
     
   }
 

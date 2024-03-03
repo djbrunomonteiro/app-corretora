@@ -2,6 +2,7 @@ export interface IAnuncio {
     id?: string,
     codigo?: string,
     titulo?: string,
+    descricao?: string,
     categoria?: string,
     tipo?: string,
     fotos?: string[],

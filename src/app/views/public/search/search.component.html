@@ -1,14 +1,14 @@
-<div class="row justify-content-between m-0 p-2">
+<div class="row justify-content-between m-0 p-2" [formGroup]="form">
     <div class="col-md-3 m-0">
-        <app-search-filter />
+        <app-search-filter (search)="pesquisar($event)" (clean)="listarTodos()" />
     </div>
 
-    <div class="col-md-9 m-0">
+    <div class="col-md-9 m-0" >
         <div class="d-md-flex justify-content-between align-items-center title-filter">
             <h4>{{(anuncios$ | async)?.length}} Resultados encontrados</h4>
             <mat-form-field appearance="outline">
                 <mat-label>Ordenar por</mat-label>
-                <mat-select formControlName="categoria">
+                <mat-select formControlName="ordenar">
                     @for (item of core.orders; track $index) {
                     <mat-option [value]="item">{{item | uppercase}}</mat-option>
                     }
@@ -16,22 +16,29 @@
             </mat-form-field>
         </div>
         <div class="row">
-            @for (item of anuncios$ | async; track $index) {
-            <div class="col-lg-4 my-2">
-                <app-card-anuncio [item]="item" />
-            </div>
+            @for (item of anuncios$ | async; track $index; let last = $last) {
+                @if (($index + 1) <= count ) {
+                    <div class="col-lg-4 my-2">
+                        <app-card-anuncio [item]="item" />
+                    </div>
+                }
+
+
+            }@empty {
+                <h4>Ops, Nenhum anúncio encontrado para sua busca.</h4>
+                <p>Altere os filtros de pesquisa ou confira anúncios que recomendamos</p>
+
+                @for (item of recomendados$ | async; track $index) {
+                    <div class="col-lg-4 my-2">
+                        <app-card-anuncio [item]="item" />
+                    </div>
+                }
             }
-            <div class="col-12">
-                <mat-paginator #paginator
-                class="demo-paginator"
-                [length]="40"
-                [pageSize]="4"
-                [showFirstLastButtons]="true"
-                [hidePageSize]="1"
-                [pageIndex]="1"
-                aria-label="Select page">
- </mat-paginator>
-            </div>
+            <!-- <div class="col-12">
+                <mat-paginator #paginator class="demo-paginator" [length]="40" [pageSize]="4"
+                    [showFirstLastButtons]="true" [hidePageSize]="1" [pageIndex]="1" aria-label="Select page">
+                </mat-paginator>
+            </div> -->
         </div>
     </div>
 
