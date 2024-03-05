@@ -1,4 +1,4 @@
-import { ApplicationConfig, importProvidersFrom, isDevMode } from '@angular/core';
+import { ApplicationConfig, LOCALE_ID, importProvidersFrom, isDevMode } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -20,6 +20,7 @@ import { getStorage } from '@angular/fire/storage';
 import { LeadEffectsService } from './store/effects/lead-effects.service';
 import { ClienteEffectsService } from './store/effects/cliente-effects.service';
 import { AgendamentoEffectsService } from './store/effects/agendamento-effects.service';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -41,6 +42,8 @@ export const appConfig: ApplicationConfig = {
       ClienteEffectsService,
       AgendamentoEffectsService
     ]),
-    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
+    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: LOCALE_ID, useValue: 'pt' },
 ]
 };
