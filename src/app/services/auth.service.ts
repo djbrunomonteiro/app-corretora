@@ -29,9 +29,9 @@ export class AuthService {
 
     this.collectionRef = collection(this.firestore, 'hashs');
 
-    this.googleAuthProvider.setCustomParameters({
-      login_hint: 'brunomonteiroestudio@gmail.com'
-    });
+    // this.googleAuthProvider.setCustomParameters({
+    //   login_hint: 'brunomonteiroestudio@gmail.com'
+    // });
     this.storeService.select(userData).subscribe(res => this.userData$.next(res))
   }
 
@@ -39,7 +39,7 @@ export class AuthService {
     signInWithPopup(this.auth, this.googleAuthProvider)
       .then(async res => {
         const email = res.user.email
-        if (email === 'kelvinbruno15@gmail.com' || 'brunomonteiroestudio@gmail.com') {
+        if (email === 'kelvinbruno15@gmail.com' || 'brunomonteiroestudio@gmail.com' || 'telmamatos2005@gmail.com') {
           const item = { nome: res?.user.displayName, email: res.user.email, id: res.user.uid, foto: res.user.photoURL };
           this.storeService.dispatchAction({ group: EGroup.User, action: EAction.SetOneStore, props: { item } })
         } else {

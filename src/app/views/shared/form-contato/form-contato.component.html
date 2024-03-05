@@ -1,51 +1,49 @@
 <form [formGroup]="form">
-    <div class="row m-0 p-0 justify-content-center align-items-center container-default">
-        <div class="col-md-8 m-0 p-0">
-            <div class="titulo">
-                <h4>Fale Comigo</h4>
-                <p>Será um prazer em atender e tirar suas dúvidas.</p>
-            </div>
-            <div class="my-3">
-                <mat-form-field appearance="outline">
-                    <mat-label>Seu Nome</mat-label>
-                    <input formControlName="nome" matInput placeholder="" required>
-                </mat-form-field>
+    <div class="container-default">
+        <div class="titulo">
+            <h4>Fale Comigo</h4>
+            <p>Será um prazer em atender e tirar suas dúvidas.</p>
+        </div>
+        <div class="my-3">
+            <mat-form-field appearance="outline">
+                <mat-label>Seu Nome</mat-label>
+                <input formControlName="nome" matInput placeholder="" required>
+            </mat-form-field>
 
-                <mat-form-field appearance="outline">
-                    <mat-label>Seu WhatsApp</mat-label>
-                    <input formControlName="whatsapp" matInput mask="(00)00000000 || (00)0 0000-0000">
-                </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Seu WhatsApp</mat-label>
+                <input formControlName="whatsapp" matInput mask="(00)00000000 || (00)0 0000-0000">
+            </mat-form-field>
 
-                <mat-form-field appearance="outline">
-                    <mat-label>Seu Email</mat-label>
-                    <input formControlName="email" matInput placeholder="">
-                </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Seu Email</mat-label>
+                <input formControlName="email" matInput placeholder="">
+            </mat-form-field>
 
-                <mat-form-field appearance="outline">
-                    <mat-label>Mensagem</mat-label>
-                    <textarea formControlName="mensagem" matInput placeholder="Ex. preciso de informações sobre..."
-                        required></textarea>
-                </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Mensagem</mat-label>
+                <textarea formControlName="mensagem" matInput placeholder="Ex. preciso de informações sobre..."
+                    required></textarea>
+            </mat-form-field>
 
-                <p class="p-0 m-0">Qual o melhor horário que posso entrar em contato ?</p>
+            <p class="p-0 m-0">Qual o melhor horário que posso entrar em contato ?</p>
 
-                <mat-button-toggle-group formControlName="horarios" class="my-3" name="dia_semana"
-                    aria-label="dia de semana para visita" multiple>
-                    @for (opt of checkHorarios.opts; track $index) {
-                    <mat-button-toggle [value]="opt.name">{{opt.name}}</mat-button-toggle>
-                    }
-                </mat-button-toggle-group>
-            </div>
-
-
-            <div class="my-3">
-                @if (loading) {
-                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-                <p class="text-center">Enviando aguarde :)</p>
-                }@else {
-                <button (click)="salvar()" [disabled]="form.invalid" class="w-100 p-3" mat-raised-button color="primary">Enviar</button>
+            <mat-button-toggle-group formControlName="horarios" class="my-3" name="dia_semana"
+                aria-label="dia de semana para visita" multiple>
+                @for (opt of checkHorarios.opts; track $index) {
+                <mat-button-toggle [value]="opt.name">{{opt.name}}</mat-button-toggle>
                 }
-            </div>
+            </mat-button-toggle-group>
+        </div>
+
+
+        <div class="my-3">
+            @if (loading) {
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            <p class="text-center">Enviando aguarde :)</p>
+            }@else {
+            <button (click)="salvar()" [disabled]="form.invalid" class="w-100 p-3" mat-raised-button color="primary">Enviar</button>
+            }
         </div>
     </div>
 </form>

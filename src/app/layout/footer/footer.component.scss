@@ -7,6 +7,9 @@ footer{
     align-items: center;
     justify-content: space-around;
     color: bisque;
+    span{
+        color: bisque !important;
+    }
     .sub-titulo{
         font-size: 1.5rem;
         font-weight: 800;
@@ -28,6 +31,12 @@ footer{
 
 @media only screen and (max-width: 768px) {
     footer{
+        height: auto;
+        padding-bottom: 130px;
+        display: flex;
+        flex-direction: column;
+        align-items: baseline;
+
         font-size: 0.8rem !important;
 
     }

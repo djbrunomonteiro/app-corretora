@@ -67,4 +67,9 @@ export class AnuncioDetailsComponent implements OnInit {
 
   }
 
+  openWhatsapp() {
+    window.open('https://api.whatsapp.com/send?phone=5598970278027&text=Estou%20entrando%20em%20contato%20atrav%C3%A9s%20do%20site%20telmamonteiro.com.br%20e%20gostaria%20de%20solicitar%20atendimento.', '_blank');
+  }
+
+
 }

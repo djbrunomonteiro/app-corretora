@@ -1,10 +1,27 @@
 <footer>
     <div class="block">
         <h4 class="sub-titulo">Endereço</h4>
-        <p>Avenida das Nações Unidas, 18802, NovAmérica Office </p>
-        <p>Conj. 309 - Vila Almeida - São Paulo - SP</p>
-    </div> 
+        <p>Turu - São Luís / MA</p>
+    </div>
     <div class="block">
+        <mat-nav-list>
+            @for (item of empresaMenu; track $index) {
+                <a (click)="goAdmin(item)" mat-list-item>
+                    <span matListItemTitle><mat-icon aria-hidden="false" class="mx-3" [fontIcon]="item.icon"></mat-icon> {{item.title}}</span>
+                </a>
+            }
+        </mat-nav-list>
+    </div>
+    <div class="block">
+        <mat-nav-list>
+            @for (item of redesMenu; track $index) {
+                <a [href]="item.url" [target]="item.target" mat-list-item>
+                    <span matListItemTitle><mat-icon aria-hidden="false" class="mx-3" [fontIcon]="item.icon"></mat-icon> {{item.title}}</span>
+                </a>
+            }
+        </mat-nav-list>
+    </div>
+    <!-- <div class="block">
         <h4 class="sub-titulo">Endereço</h4>
         <p>Avenida das Nações Unidas, 18802, NovAmérica Office </p>
         <p>Conj. 309 - Vila Almeida - São Paulo - SP</p>
@@ -13,5 +30,5 @@
         <h4 class="sub-titulo">Endereço</h4>
         <p>Avenida das Nações Unidas, 18802, NovAmérica Office </p>
         <p>Conj. 309 - Vila Almeida - São Paulo - SP</p>
-    </div> 
+    </div>  -->
 </footer>

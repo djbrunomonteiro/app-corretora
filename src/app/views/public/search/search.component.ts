@@ -104,6 +104,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
   onScroll() {
     const viewportHeight = window.innerHeight;
     const scrollHeight = document.documentElement.scrollHeight;
+    if(!this.anuncios$){return}
     this.anuncios$.pipe(first()).subscribe(elem => {
       if (elem.length > this.count && window.pageYOffset + viewportHeight >= scrollHeight) {
         this.count += this.increment;

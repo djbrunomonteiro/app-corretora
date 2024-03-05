@@ -1,0 +1,50 @@
+name: Deploy Web FTP 
+
+on:
+  push:
+    branches:
+      - main
+
+  # the follow line allow this script to be started manually.
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 18
+    - name: Install packages with NPM
+      run: npm install
+    - name: Build for production
+      run: npm run build
+    - name: Upload artifacts to be used in next job
+      if: success()
+      uses: actions/upload-artifact@v1
+      with:
+        name: deploy_dist
+        path: dist/app-corretora/browser/
+
+  ftp-deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Download artifacts created at previous job
+      if: success()
+      uses: actions/download-artifact@v1
+      with:
+        name: deploy_dist
+        path: ./
+    - name: Deploy to FTP
+      uses: SamKirkland/FTP-Deploy-Action@4.3.3
+      with:
+        server: ${{ secrets.ftp_host }}
+        username: ${{ secrets.ftp_user }}
+        password: ${{ secrets.ftp_password }}
+        server-dir: public_html/
+        dangerous-clean-slate: true # optional

@@ -10,7 +10,7 @@ import { StoreService } from '../../../services/store.service';
 import { UltimosAnuncios, anunciosSlides } from '../../../store/selectors/anuncio.selector';
 import { ESlides } from '../../../enums/slides';
 import { IConfigSlides } from '../../../models/configslides';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'app-slides',
@@ -80,7 +80,13 @@ export class SlidesComponent {
 
   openAnuncio(url: string){
     this.router.navigate([`/anuncios/${url}`])
+  }
 
+  openMais(){
+    console.log('teste', this.slidesConfig);
+    const queryParams = { termo: String(this.slidesConfig.titulo).toLowerCase() } as NavigationExtras
+    this.router.navigate(['buscar'], {queryParams} )
+    
   }
 
 }
