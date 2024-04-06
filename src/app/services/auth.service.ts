@@ -52,8 +52,6 @@ export class AuthService {
 
       });
 
-
-
   }
 
   isAuth() {

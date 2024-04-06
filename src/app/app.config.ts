@@ -43,7 +43,7 @@ export const appConfig: ApplicationConfig = {
       AgendamentoEffectsService
     ]),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    // { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: LOCALE_ID, useValue: 'pt' },
 ]
 };
