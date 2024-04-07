@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, afterNextRender } from '@angular/core';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { MaterialModule } from '../../../../modules/material/material.module';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -58,14 +58,19 @@ export class ClienteHomeComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,
     private uploadService: UploadService
 
-  ) { }
+  ) {
+
+    afterNextRender(() => {
+      this.activatedRoute.queryParams.subscribe(q => this.queryParams = q);
+      if (!this.ignoreLoad) {
+        this.checkAuth()
+      }
+    });
+  }
 
 
   ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe(q => this.queryParams = q);
-    if (!this.ignoreLoad) {
-      this.checkAuth()
-    }
+
 
   }
 
@@ -117,6 +122,7 @@ export class ClienteHomeComponent implements OnInit, AfterViewInit {
     if (!item) { return }
     this.storeService.dispatchAction({ group: EGroup.Cliente, action: EAction.SetOneStore, props: { item } });
     this.router.navigate([`/auth/cliente/${item.id}`], {queryParams: this.queryParams});
+
     localStorage.setItem('access_token', item.hash)
 
   }

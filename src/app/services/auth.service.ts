@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Auth, signInWithPopup, GoogleAuthProvider } from '@angular/fire/auth';
 import { StoreService } from './store.service';
 import { EAction, EGroup } from '../store/app.actions';
@@ -7,6 +7,7 @@ import { CollectionReference, Firestore, and, collection, doc, getDocs, limit, q
 import { IResponse } from '../models/response';
 import { userData } from '../store/selectors/user.selector';
 import { BehaviorSubject } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,8 @@ export class AuthService {
     private storeService: StoreService,
     private router: Router,
     private firestore: Firestore,
+    @Inject(PLATFORM_ID) public platformId: Object,
+
   ) {
 
     this.collectionRef = collection(this.firestore, 'hashs');
@@ -66,10 +69,14 @@ export class AuthService {
   logout() {
     this.auth.signOut();
     this.router.navigate(['/']);
-    localStorage.clear();
     this.storeService.dispatchAction({group: EGroup.Cliente, action:EAction.Clear})
     this.storeService.dispatchAction({group: EGroup.Lead, action:EAction.Clear})
     this.storeService.dispatchAction({group: EGroup.User, action:EAction.Clear})
+    if(isPlatformBrowser(this.platformId)){
+      localStorage.clear();
+      
+    }
+    
 
   }
 

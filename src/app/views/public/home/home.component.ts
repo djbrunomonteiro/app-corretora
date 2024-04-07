@@ -83,7 +83,6 @@ export class HomeComponent {
   constructor(
     private fb: FormBuilder,
     public core: CoreService,
-    private router: Router,
   ){}
 
 

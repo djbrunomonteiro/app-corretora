@@ -13,21 +13,18 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { appReducers } from './store/app.state';
 import { metaReducers } from './store/logout.reducer';
 import { AnuncioEffectsService } from './store/effects/anuncio-effects.service';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideEnvironmentNgxMask } from 'ngx-mask';
-import { Ng2ImgMaxService } from 'ng2-img-max';
-import { getStorage } from '@angular/fire/storage';
 import { LeadEffectsService } from './store/effects/lead-effects.service';
 import { ClienteEffectsService } from './store/effects/cliente-effects.service';
 import { AgendamentoEffectsService } from './store/effects/agendamento-effects.service';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { provideClientHydration } from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    Ng2ImgMaxService,
     provideRouter(routes),
     provideAnimations(),
-    provideHttpClient(),
+    provideHttpClient(withFetch()),
     provideEnvironmentNgxMask(),
     importProvidersFrom([
         provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
@@ -44,6 +41,7 @@ export const appConfig: ApplicationConfig = {
     ]),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     // { provide: LocationStrategy, useClass: HashLocationStrategy },
-    { provide: LOCALE_ID, useValue: 'pt' },
+    { provide: LOCALE_ID, useValue: 'pt' }, provideClientHydration(),
+
 ]
 };

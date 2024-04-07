@@ -1,8 +1,9 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, OnInit, ViewChild, afterNextRender } from '@angular/core';
 import { MaterialModule } from '../../../../modules/material/material.module';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { resolve } from 'dns';
 
 @Component({
   selector: 'app-admin-home',
@@ -19,8 +20,15 @@ export class AdminHomeComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  constructor(){
+    afterNextRender(() => {
+      localStorage.clear()
+      
+    })
+  }
   ngOnInit(): void {
-    localStorage.clear()
+
+    
   }
 
   ngAfterViewInit() {

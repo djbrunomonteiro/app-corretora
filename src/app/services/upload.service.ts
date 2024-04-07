@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Ng2ImgMaxService } from 'ng2-img-max';
-import { Observable, catchError, first, map, of, switchMap, throwError } from 'rxjs';
-import { EFolderUpload, ESize } from '../enums/folders';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { catchError, of, switchMap } from 'rxjs';
+import { ESize } from '../enums/folders';
 import { UtilsService } from './utils.service';
 import { StorageReference, getStorage, getDownloadURL, ref, uploadBytes } from '@angular/fire/storage'
 import { IResize } from '../models/resize';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +18,9 @@ export class UploadService {
 
   constructor(
     private http: HttpClient,
-    private ng2ImgMaxService: Ng2ImgMaxService,
     private utils: UtilsService,
+    @Inject(PLATFORM_ID) public platformId: Object,
+
   ) { }
 
   async uploadIMG(file: File, folder = 'anuncios') {
@@ -46,6 +47,11 @@ export class UploadService {
 
   async uploadFILE(file: File, folder = 'documentos') {
     return new Promise<string>(async resolve => {
+      if(!isPlatformBrowser(this.platformId)){
+        resolve('')
+        return
+        
+      }
       const access_token = localStorage.getItem('access_token') ?? '';
       const custom = {access_token}
       let results = '';
@@ -85,11 +91,11 @@ export class UploadService {
       for (let index = 0; index < 2; index++) {
         switch (index) {
           case 0:
-            resResize = await this.resizeImg(file, name, 300, 300);
+            resResize = file
             size = ESize.medium
             break;
           default:
-            resResize = await this.resizeImg(file, name, 1500, 1500);
+            resResize = file
             size = ESize.large
             break;
         }
@@ -112,19 +118,19 @@ export class UploadService {
 
   }
 
-  resizeImg(file: File, name: string, maxWidth: number, maxHeigth: number) {
-    return new Promise<any>(resolve => {
-      const resize$ = this.ng2ImgMaxService.resizeImage(file, maxWidth, maxHeigth);
-      resize$.pipe(
-        switchMap(resize => {
-          const newFile = new File([resize], name, { type: 'image/jpeg' });
-          const compres$ = this.ng2ImgMaxService.compressImage(newFile, 0.120);
-          return compres$;
-        }),
-        catchError(() => of({ error: true })),
-      ).subscribe(res => resolve(res))
-    })
-  }
+  // resizeImg(file: File, name: string, maxWidth: number, maxHeigth: number) {
+  //   return new Promise<any>(resolve => {
+  //     const resize$ = this.ng2ImgMaxService.resizeImage(file, maxWidth, maxHeigth);
+  //     resize$.pipe(
+  //       switchMap(resize => {
+  //         const newFile = new File([resize], name, { type: 'image/jpeg' });
+  //         const compres$ = this.ng2ImgMaxService.compressImage(newFile, 0.120);
+  //         return compres$;
+  //       }),
+  //       catchError(() => of({ error: true })),
+  //     ).subscribe(res => resolve(res))
+  //   })
+  // }
 
 
 }

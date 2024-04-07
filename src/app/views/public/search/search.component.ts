@@ -1,5 +1,5 @@
 import { CommonModule, DOCUMENT } from '@angular/common';
-import { AfterViewInit, CUSTOM_ELEMENTS_SCHEMA, Component, HostListener, Inject, OnInit } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, HostListener, OnInit, afterNextRender } from '@angular/core';
 import { MaterialModule } from '../../../modules/material/material.module';
 import { CoreService } from '../../../services/core.service';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
@@ -13,6 +13,7 @@ import { CardAnuncioComponent } from '../../shared/card-anuncio/card-anuncio.com
 import { SearchFilterComponent } from '../../shared/search-filter/search-filter.component';
 import { ScrollableDirective } from '../../../directives/scrollable.directive';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoadingComponent } from '../../shared/loading/loading.component';
 
 
 @Component({
@@ -29,13 +30,14 @@ import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@ang
     FavoritoPipe,
     CardAnuncioComponent,
     SearchFilterComponent,
-    ScrollableDirective
+    ScrollableDirective,
+    LoadingComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss'
 })
-export class SearchComponent implements OnInit, AfterViewInit {
+export class SearchComponent implements OnInit {
 
   anuncios$!: Observable<any[]>
   recomendados$!: Observable<any[]>;
@@ -45,41 +47,38 @@ export class SearchComponent implements OnInit, AfterViewInit {
   form = this.formBuilder.group({
     ordenar: ['']
   });
-  ordenarCtrl = this.form.get('ordenar') as FormControl
+
+  ordenarCtrl = this.form.get('ordenar') as FormControl;
+
+  loading = false;
 
 
   constructor(
     public core: CoreService,
     private storeService: StoreService,
     private formBuilder: FormBuilder
-
   ) {
+
+    afterNextRender(() => {
+      this.getItens();
+      this.form.patchValue({ordenar: this.core.orders[0]})
+    });
+
+
   }
 
   ngOnInit(): void {
-    this.getItens();
-    this.form.patchValue({ordenar: this.core.orders[0]})
-    
-  }
 
-
-  ngAfterViewInit(): void {
-    // this.ordenarCtrl.valueChanges.subscribe((c) => {
-    //   switch(c.value){
-    //     case 'menor valor':
-
-
-    //   }
-
-
-      
-    // })
   }
 
 
   getItens() {
+    this.loading = true;
     const result$ = this.storeService.dispatchAction({ group: EGroup.Anuncio, action: EAction.GetAll });
-    result$.pipe(first()).subscribe(() => this.listarTodos())
+    result$.pipe(first()).subscribe(() => {
+      this.loading = false;
+      this.listarTodos();
+    } )
   }
 
   listarTodos() {
@@ -115,7 +114,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
   }
 
   ngOnDestroy() {
-    window.removeEventListener('scroll', this.onScroll);
+    // window.removeEventListener('scroll', this.onScroll);
   }
 
 }

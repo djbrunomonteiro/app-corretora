@@ -1,5 +1,5 @@
-import { Component, HostListener, LOCALE_ID, OnInit } from '@angular/core';
-import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { Component, HostListener, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
@@ -27,23 +27,36 @@ register();
 })
 export class AppComponent implements OnInit {
   title = 'app-corretora';
+
+  isBrowser!: boolean;
   constructor(
     private auth: AuthService,
-    private utils: UtilsService
+    private utils: UtilsService,
+    @Inject(PLATFORM_ID) public platformId: Object,
     ) {
 
 
   }
   ngOnInit(): void {
-    this.auth.isAuth();
-    this.utils.widthSize.next(window.innerWidth);
-    this.utils.heigthSize.next(window.innerHeight);
+    this.isBrowser = isPlatformBrowser(this.platformId);
+    
+    if (this.isBrowser) {
+      this.auth.isAuth();
+      this.utils.widthSize.next(window.innerWidth);
+      this.utils.heigthSize.next(window.innerHeight);
+    }
+
+
   }
 
   @HostListener('window:resize', ['$event'])
   onWindowResize(){
-    this.utils.widthSize.next(window.innerWidth);
-    this.utils.heigthSize.next(window.innerHeight);
+    if (this.isBrowser) {
+      this.utils.widthSize.next(window.innerWidth);
+      this.utils.heigthSize.next(window.innerHeight);
+    }
+
+
   }
 
 

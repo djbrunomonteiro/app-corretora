@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { switchMap, map } from 'rxjs';
+import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { switchMap, map, combineLatestWith, withLatestFrom, of, delay } from 'rxjs';
 import { IResponse } from '../../models/response';
 import { StoreService } from '../../services/store.service';
 import { getAction, EGroup, EAction, appActions, IAction } from '../app.actions';
 import { UtilsService } from '../../services/utils.service';
 import { AnuncioService } from '../../services/anuncio.service';
+import { AllAnuncios } from '../selectors/anuncio.selector';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,13 @@ export class AnuncioEffectsService {
   getAll = createEffect(() =>
     this.actions$.pipe(
       ofType(getAction(EGroup.Anuncio, EAction.GetAll)),
-      switchMap(() => {
+      concatLatestFrom(() => this.storeService.select(AllAnuncios)),
+      switchMap(([_, anuncios]) => {
+        if(anuncios.length){ 
+          console.log('economizou ', anuncios);
+          
+          return of({error: false, message: 'Itens obtidos com sucesso!', results: anuncios}).pipe(delay(1000))
+        }
         return this.anuncioService.getAll().pipe(
           map((res: IResponse) => {
             if (res.status === 200) {
