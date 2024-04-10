@@ -27,7 +27,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: deploy_dist
-        path: dist/app-corretora/browser/
+        path: dist/app-corretora/server
 
   ftp-deploy:
     needs: build
@@ -46,5 +46,5 @@ jobs:
         server: ${{ secrets.ftp_host }}
         username: ${{ secrets.ftp_user }}
         password: ${{ secrets.ftp_password }}
-        server-dir: public_html/
+        server-dir: public_html/server
         dangerous-clean-slate: true # optional
