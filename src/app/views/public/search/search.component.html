@@ -3,11 +3,9 @@
         <app-search-filter (search)="pesquisar($event)" (clean)="listarTodos()" />
     </div>
 
-
-
     <div class="col-md-9 m-0">
 
-        @if(loading){
+        @if(loading$ |async){
             <app-loading/>
 
         }@else {
@@ -15,7 +13,7 @@
                 <h4>{{(anuncios$ | async)?.length}} Resultados encontrados</h4>
                 <mat-form-field appearance="outline">
                     <mat-label>Ordenar por</mat-label>
-                    <mat-select formControlName="ordenar">
+                    <mat-select formControlName="ordenar" >
                         @for (item of core.orders; track $index) {
                         <mat-option [value]="item">{{item | uppercase}}</mat-option>
                         }

@@ -68,33 +68,52 @@ export const anunciosSlides = (tipo: ESlides, start = 0, end = 8) => createSelec
     }
 );
 
-export const SearchAnuncios = (search: any) => createSelector(
+export const SearchAnuncios = (search: any, order?: any) => createSelector(
     AllAnuncios,
     (elements) => {
-        const resTermo = elements.filter(elem => 
-            String(elem.titulo).toLowerCase().includes(search?.termo.toLowerCase()) ||
-            String(elem.descricao).toLowerCase().includes(search?.termo.toLowerCase()) ||
-            String(elem.end_bairro).toLowerCase().includes(search?.termo.toLowerCase()) ||
-            String(elem.end_cidade).toLowerCase().includes(search?.termo.toLowerCase()) ||
-            String(elem.tipo).toLowerCase().includes(search?.termo.toLowerCase()) ||
-            String(elem.codigo).toLowerCase().includes(search?.termo.toLowerCase())
-        );
+
+        let results: any[] = [];
+        
+        const {all,termo, categoria, tipo, preco_max} = search;
+        if(all){return {results: results.concat(elements), recomends: elements} }
 
 
-        const resCategoria = elements.filter(elem => elem.categoria === search?.categoria);
-        const resTipo = resCategoria.filter(elem => elem.tipo === search?.tipo);
-        let result: IAnuncio[] = resTipo;
-        if(search?.termo){
-            result = resTipo.filter(elem => String(elem.titulo).toLowerCase().includes(search?.termo.toLowerCase()));
+        results = [...elements];
+
+        if(termo){
+
+            const resTermo = results.filter(elem => 
+                String(elem.titulo).toLowerCase().includes(search?.termo.toLowerCase()) ||
+                String(elem.descricao).toLowerCase().includes(search?.termo.toLowerCase()) ||
+                String(elem.end_bairro).toLowerCase().includes(search?.termo.toLowerCase()) ||
+                String(elem.end_cidade).toLowerCase().includes(search?.termo.toLowerCase()) ||
+                String(elem.tipo).toLowerCase().includes(search?.termo.toLowerCase()) ||
+                String(elem.codigo).toLowerCase().includes(search?.termo.toLowerCase())
+                );
+                
+            results = [...resTermo]
         }
-        if(search?.preco_max){
-            result = resTipo.filter(elem => {
+
+
+
+        if(categoria){
+            results = results.filter(elem => elem.categoria === search?.categoria);
+        }
+
+        if(tipo){
+
+            results = results.filter(elem => elem.tipo === search?.tipo);
+        }
+
+        if(preco_max){
+            results = results.filter(elem => {
                 const preco = Number(elem.preco) ?? 0; 
                 if(preco === 0){return true};
                 return preco <= Number(search?.preco_max) && preco >= Number(search?.preco_min)
             } );
         }
 
-        return {results: result.concat(resTermo), recomends: resCategoria} 
+
+        return {results, recomends: elements} 
     }
 );

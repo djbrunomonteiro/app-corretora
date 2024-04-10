@@ -52,7 +52,6 @@ export class ListAgendamentosComponent {
   }
 
   getAgendamentos(){
-    console.log(this.clienteService.clienteAuth);
     let id = this.clienteService.clienteAuth.id;
     const result$ = this.storeService.dispatchAction({group:EGroup.Agendamento, action: EAction.GetAll, params: {id}});
     result$.pipe(first()).subscribe(res => {
@@ -61,9 +60,7 @@ export class ListAgendamentosComponent {
 
     this.agendamentos$ = this.storeService.select(AllAgendamentos);
     this.agendamentos$.subscribe(res => {
-      console.log('res', res);
       this.dataSource = new MatTableDataSource<any[]>(res); 
-
     } )
 
 

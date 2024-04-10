@@ -25,8 +25,6 @@ export class ClienteService {
     this.collectionRef = collection(this.firestore, 'clientes');
     this.storeService.select(ClienteIsAuth).subscribe(res => {
       this.clienteAuth = res;
-      console.log('cliente is auth', this.clienteAuth);
-      
     } );
   }
 

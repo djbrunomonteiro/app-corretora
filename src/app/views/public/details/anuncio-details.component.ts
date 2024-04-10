@@ -1,11 +1,11 @@
-import { CommonModule } from '@angular/common';
-import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit, afterNextRender } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, Inject, OnInit, PLATFORM_ID, afterNextRender } from '@angular/core';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { MaterialModule } from '../../../modules/material/material.module';
 import { UrlFotosPipe } from '../../../pipes/url-fotos.pipe';
 import { StoreService } from '../../../services/store.service';
 import { EAction, EGroup } from '../../../store/app.actions';
-import { Observable, first } from 'rxjs';
+import { Observable, Subject, first, takeUntil } from 'rxjs';
 import { AllAnuncios, OneAnuncio } from '../../../store/selectors/anuncio.selector';
 import { ActivatedRoute } from '@angular/router';
 import { FormContatoComponent } from '../../shared/form-contato/form-contato.component';
@@ -33,11 +33,13 @@ export class AnuncioDetailsComponent implements OnInit {
 
   anuncio$!: Observable<any>;;
 
-  loading = false
+  loading = true;
+  unsub$ = new Subject()
   constructor(
     private storeService: StoreService,
     private activatedRoute: ActivatedRoute,
     public dialog: MatDialog,
+    @Inject(PLATFORM_ID) public platformId: Object,
   ){
 
     afterNextRender(() => {
@@ -56,7 +58,7 @@ export class AnuncioDetailsComponent implements OnInit {
     this.loading = true;
     const result$ = this.storeService.dispatchAction({group: EGroup.Anuncio, action: EAction.GetAll});
     result$.pipe(first()).subscribe((e) =>{
-      this.anuncio$ = this.storeService.select(OneAnuncio(url));
+      this.anuncio$ = this.storeService.select(OneAnuncio(url)).pipe(takeUntil(this.unsub$));
       this.loading = false;
     })
 
@@ -73,7 +75,10 @@ export class AnuncioDetailsComponent implements OnInit {
   }
 
   openWhatsapp() {
-    window.open('https://api.whatsapp.com/send?phone=5598970278027&text=Estou%20entrando%20em%20contato%20atrav%C3%A9s%20do%20site%20telmamonteiro.com.br%20e%20gostaria%20de%20solicitar%20atendimento.', '_blank');
+    if(!isPlatformBrowser(this.platformId)){
+      window.open('https://api.whatsapp.com/send?phone=5598970278027&text=Estou%20entrando%20em%20contato%20atrav%C3%A9s%20do%20site%20telmamonteiro.com.br%20e%20gostaria%20de%20solicitar%20atendimento.', '_blank');
+    }
+    
   }
 
 

@@ -42,18 +42,11 @@ export class AgendamentoService {
       if(!this.collectionRef){return resolve([])}
       const itens: any[] = [];
       let q: Query;
-
-      console.log('id_cliente', id_cliente);
-      
       if(id_cliente){
         q = query(this.collectionRef, where('id_cliente', "==", id_cliente))
       }else{
         q = query(this.collectionRef)
       }
-
-      console.log('query', q);
-      
-      
 
       getDocs(q).then(res => {
         res.forEach(async (doc) => {

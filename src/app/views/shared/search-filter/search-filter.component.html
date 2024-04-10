@@ -5,6 +5,9 @@
             <button (click)="limpar()" mat-button color="warn">Limpar X</button>
         </div>
 
+        <button (click)="verTodos()" class="w-100 my-2" mat-stroked-button color="primary">Ver todos os anúncios</button>
+
+
         <div class="d-flex flex-column mt-4">
             <h6 class="mb-3">O que você deseja ?</h6>
             <mat-form-field appearance="outline">
@@ -17,6 +20,7 @@
         }@else {
             <button (click)="ctrlFilter(true)" class="w-100 my-2" mat-stroked-button color="primary">Exibir Filtros</button>
         }
+
     </div>
 
     @if (openFilter) {
@@ -43,6 +47,8 @@
                 </mat-form-field>
             </div>
             <h6 class="mb-3 w-100">Faixa de preço</h6>
+
+
     
             <div class="d-flex">
                 <mat-form-field class="w-50 m-rigth" appearance="outline">
@@ -70,26 +76,26 @@
                 </mat-form-field>
             </div> -->
     
+            <div class="w-100 my-2">
+                <h6>Dormitórios</h6>
+                <mat-button-toggle-group formControlName="dorm_qtd" #group="matButtonToggleGroup">
+                    <mat-button-toggle value="2" aria-label="um dormitorio">
+                        1
+                    </mat-button-toggle> <mat-button-toggle value="1" aria-label="dois dormitorio">
+                        2
+                    </mat-button-toggle> <mat-button-toggle value="2" aria-label="tres dormitorio">
+                        3
+                    </mat-button-toggle> <mat-button-toggle value="3" aria-label="quarto dormitorio">
+                        4
+                    </mat-button-toggle> <mat-button-toggle value="4" aria-label="cinco ou mais dormitorio">
+                        5+
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
+
+            </div>
             <div class="d-md-flex justify-content-between">
-                <div class="w-50 my-2">
-                    <h6>Dormitórios</h6>
-                    <mat-button-toggle-group formControlName="dorm_qtd" #group="matButtonToggleGroup">
-                        <mat-button-toggle value="2" aria-label="um dormitorio">
-                            1
-                        </mat-button-toggle> <mat-button-toggle value="1" aria-label="dois dormitorio">
-                            2
-                        </mat-button-toggle> <mat-button-toggle value="2" aria-label="tres dormitorio">
-                            3
-                        </mat-button-toggle> <mat-button-toggle value="3" aria-label="quarto dormitorio">
-                            4
-                        </mat-button-toggle> <mat-button-toggle value="4" aria-label="cinco ou mais dormitorio">
-                            5+
-                        </mat-button-toggle>
-                    </mat-button-toggle-group>
     
-                </div>
-    
-                <div class="w-50 my-2">
+                <div class="w-100 my-2">
                     <h6>Suítes</h6>
                     <mat-button-toggle-group formControlName="suite_qtd" #group="matButtonToggleGroup">
                         <mat-button-toggle value="2" aria-label="um dormitorio">
@@ -109,7 +115,7 @@
     
     
             <div class="d-md-flex justify-content-between my-3">
-                <div class="w-50">
+                <div class="w-100">
                     <h6>Vagas</h6>
                     <mat-button-toggle-group formControlName="vagas_qtd" #group="matButtonToggleGroup">
                         <mat-button-toggle value="2" aria-label="um dormitorio">

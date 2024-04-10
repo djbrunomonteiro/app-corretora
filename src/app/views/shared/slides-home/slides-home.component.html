@@ -1,5 +1,5 @@
 <section class="slides">
-    <swiper-container [breakpoints]="breakpoints" navigation="true" pagination="true" slidesOffsetAfter="0.5">
+    <swiper-container [breakpoints]="breakpoints" navigation="true" pagination="true" slidesOffsetAfter="0.5" loop="true" autoplay-delay="7000">
         @for (item of slides1; track $index) {
             <swiper-slide class="slide">
                 @if ((item.fotos[0] | urlFotos: 'anuncios' | async); as src) {

@@ -77,8 +77,6 @@ export class LeadEffectsService {
         const item = action?.props?.item;
         return this.leadService.updateOne(item).pipe(
           map((res: IResponse) => {
-            console.log('RESULT UPDATE', res);
-
             if (res.status === 200 || res.status === 201) {
               const item = this.utils.paramsJsonParse(res.results)
               this.storeService.dispatchAction({ group: EGroup.Lead, action: EAction.SetOneStore, props: { item } })
@@ -92,7 +90,6 @@ export class LeadEffectsService {
         if (res.error) {
           return appActions({ group: EGroup.Lead, action: EAction.UpdateOneError, props: { status: res.status, error: res.error, message: res?.message } })
         } else {
-          console.log('existe rror', res.error);
           return appActions({ group: EGroup.Lead, action: EAction.UpdateOneSucess, props: { status: res.status, error: res.error, message: res?.message } })
         }
       })

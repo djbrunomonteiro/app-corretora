@@ -93,10 +93,6 @@ export class AgendamentoComponent implements OnInit {
     });
 
     const item = {...this.form.value};
-
-    console.log('item', item);
-    
-
     const result$ = this.storeService.dispatchAction({ group: EGroup.Agendamento, action: EAction.SetOne, props: { item } });
     result$.pipe(first()).subscribe(res =>{
       this.utils.showMessage(res.props?.message, undefined, {duration: 5000});

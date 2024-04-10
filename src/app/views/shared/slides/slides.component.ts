@@ -83,8 +83,7 @@ export class SlidesComponent {
   }
 
   openMais(){
-    console.log('teste', this.slidesConfig);
-    const queryParams = { termo: String(this.slidesConfig.titulo).toLowerCase() } as NavigationExtras
+    const queryParams = { termo: String(this.slidesConfig.tipo).toLowerCase() } as NavigationExtras
     this.router.navigate(['buscar'], {queryParams} )
     
   }

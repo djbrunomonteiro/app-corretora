@@ -119,7 +119,6 @@ export class ClienteEffectsService {
         if (res.error) {
           return appActions({ group: EGroup.Cliente, action: EAction.UpdateOneError, props: { status: res.status, error: res.error, message: res?.message } })
         } else {
-          console.log('existe rror', res.error);
           return appActions({ group: EGroup.Cliente, action: EAction.UpdateOneSucess, props: { status: res.status, error: res.error, message: res?.message } })
         }
       })

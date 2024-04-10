@@ -244,8 +244,6 @@ export class AdminClientesEditComponent implements OnInit, AfterViewInit {
 
   salvar() {
     const item = { ...this.form.value, data_nasc: String(this.form.value.data_nasc), url: this.createUrl() };
-    console.log('is add item', item);
-    
 
     return;
     let action: MyAction;

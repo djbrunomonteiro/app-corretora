@@ -30,8 +30,15 @@ export class SearchHomeComponent {
     private router: Router,
   ){}
 
-  search(){
-    const queryParams = { categoria: this.form.value.categoria, tipo: this.form.value.tipo, termo: this.form.value.termo } as NavigationExtras
+  search(all = false){
+    let queryParams: NavigationExtras;
+    if(all){
+      queryParams = {anuncios: 'todos-os-imoveis-publicados-compra-venda-aluguel-sao-luis-maranhao' } as NavigationExtras
+
+    }else{
+      queryParams = { categoria: this.form.value.categoria, tipo: this.form.value.tipo, termo: this.form.value.termo } as NavigationExtras
+
+    }
     this.router.navigate(['buscar'], {queryParams} )
   }
 

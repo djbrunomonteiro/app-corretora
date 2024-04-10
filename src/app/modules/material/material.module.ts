@@ -25,14 +25,12 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatMenuModule} from '@angular/material/menu';
 import {
-  MatBottomSheet,
   MatBottomSheetModule,
-  MatBottomSheetRef,
 } from '@angular/material/bottom-sheet';
 import {MatRippleModule} from '@angular/material/core';
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import {ScrollingModule} from '@angular/cdk/scrolling';
-
+import {MatSliderModule} from '@angular/material/slider';
 @NgModule({
   declarations: [],
   imports: [
@@ -64,7 +62,8 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
     MatBottomSheetModule,
     MatRippleModule,
     ClipboardModule,
-    ScrollingModule
+    ScrollingModule,
+    MatSliderModule
     
   ],
   exports:[
@@ -95,7 +94,8 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
     MatBottomSheetModule,
     MatRippleModule,
     ClipboardModule,
-    ScrollingModule
+    ScrollingModule,
+    MatSliderModule
   ]
 })
 export class MaterialModule { }

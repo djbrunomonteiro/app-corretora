@@ -26,8 +26,6 @@ export class AnuncioEffectsService {
       concatLatestFrom(() => this.storeService.select(AllAnuncios)),
       switchMap(([_, anuncios]) => {
         if(anuncios.length){ 
-          console.log('economizou ', anuncios);
-          
           return of({error: false, message: 'Itens obtidos com sucesso!', results: anuncios}).pipe(delay(1000))
         }
         return this.anuncioService.getAll().pipe(
@@ -97,7 +95,6 @@ export class AnuncioEffectsService {
         if (res.error) {
           return appActions({ group: EGroup.Anuncio, action: EAction.UpdateOneError, props: { status: res.status, error: res.error, message: res?.message } })
         } else {
-          console.log('existe rror', res.error);
           return appActions({ group: EGroup.Anuncio, action: EAction.UpdateOneSucess, props: { status: res.status, error: res.error, message: res?.message } })
         }
       })

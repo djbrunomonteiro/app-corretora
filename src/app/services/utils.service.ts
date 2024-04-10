@@ -1,10 +1,11 @@
 import { Platform } from '@angular/cdk/platform';
 import { HttpClient } from '@angular/common/http';
-import { HostListener, Injectable } from '@angular/core';
+import { HostListener, Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import {Clipboard} from '@angular/cdk/clipboard';
 import { Router } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class UtilsService {
     private http: HttpClient,
     private _snackBar: MatSnackBar,
     private clipboard: Clipboard,
+    @Inject(PLATFORM_ID) public platformId: Object,
   ) { }
 
   copyText(txt: string = '') {
@@ -30,7 +32,10 @@ export class UtilsService {
   }
 
   openLinkInNewTab(url: string) {
-    window.open(url,'_blank');
+    if(isPlatformBrowser(this.platformId)){
+      window.open(url,'_blank');
+
+    }
   }
   showMessage(message: string = '', action: string = 'X', config: MatSnackBarConfig = {horizontalPosition: 'center', verticalPosition: 'bottom', duration: 3000}){
     this._snackBar.open(message, action, config);
