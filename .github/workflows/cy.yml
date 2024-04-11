@@ -24,6 +24,8 @@ jobs:
         with:
           name: deploy_dist
           path: dist/app-corretora # Uploads everything from the current directory
+      - name: Copy package.json to dist/app-corretora
+        run: cp package.json dist/app-corretora
 
   ftp-deploy:
     needs: build
@@ -41,7 +43,5 @@ jobs:
           server: ${{ secrets.ftp_host }}
           username: ${{ secrets.ftp_user }}
           password: ${{ secrets.ftp_password }}
-          local-dir: dist/app-corretora/
-          additional-files: package.json
           server-dir: public_html/
           dangerous-clean-slate: true # optional
