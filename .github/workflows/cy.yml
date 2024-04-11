@@ -18,14 +18,14 @@ jobs:
         run: npm install
       - name: Build for production
         run: npm run build
+      - name: Copy package.json to dist/app-corretora
+        run: cp package.json dist/app-corretora
       - name: Upload artifacts to be used in next job
         if: success()
         uses: actions/upload-artifact@v1
         with:
           name: deploy_dist
           path: dist/app-corretora # Uploads everything from the current directory
-      - name: Copy package.json to dist/app-corretora
-        run: cp package.json dist/app-corretora
 
   ftp-deploy:
     needs: build
