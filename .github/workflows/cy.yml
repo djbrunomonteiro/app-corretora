@@ -23,7 +23,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: deploy_dist
-          path: . # Uploads everything from the current directory
+          path: dist/app-corretora # Uploads everything from the current directory
 
   ftp-deploy:
     needs: build
@@ -35,13 +35,13 @@ jobs:
         with:
           name: deploy_dist
           path: ./
-      - name: Remove node_modules directory
-        run: rm -rf ./node_modules
       - name: Deploy to FTP
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
           server: ${{ secrets.ftp_host }}
           username: ${{ secrets.ftp_user }}
           password: ${{ secrets.ftp_password }}
+          local-dir: dist/app-corretora
+          additional-files: package.json
           server-dir: public_html/
           dangerous-clean-slate: true # optional
