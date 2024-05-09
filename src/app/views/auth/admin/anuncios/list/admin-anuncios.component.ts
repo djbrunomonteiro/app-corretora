@@ -69,7 +69,9 @@ export class AdminAnunciosComponent implements OnInit {
   delete(id: string){
     const dialogRef = this.dialog.open(AlertConfirmComponent );
     dialogRef.afterClosed().pipe(first()).subscribe(res => {
-      if(!res){return}
+      if(!res){return};
+      console.log('idd', id);
+      
 
       const result$ = this.storeService.dispatchAction({group: EGroup.Anuncio, action: EAction.DeleteOne, params: {id}});
       result$.pipe(first()).subscribe((act) =>{

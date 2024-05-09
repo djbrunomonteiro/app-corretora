@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, Inject, Input, OnInit, Optional } from '@angular/core';
+import { AfterViewInit, Component, Inject, Input, OnDestroy, OnInit, Optional } from '@angular/core';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MaterialModule } from '../../../../../modules/material/material.module';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -15,6 +15,8 @@ import { UrlFotosPipe } from '../../../../../pipes/url-fotos.pipe';
 import { StoreService } from '../../../../../services/store.service';
 import { EAction, EGroup, IAction, MyAction } from '../../../../../store/app.actions';
 import { CoreService } from '../../../../../services/core.service';
+import { NgxEditorModule } from 'ngx-editor';
+import { Editor } from 'ngx-editor';
 
 @Component({
   selector: 'app-edit',
@@ -28,7 +30,8 @@ import { CoreService } from '../../../../../services/core.service';
     NgxMaskPipe,
     DropzoneCdkModule,
     DropzoneMaterialModule,
-    UrlFotosPipe
+    UrlFotosPipe,
+    NgxEditorModule
   ],
   providers: [
     {
@@ -39,7 +42,10 @@ import { CoreService } from '../../../../../services/core.service';
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.scss'
 })
-export class AdminAnuncioEditComponent implements OnInit, AfterViewInit {
+export class AdminAnuncioEditComponent implements OnInit, AfterViewInit, OnDestroy {
+
+  editor!: Editor;
+  html = '';
 
   form = this._formBuilder.group({
     id: [''],
@@ -80,9 +86,6 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit {
   ctrltipo = this.form.get('tipo') as FormControl;
   ctrlpreco = this.form.get('preco') as FormControl;
 
-
-
-
   estados: any[] = [];
   cidades: any[] = [];
 
@@ -107,7 +110,11 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit {
   ) {
   }
 
+
   async ngOnInit(): Promise<void> {
+
+  
+    this.editor = new Editor();
     this.utils.getLocalidades().subscribe((res: any) => {
       this.estados = res?.estados;
       setTimeout(() => {
@@ -186,6 +193,11 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit {
   salvar(){
     const item = {...this.form.value, url: this.createUrl()};
     let action: MyAction;
+
+    console.log(item);
+    
+
+    return;
     if(item.id){
       action = {group:EGroup.Anuncio, action: EAction.UpdateOne, props: {item}}
 
@@ -244,6 +256,10 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit {
 
     return result;
 
+  }
+
+  ngOnDestroy(): void {
+    this.editor.destroy();
   }
 
 

@@ -1,13 +1,13 @@
 export const environment = {
 
     firebaseConfig : {
-        apiKey: "AIzaSyAIugSQiIwaSCwA2aAemUm0-0ZHpRXxHc4",
-        authDomain: "corretora-teste.firebaseapp.com",
-        projectId: "corretora-teste",
-        storageBucket: "corretora-teste.appspot.com",
-        messagingSenderId: "1063240282485",
-        appId: "1:1063240282485:web:65155f8bc473bcae8ce33c",
-        measurementId: "G-4RC43GY5QL"
+        apiKey: "AIzaSyAKWi-JG6bxDEdn_mmahHn-0CBjzbyrnlc",
+        authDomain: "site-telmamonteiro.firebaseapp.com",
+        projectId: "site-telmamonteiro",
+        storageBucket: "site-telmamonteiro.appspot.com",
+        messagingSenderId: "70696330009",
+        appId: "1:70696330009:web:df505eb3dea260e92b1b88",
+        measurementId: "G-H4SQ825ZRS"
       }
       
 };

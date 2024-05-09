@@ -1,4 +1,3 @@
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Firestore, collection, CollectionReference, doc, setDoc, getDocs, updateDoc, deleteDoc, getDoc, query, where, limit, arrayUnion } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IResponse } from '../models/response';
@@ -6,21 +5,22 @@ import * as bcryptjs from 'bcryptjs'
 import { StoreService } from './store.service';
 import { ClienteIsAuth } from '../store/selectors/cliente.selector';
 import { EAction, EGroup } from '../store/app.actions';
+
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClienteService {
-
   collectionRef: CollectionReference | undefined;
-
   clienteAuth: any;
-
   constructor(
     private firestore: Firestore,
     private storeService: StoreService,
-    @Inject(PLATFORM_ID) public platformId: Object,
+
+    @Inject(PLATFORM_ID) public platformId: Object
+
   ) {
     this.collectionRef = collection(this.firestore, 'clientes');
     this.storeService.select(ClienteIsAuth).subscribe(res => {
@@ -123,12 +123,11 @@ export class ClienteService {
           updateDoc(ref, newItem)
             .then(res => {
               response = { status: 201, error: false, results: newItem, message: 'Item atualizado com sucesso!' };
-              if(newItem?.auth){
-                if(isPlatformBrowser(this.platformId)){
-                  localStorage.setItem('access_token', hash )
-                  
-                }
+
+              if(isPlatformBrowser(this.platformId)){
+                localStorage.setItem('access_token', hash )
               }
+
               sub.next(response)
   
             }).catch(err => {

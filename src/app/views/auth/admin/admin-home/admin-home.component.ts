@@ -23,20 +23,14 @@ export class AdminHomeComponent implements OnInit {
   constructor(){
     afterNextRender(() => {
       localStorage.clear()
-      
     })
   }
+  
   ngOnInit(): void {
-
-    
   }
-
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
-
-
-
 }
 
 export interface PeriodicElement {

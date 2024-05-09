@@ -12,6 +12,7 @@ import { FormContatoComponent } from '../../shared/form-contato/form-contato.com
 import { MatDialog } from '@angular/material/dialog';
 import { AgendamentoComponent } from '../../shared/agendamento/agendamento.component';
 import { LoadingComponent } from '../../shared/loading/loading.component';
+import { ESize } from '../../../enums/folders';
 
 @Component({
   selector: 'app-anuncio-details',
@@ -34,7 +35,9 @@ export class AnuncioDetailsComponent implements OnInit {
   anuncio$!: Observable<any>;;
 
   loading = true;
-  unsub$ = new Subject()
+  unsub$ = new Subject();
+  size = ESize;
+  
   constructor(
     private storeService: StoreService,
     private activatedRoute: ActivatedRoute,

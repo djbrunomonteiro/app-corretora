@@ -73,6 +73,9 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+
+    
     this.form.valueChanges
     .pipe(takeUntil(this.unsub$))
     .subscribe(c =>{

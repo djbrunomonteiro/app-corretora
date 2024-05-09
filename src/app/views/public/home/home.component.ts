@@ -71,7 +71,7 @@ export class HomeComponent {
       title: 'Facebook',
       iconlabel: 'perm_phone_msg',
       icon: 'perm_phone_msg',
-      url: 'https://www.instagram.com/telmamonteirodematos?igsh=MTl0ZXoycmY2YTNvYQ==',
+      url: 'https://www.facebook.com/telma.monteiro.79?mibextid=ZbWKwL',
       target: '_blank'
     },
 

@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:app-corretora": "node dist/app-corretora/server/server.mjs"
+    "serve:ssr": "node dist/app-corretora/server/server.mjs"
   },
   "private": true,
   "dependencies": {
@@ -38,6 +38,7 @@
     "firebase": "^10.7.2",
     "ng2-img-max": "^2.2.9",
     "ngx-dropzone": "^3.0.0",
+    "ngx-editor": "^17.0.2",
     "ngx-mask": "^17.0.4",
     "rxjs": "~7.8.0",
     "swiper": "^11.0.5",
