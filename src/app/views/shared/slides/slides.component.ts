@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { CUSTOM_ELEMENTS_SCHEMA, Component, Input } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, Input, Signal, effect, inject, signal } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { SwiperOptions } from 'swiper/types';
@@ -7,10 +7,11 @@ import { MaterialModule } from '../../../modules/material/material.module';
 import { UrlFotosPipe } from '../../../pipes/url-fotos.pipe';
 import { SearchHomeComponent } from '../search-home/search-home.component';
 import { StoreService } from '../../../services/store.service';
-import { UltimosAnuncios, anunciosSlides } from '../../../store/selectors/anuncio.selector';
-import { ESlides } from '../../../enums/slides';
 import { IConfigSlides } from '../../../models/configslides';
 import { NavigationExtras, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AnunciosStore } from '../../../store/anuncios';
+import { IAnuncio } from '../../../models/anuncio';
 
 @Component({
   selector: 'app-slides',
@@ -32,6 +33,8 @@ import { NavigationExtras, Router } from '@angular/router';
 export class SlidesComponent {
 
   @Input() slidesConfig!: IConfigSlides;
+
+  private readonly store = inject(Store);
 
   
   breakpoints: SwiperOptions['breakpoints'] = {
@@ -59,20 +62,31 @@ export class SlidesComponent {
     }
   };
 
-  slides: any[] = [];
+  slides!: Signal<any[]>;
 
+  anunciosStore = inject(AnunciosStore)
+
+  countSLider = signal(3)
+  
 
   constructor(
     private storeService: StoreService,
     private router: Router
-    ) { }
+    ) {
+
+    }
   ngOnInit(): void {
     this.setItensSlides()
   }
 
   setItensSlides(){
     if(!this.slidesConfig){return;}
-    this.storeService.select(anunciosSlides(this.slidesConfig.tipo, this.slidesConfig.start, this.slidesConfig.end)).subscribe(res => this.slides = res);
+
+    this.slides = this.anunciosStore.selectItensSlider(this.slidesConfig.tipo, this.slidesConfig.start, this.slidesConfig.end)
+    
+    // this.slidesSignal = this.store.selectSignal(anunciosSlides(this.slidesConfig.tipo, this.slidesConfig.start, this.slidesConfig.end))
+    
+    // this.storeService.select(anunciosSlides(this.slidesConfig.tipo, this.slidesConfig.start, this.slidesConfig.end)).subscribe(res => this.slides = res);
     if(!this.slidesConfig.breakpoints){return;}
     this.breakpoints = this.slidesConfig.breakpoints;
 

@@ -3,7 +3,7 @@ name: Deploy Web FTP
 on:
   push:
     branches:
-      - main
+      - testeeee
   workflow_dispatch:
 
 jobs:

@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { catchError, of, switchMap } from 'rxjs';
 import { ESize } from '../enums/folders';
 import { UtilsService } from './utils.service';
 import { StorageReference, getStorage, getDownloadURL, ref, uploadBytes } from '@angular/fire/storage'
@@ -25,23 +24,12 @@ export class UploadService {
 
   async uploadIMG(file: File, folder = 'anuncios') {
     return new Promise<string>(async resolve => {
-      const filesResize = await this.gerarMultiplosTamanhos(file);
-      let results = ''
-      for (let index = 0; index < filesResize.length; index++) {
-        const size = filesResize[index]?.size;
-        const fileR = filesResize[index]?.file;
-        if(!fileR){return;}
-        this.storageRef = ref(this.storage, `${folder}/${size}/${fileR?.name}`);
-        const resUpload = await uploadBytes(this.storageRef, fileR);
-        results = resUpload?.ref.name;
-      }
-
-      resolve(results)
-
+      if(!file){return;}
+      const name = `img-${Math.random().toString(36).substring(2, 8)}${Date.now().toString(36)}`
+      this.storageRef = ref(this.storage, `${folder}/${ESize.large}/${name}`);
+      const resUpload = await uploadBytes(this.storageRef, file);
+      resolve(resUpload?.ref.name)
     })
-
-
-
   }
 
 
@@ -72,7 +60,7 @@ export class UploadService {
     return newName;
   };
 
-  async getFoto(name: string, folder: string, size: string = ESize.medium) {
+  async getFoto(name: string, folder: string, size: string = ESize.large) {
     const path = `${folder}/${size}/${name}`
     this.storageRef = ref(this.storage, path);
     return await getDownloadURL(this.storageRef)
@@ -92,7 +80,7 @@ export class UploadService {
         switch (index) {
           case 0:
             resResize = file
-            size = ESize.medium
+            size = ESize.large
             break;
           default:
             resResize = file

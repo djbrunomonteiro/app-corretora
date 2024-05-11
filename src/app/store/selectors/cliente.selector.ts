@@ -5,6 +5,7 @@ export const clienteState = createFeatureSelector<fromAppReducer.AppState>('clie
 export const AllClientes = createSelector(
     clienteState,
     (elements) => {
+        return []
         const result = Object.values(elements.entities);
         return result
     }

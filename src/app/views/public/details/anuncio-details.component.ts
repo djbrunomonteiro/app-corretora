@@ -34,7 +34,7 @@ export class AnuncioDetailsComponent implements OnInit {
 
   anuncio$!: Observable<any>;;
 
-  loading = true;
+  loading = false;
   unsub$ = new Subject();
   size = ESize;
   
@@ -45,14 +45,15 @@ export class AnuncioDetailsComponent implements OnInit {
     @Inject(PLATFORM_ID) public platformId: Object,
   ){
 
-    afterNextRender(() => {
-      const url = this.activatedRoute.snapshot.paramMap.get('url');
-      if (!url) { return };
-      this.getItem(url);
-    });
   }
 
   ngOnInit(): void {
+    if(isPlatformBrowser(this.platformId)){
+      const url = this.activatedRoute.snapshot.paramMap.get('url');
+      if (!url) { return };
+      this.getItem(url);
+
+    }
 
   }
 
@@ -60,9 +61,10 @@ export class AnuncioDetailsComponent implements OnInit {
     if(!url){return}
     this.loading = true;
     const result$ = this.storeService.dispatchAction({group: EGroup.Anuncio, action: EAction.GetAll});
-    result$.pipe(first()).subscribe((e) =>{
-      this.anuncio$ = this.storeService.select(OneAnuncio(url)).pipe(takeUntil(this.unsub$));
+    result$.subscribe((e) =>{
+      console.log('eitaaaa nos', e);
       this.loading = false;
+      this.anuncio$ = this.storeService.select(OneAnuncio(url)).pipe(takeUntil(this.unsub$));
     })
 
   }

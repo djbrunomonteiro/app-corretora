@@ -1,4 +1,5 @@
 <h2 mat-dialog-title>Editor de Anúncio</h2>
+
 <mat-dialog-content class="mat-typography">
   <form [formGroup]="form">
 
@@ -14,12 +15,6 @@
           <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
           <ngx-editor [editor]="editor" formControlName="descricao"  [disabled]="false" [placeholder]="'Ex. casa próximo de tudo...'"></ngx-editor>
         </div>
-
-        <!-- <mat-form-field appearance="outline">
-          <mat-label>Descrição</mat-label>
-          <textarea formControlName="descricao" matInput placeholder="Ex. casa próximo de tudo..." required></textarea>
-        </mat-form-field> -->
-
         <p>Endereço</p>
 
         <div class="d-flex">
@@ -235,14 +230,14 @@
 
       <mat-step>
         <ng-template matStepLabel>Fotos</ng-template>
-
+<!-- 
         <p>Fotos 360º Graus</p>
         <div class="d-flex mt-3">
           <mat-form-field class="w-100" appearance="outline">
             <mat-label>Link Tour Virtual</mat-label>
             <input matInput formControlName="tour_virtual">
           </mat-form-field>
-        </div>
+        </div> -->
 
 
         <p>Fotos Padrão</p>
@@ -275,7 +270,14 @@
 
   </form>
 </mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button (click)="salvar()" class="w-25" [disabled]="form.invalid || loadingUpload" mat-raised-button color="primary" cdkFocusInitial>SALVAR</button>
-</mat-dialog-actions>
+
+@if (loadingSave) {
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+}@else {
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button (click)="salvar()" class="w-25" [disabled]="form.invalid || loadingUpload" mat-raised-button color="primary" cdkFocusInitial>SALVAR</button>
+  </mat-dialog-actions>
+
+}
+

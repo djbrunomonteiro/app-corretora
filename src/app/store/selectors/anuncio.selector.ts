@@ -4,12 +4,25 @@ import { ClienteIsAuth, OneCliente } from './cliente.selector';
 import { UtilsService } from '../../services/utils.service';
 import { ESlides } from '../../enums/slides';
 import { IAnuncio } from '../../models/anuncio';
-export const anuncioState = createFeatureSelector<fromAppReducer.AppState>('anuncioState');
+import {AnuncioState, AnunciosStore} from '../anuncios'
+import { inject } from '@angular/core';
+
+export interface AppS {
+    anuncios: AnuncioState
+}
+
+
+export const anuncioState = createFeatureSelector<AnuncioState>('user');
 
 export const AllAnuncios = createSelector(
     anuncioState,
     (elements) => {
+        console.log('chamou o select pai', elements);
+        
+        return []
         const result = Object.values(elements.entities);
+        console.log(result);
+        
         return result as IAnuncio[]
     }
 );
@@ -26,6 +39,8 @@ export const UltimosAnuncios = (start = 0, end = 8) => createSelector(
 export const OneAnuncio = (url: string) => createSelector(
     AllAnuncios,
     (elements) => {
+        console.log(url);
+        
         const result = elements.filter(elem => elem.url === url)[0];
         return result
     }
@@ -61,6 +76,9 @@ export const recomendadosAnuncio = (id: string) => createSelector(
 export const anunciosSlides = (tipo: ESlides, start = 0, end = 8) => createSelector(
     AllAnuncios,
     (elements) => {
+
+        console.log('elementios', elements);
+        
         let result: IAnuncio[] = UtilsService.prototype.ordenarItens(elements, 'created_at');
         result = result.filter((elem) => String(elem.tipo).includes(tipo) && elem.status === 'aberto')
         result = result.filter((_, i) => i >= start && i <= end)

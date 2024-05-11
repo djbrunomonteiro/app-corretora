@@ -4,6 +4,6 @@ export enum EFolderUpload {
 }
 
 export enum ESize {
-    medium = 'medium',
+    // medium = 'medium',
     large = 'large',
 }

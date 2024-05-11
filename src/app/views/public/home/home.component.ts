@@ -1,9 +1,8 @@
-import { AfterViewInit, CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 import { MaterialModule } from '../../../modules/material/material.module';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreService } from '../../../services/core.service';
-import { Router } from '@angular/router';
 import { SearchHomeComponent } from '../../shared/search-home/search-home.component';
 import { UrlFotosPipe } from '../../../pipes/url-fotos.pipe';
 import { BannerVenderHomeComponent } from '../../shared/banner-vender-home/banner-vender-home.component';
@@ -74,11 +73,7 @@ export class HomeComponent {
       url: 'https://www.facebook.com/telma.monteiro.79?mibextid=ZbWKwL',
       target: '_blank'
     },
-
-
   ]
-
-
 
   constructor(
     private fb: FormBuilder,
@@ -89,6 +84,5 @@ export class HomeComponent {
   getUrl(url: string) {
     return `url(${url})`;
   }
-
 
 }

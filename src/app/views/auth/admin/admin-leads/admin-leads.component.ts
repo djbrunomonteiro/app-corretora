@@ -54,15 +54,16 @@ export class AdminLeadsComponent implements OnInit, AfterViewInit {
   }
 
   getItens(){
-    const result$ = this.storeService.dispatchAction({group: EGroup.Lead, action: EAction.GetAll});
-    result$.pipe(first()).subscribe((r) =>{
-      this.leads$ = this.storeService.select(AllLeads);
-      this.leads$.subscribe(res => {
-        if(res?.length){
-          this.dataSource = new MatTableDataSource<any>(res); 
-        }
-      } )
-    })
+    // const result$ = this.storeService.dispatchAction({group: EGroup.Lead, action: EAction.GetAll});
+
+    // result$.pipe(first()).subscribe((r) =>{
+    //   this.leads$ = this.storeService.select(AllLeads);
+    //   this.leads$.subscribe(res => {
+    //     if(res?.length){
+    //       this.dataSource = new MatTableDataSource<any>(res); 
+    //     }
+    //   } )
+    // })
 
   }
 

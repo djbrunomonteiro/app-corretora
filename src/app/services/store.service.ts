@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { EAction, IAction, MyAction, appActions, getAction } from '../store/app.actions';
-import { Observable, of } from 'rxjs';
+import { Observable, delay, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +16,11 @@ export class StoreService {
 
   dispatchAction(myAction: MyAction): Observable<IAction> {
     const action = appActions(myAction);
+
     if (String(action.type).includes('Store')) {
       this.store.dispatch(action);
+      console.log(action);
+      
       return of(); // para actions que salvam apenas no Store
     } else {
       const typeS = myAction.action + 'Sucess' as EAction;
@@ -25,8 +28,7 @@ export class StoreService {
       const success = getAction(myAction.group, typeS);
       const error = getAction(myAction.group, typeE);
       this.store.dispatch(action);
-
-      return this.actions$.pipe(ofType(success, error));
+      return this.actions$.pipe(ofType(success, error))
     }
   }
 

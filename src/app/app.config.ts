@@ -7,7 +7,7 @@ import { environment } from '../environments/environment.development';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { provideAuth, getAuth} from '@angular/fire/auth';
-import { provideStore } from '@ngrx/store';
+import { provideState, provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { appReducers } from './store/app.state';
@@ -19,6 +19,8 @@ import { LeadEffectsService } from './store/effects/lead-effects.service';
 import { ClienteEffectsService } from './store/effects/cliente-effects.service';
 import { AgendamentoEffectsService } from './store/effects/agendamento-effects.service';
 import { provideClientHydration } from '@angular/platform-browser';
+import { AnunciosStore } from './store/anuncios';
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -30,18 +32,22 @@ export const appConfig: ApplicationConfig = {
         provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
         provideAuth(() => getAuth()),
         provideFirestore(() => getFirestore()),
+        AnunciosStore
         
     ]),
-    provideStore(appReducers, { metaReducers, runtimeChecks: {strictActionImmutability: false, strictStateImmutability: false} }),
-    provideEffects([
-      AnuncioEffectsService, 
-      LeadEffectsService,
-      ClienteEffectsService,
-      AgendamentoEffectsService
-    ]),
+
+    // provideStore(appReducers, { metaReducers, runtimeChecks: {strictActionImmutability: false, strictStateImmutability: false} }),
+    // provideEffects([
+    //   AnuncioEffectsService, 
+    //   LeadEffectsService,
+    //   ClienteEffectsService,
+    //   AgendamentoEffectsService
+    // ]),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     // { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: LOCALE_ID, useValue: 'pt' }, provideClientHydration(),
+    provideStore()
+
 
 ]
 };

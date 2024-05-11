@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, Inject, Input, OnDestroy, OnInit, Optional } from '@angular/core';
+import { AfterViewInit, Component, Inject, Input, OnDestroy, OnInit, Optional, Signal, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MaterialModule } from '../../../../../modules/material/material.module';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -7,7 +7,7 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { UtilsService } from '../../../../../services/utils.service';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { EFolderUpload } from '../../../../../enums/folders';
-import { BehaviorSubject, Observable, first } from 'rxjs';
+import { BehaviorSubject, Observable, first, of } from 'rxjs';
 import { DropzoneCdkModule } from '@ngx-dropzone/cdk';
 import { DropzoneMaterialModule } from '@ngx-dropzone/material';
 import { UploadService } from '../../../../../services/upload.service';
@@ -17,6 +17,10 @@ import { EAction, EGroup, IAction, MyAction } from '../../../../../store/app.act
 import { CoreService } from '../../../../../services/core.service';
 import { NgxEditorModule } from 'ngx-editor';
 import { Editor } from 'ngx-editor';
+import { AnunciosStore } from '../../../../../store/anuncios';
+import { IAnuncio } from '../../../../../models/anuncio';
+import {toSignal} from '@angular/core/rxjs-interop'
+import { IResponse } from '../../../../../models/response';
 
 @Component({
   selector: 'app-edit',
@@ -43,6 +47,8 @@ import { Editor } from 'ngx-editor';
   styleUrl: './edit.component.scss'
 })
 export class AdminAnuncioEditComponent implements OnInit, AfterViewInit, OnDestroy {
+
+  anunciosStore = inject(AnunciosStore);
 
   editor!: Editor;
   html = '';
@@ -93,9 +99,14 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit, OnDestr
   urlsFotos$ = new BehaviorSubject<string[]>([]);
 
   loadingUpload = false;
+  loadingSave = false;
 
   filesCtrl = new FormControl();
   fotos$= new BehaviorSubject<string[]>([]);
+
+  meus = toSignal(of(0));
+
+  teste !:Signal<any>;
   
   constructor(
     public dialogRef: MatDialogRef<AdminAnuncioEditComponent>,
@@ -112,8 +123,9 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit, OnDestr
 
 
   async ngOnInit(): Promise<void> {
-
-  
+    console.log(this.meus());
+    
+    
     this.editor = new Editor();
     this.utils.getLocalidades().subscribe((res: any) => {
       this.estados = res?.estados;
@@ -124,9 +136,7 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit, OnDestr
 
     if(this.data){
       this.form.patchValue({...this.data});
-
       const paths = this.form.value.fotos?.filter(elem => elem) ?? [];
-
       for (let index = 0; index < paths.length; index++) {
         const path = paths[index];
         await this.getFotos(path)
@@ -167,7 +177,6 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit, OnDestr
         fotos.push(res);
         this.getFotos(res)
 
-
       }
     }
 
@@ -180,7 +189,10 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit, OnDestr
   async getFotos(path: string){
     const fullPath = await this.uploadService.getFoto(path, 'anuncios');
     const nvs = [...this.fotos$.value, fullPath];
-    this.fotos$.next(nvs)
+    this.fotos$.next(nvs);
+
+    console.log(this.fotos$.value);
+    
   }
 
   remove(index: number){
@@ -190,30 +202,24 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit, OnDestr
     this.fotos$.next(this.fotos$.value.filter((_, i) => i != index));
   }
 
-  salvar(){
-    const item = {...this.form.value, url: this.createUrl()};
-    let action: MyAction;
+  async salvar(){
+    this.loadingSave = true;
+    const item = {...this.form.value, url: this.createUrl()} as Partial<IAnuncio>;
+    const response = await this.anunciosStore.saveOne(item);
+    this.loadingSave = false;
+    const {error, message} = response;
+    this.utils.showMessage(message);
+    if(error){return}
+    this.dialogRef.close();
 
-    console.log(item);
-    
-
-    return;
-    if(item.id){
-      action = {group:EGroup.Anuncio, action: EAction.UpdateOne, props: {item}}
-
-    }else{
-      action = {group:EGroup.Anuncio, action: EAction.SetOne, props: {item}}
-    }
-
-    const result$ = this.storeService.dispatchAction(action)
-    result$.pipe(first()).subscribe(res => {
-      this.utils.showMessage(res?.props?.message);
-
-      if(!res.props?.error){
-       this.dialogRef.close();
-      }
+    // const result$ = this.storeService.dispatchAction(action)
+    // result$.pipe(first()).subscribe(res => {
+    //   this.utils.showMessage(res?.props?.message);
+    //   if(!res.props?.error){
+    //    this.dialogRef.close();
+    //   }
       
-    })
+    // })
   }
   
   createUrl(){

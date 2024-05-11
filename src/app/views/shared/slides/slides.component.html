@@ -1,6 +1,7 @@
 <section class="slides">
+
     <swiper-container [breakpoints]="breakpoints"  navigation="true" pagination="true" slidesOffsetAfter="0.5" loop="true" autoplay-delay="5000">
-        @for (item of slides; track $index) {
+        @for (item of slides(); track $index) {
             <swiper-slide (click)="openAnuncio(item.url)"  class="slide cursor-pointer">
                 @if ((item.fotos[0] | urlFotos: 'anuncios' | async); as src) {
                     <img [src]="src" style="width: 100%;">

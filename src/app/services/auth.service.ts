@@ -1,4 +1,4 @@
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { Auth, signInWithPopup, GoogleAuthProvider } from '@angular/fire/auth';
 import { StoreService } from './store.service';
 import { EAction, EGroup } from '../store/app.actions';
@@ -8,12 +8,16 @@ import { IResponse } from '../models/response';
 import { userData } from '../store/selectors/user.selector';
 import { BehaviorSubject } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
+import { UserStore } from '../store/user';
+import { patchState } from '@ngrx/signals';
+import { addEntity, removeAllEntities } from '@ngrx/signals/entities';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  userStore = inject(UserStore);
   googleAuthProvider = new GoogleAuthProvider();
 
   collectionRef: CollectionReference | undefined;
@@ -29,13 +33,7 @@ export class AuthService {
     @Inject(PLATFORM_ID) public platformId: Object,
 
   ) {
-
     this.collectionRef = collection(this.firestore, 'hashs');
-
-    // this.googleAuthProvider.setCustomParameters({
-    //   login_hint: 'brunomonteiroestudio@gmail.com'
-    // });
-    this.storeService.select(userData).subscribe(res => this.userData$.next(res))
   }
 
   loginAdmin() {
@@ -44,15 +42,13 @@ export class AuthService {
         const email = res.user.email
         if (email === 'kelvinbruno15@gmail.com' || 'brunomonteiroestudio@gmail.com' || 'telmamatos2005@gmail.com') {
           const item = { nome: res?.user.displayName, email: res.user.email, id: res.user.uid, foto: res.user.photoURL };
-          this.storeService.dispatchAction({ group: EGroup.User, action: EAction.SetOneStore, props: { item } })
-        } else {
-          const current = await this.auth.currentUser;
-          current?.delete()
+          patchState(this.userStore, addEntity(item));
+          return;
         }
+        const current = await this.auth.currentUser;
+        current?.delete()
 
       }).catch(err => {
-        console.log('houve error', err);
-
       });
 
   }
@@ -61,7 +57,7 @@ export class AuthService {
     this.auth.onAuthStateChanged((user) => {
       if (!user) { return }
       const item = { nome: user.displayName, email: user.email, id: user.uid, foto: user.photoURL };
-      this.storeService.dispatchAction({ group: EGroup.User, action: EAction.SetOneStore, props: { item } })
+      patchState(this.userStore, addEntity(item))
     });
 
   }
@@ -74,6 +70,7 @@ export class AuthService {
     this.storeService.dispatchAction({group: EGroup.User, action:EAction.Clear})
     if(isPlatformBrowser(this.platformId)){
       localStorage.clear();
+      patchState(this.userStore, removeAllEntities())
       
     }
     

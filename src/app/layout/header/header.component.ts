@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MaterialModule } from '../../modules/material/material.module';
 import { Router, RouterModule } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
@@ -10,6 +10,7 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MenuComponent } from '../menu/menu.component';
 import { userData } from '../../store/selectors/user.selector';
 import { UtilsService } from '../../services/utils.service';
+import { UserStore } from '../../store/user';
 
 @Component({
   selector: 'app-header',
@@ -21,6 +22,7 @@ import { UtilsService } from '../../services/utils.service';
 export class HeaderComponent implements OnInit {
 
   readonly currentUrl$ = new BehaviorSubject<string>('');
+  userStore = inject(UserStore)
   isAdmin$ = new BehaviorSubject<boolean>(true);
 
 
@@ -63,7 +65,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.currentUrl$.next(this.router.url);
     this.isAdmin$.next(this.router.url.includes('admin'));
-
+    console.log();
     
   }
 

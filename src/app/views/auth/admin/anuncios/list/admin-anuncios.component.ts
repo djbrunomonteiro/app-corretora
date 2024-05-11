@@ -1,17 +1,16 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, effect, inject } from '@angular/core';
 import { MaterialModule } from '../../../../../modules/material/material.module';
 import { CommonModule } from '@angular/common';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { AnuncioService } from '../../../../../services/anuncio.service';
 import { StoreService } from '../../../../../services/store.service';
 import { EAction, EGroup } from '../../../../../store/app.actions';
 import { Observable, first } from 'rxjs';
-import { AllAnuncios } from '../../../../../store/selectors/anuncio.selector';
 import { AdminAnuncioEditComponent } from '../edit/edit.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertConfirmComponent } from '../../../../shared/alert-confirm/alert-confirm.component';
 import { UtilsService } from '../../../../../services/utils.service';
+import { AnunciosStore } from '../../../../../store/anuncios';
 
 @Component({
   selector: 'app-admin-anuncios',
@@ -25,10 +24,10 @@ import { UtilsService } from '../../../../../services/utils.service';
 })
 export class AdminAnunciosComponent implements OnInit {
 
+  anunciosStore = inject(AnunciosStore)
 
   displayedColumns: string[] = ['codigo','titulo', 'categoria', 'tipo', 'cidade', 'status', 'acoes'];
   dataSource = new MatTableDataSource<any>([]);
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   anuncios$!: Observable<any[]>
@@ -37,29 +36,23 @@ export class AdminAnunciosComponent implements OnInit {
     private storeService: StoreService,
     public dialog: MatDialog,
     private utils: UtilsService
-  ){}
+  ){
+    effect(() => {
+      this.setDataTable()
+    })
+  }
 
   ngOnInit(): void {
-    this.getItens();
-    // this.openEdit()
-
+    this.setDataTable();
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+
   }
 
-  getItens(){
-    const result$ = this.storeService.dispatchAction({group: EGroup.Anuncio, action: EAction.GetAll});
-    result$.pipe(first()).subscribe((r) =>{
-      this.anuncios$ = this.storeService.select(AllAnuncios);
-      this.anuncios$.subscribe(res => {
-        if(res?.length){
-          this.dataSource = new MatTableDataSource<any>(res); 
-        }
-      } )
-    })
-
+  setDataTable(){
+    this.dataSource = new MatTableDataSource<any>(this.anunciosStore.allItens());
+    this.dataSource.paginator = this.paginator;
   }
 
   openEdit(item?: any){

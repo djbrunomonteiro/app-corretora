@@ -5,6 +5,7 @@ export const userState = createFeatureSelector<fromAppReducer.AppState>('userSta
 export const userData = createSelector(
     userState,
     (elements) => {
+        return
         const result = Object.values(elements.entities)[0];
         return result
     }

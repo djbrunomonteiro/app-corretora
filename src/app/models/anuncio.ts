@@ -1,5 +1,5 @@
 export interface IAnuncio {
-    id?: string,
+    id: string,
     codigo?: string,
     titulo?: string,
     descricao?: string,

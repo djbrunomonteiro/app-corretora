@@ -11,7 +11,7 @@ export class UrlFotosPipe implements PipeTransform {
 
   constructor(private uploadService: UploadService){}
 
-  transform(name: string, folder: string, size: string = ESize.medium): Observable<string> {
+  transform(name: string, folder: string, size: string = ESize.large): Observable<string> {
     return new Observable<string>(sub => {
       this.uploadService.getFoto(name, folder, size)
         .then(res => {
