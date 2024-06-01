@@ -4,7 +4,7 @@ import { MaterialModule } from '../../../../../modules/material/material.module'
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Observable, first } from 'rxjs';
+import { first } from 'rxjs';
 import { StoreService } from '../../../../../services/store.service';
 import { UtilsService } from '../../../../../services/utils.service';
 import { AlertConfirmComponent } from '../../../../shared/alert-confirm/alert-confirm.component';
@@ -12,6 +12,7 @@ import { EGroup, EAction } from '../../../../../store/app.actions';
 import { Router } from '@angular/router';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { ClientesStore } from '../../../../../store/cliente-store';
+import { ICliente } from '../../../../../models/cliente';
 
 @Component({
   selector: 'app-admin-clientes-list',
@@ -28,35 +29,30 @@ import { ClientesStore } from '../../../../../store/cliente-store';
 export class AdminClientesListComponent implements OnInit {
 
   clientesStore = inject(ClientesStore);
+  clientes!: ICliente[]
   displayedColumns: string[] = ['nome', 'cpf_cnpj', 'whatsapp', 'email', 'tipo_compra', 'cidade', 'acoes'];
   dataSource = new MatTableDataSource<any>([]);
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
 
   constructor(
-    private storeService: StoreService,
     public dialog: MatDialog,
-    private utils: UtilsService,
     private router: Router
   ) {
     effect(() => {
-      this.setDataTable()
+      this.clientes = this.clientesStore.allItens();
+      console.log(this.clientes);
+      
+      
     })
   }
   ngOnInit(): void {
-    this.setDataTable();
-  }
-
-  setDataTable(){
-    this.dataSource = new MatTableDataSource<any>(this.clientesStore.allItens());
-    this.dataSource.paginator = this.paginator;
+    this.clientesStore.loadAll();
+    this.clientes = this.clientesStore.allItens();
   }
 
 
   openEdit(item?: any) {
-    console.log('item', item);
-    
     if(item){
       this.router.navigate([`/auth/admin/clientes/edit/${item.id}`])
     }else{
@@ -71,10 +67,10 @@ export class AdminClientesListComponent implements OnInit {
     dialogRef.afterClosed().pipe(first()).subscribe(res => {
       if (!res) { return }
 
-      const result$ = this.storeService.dispatchAction({ group: EGroup.Anuncio, action: EAction.DeleteOne, params: { id } });
-      result$.pipe(first()).subscribe((act) => {
-        this.utils.showMessage(act.props?.message)
-      })
+      // const result$ = this.storeService.dispatchAction({ group: EGroup.Anuncio, action: EAction.DeleteOne, params: { id } });
+      // result$.pipe(first()).subscribe((act) => {
+      //   this.utils.showMessage(act.props?.message)
+      // })
     });
 
 

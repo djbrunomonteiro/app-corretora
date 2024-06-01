@@ -7,20 +7,15 @@ import { environment } from '../environments/environment.development';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { provideAuth, getAuth} from '@angular/fire/auth';
-import { provideState, provideStore } from '@ngrx/store';
-import { provideEffects } from '@ngrx/effects';
+import { provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
-import { appReducers } from './store/app.state';
-import { metaReducers } from './store/logout.reducer';
-import { AnuncioEffectsService } from './store/effects/anuncio-effects.service';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideEnvironmentNgxMask } from 'ngx-mask';
-import { LeadEffectsService } from './store/effects/lead-effects.service';
-import { ClienteEffectsService } from './store/effects/cliente-effects.service';
-import { AgendamentoEffectsService } from './store/effects/agendamento-effects.service';
 import { provideClientHydration } from '@angular/platform-browser';
-import { AnunciosStore } from './store/anuncios-store';
+import localePt from '@angular/common/locales/pt'
+import { registerLocaleData } from '@angular/common';
 
+registerLocaleData(localePt, 'pt');
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -45,7 +40,7 @@ export const appConfig: ApplicationConfig = {
     // ]),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     // { provide: LocationStrategy, useClass: HashLocationStrategy },
-    { provide: LOCALE_ID, useValue: 'pt' }, provideClientHydration(),
+    { provide: LOCALE_ID, useValue: 'pt-BR' }, provideClientHydration(),
     provideStore()
 
 
