@@ -4,7 +4,7 @@ import { ClienteIsAuth, OneCliente } from './cliente.selector';
 import { UtilsService } from '../../services/utils.service';
 import { ESlides } from '../../enums/slides';
 import { IAnuncio } from '../../models/anuncio';
-import {AnuncioState, AnunciosStore} from '../anuncios'
+import {AnuncioState, AnunciosStore} from '../anuncios-store'
 import { inject } from '@angular/core';
 
 export interface AppS {

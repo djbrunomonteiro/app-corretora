@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { SsrCookieService } from 'ngx-cookie-service-ssr';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -89,7 +91,6 @@ export class CoreService {
   ];
 
   orders = [
-    // "mais relevantes",
     "menor valor",
     "maior valor",
     "mais recentes",
@@ -114,8 +115,11 @@ export class CoreService {
     "Outros"
   ]
   nums: number[] = [];
+  acceptedCookies$ = new BehaviorSubject('')
 
-  constructor() { 
+  constructor(
+    private ssrCookieService: SsrCookieService,
+  ) { 
     this.generateNums()
   }
 
@@ -124,5 +128,15 @@ export class CoreService {
       this.nums.push(index)
     }
 
+  }
+
+  getAcceptedCookies(){
+    const res = this.ssrCookieService.get('acceptedCookies') ?? '';
+    this.acceptedCookies$.next(res);
+  }
+
+  setAcceptedCookies(value: string){
+    this.ssrCookieService.set('acceptedCookies', value);
+    this.acceptedCookies$.next(value);
   }
 }

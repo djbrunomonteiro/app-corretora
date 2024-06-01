@@ -10,7 +10,7 @@ import { StoreService } from '../../../services/store.service';
 import { IConfigSlides } from '../../../models/configslides';
 import { NavigationExtras, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { AnunciosStore } from '../../../store/anuncios';
+import { AnunciosStore } from '../../../store/anuncios-store';
 import { IAnuncio } from '../../../models/anuncio';
 
 @Component({

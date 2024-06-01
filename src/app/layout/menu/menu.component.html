@@ -1,7 +1,7 @@
 <mat-nav-list class="p-3">
     <div class="cliente">
         <h5 class="p-3">MENU DO CLIENTE</h5>
-        @if(clienteService.clienteAuth){
+        @if(clienteStore.isAuth()){
             @for (item of clienteMenu; track $index) {
                 <a mat-list-item (click)="goCliente(item)">
                   <span matListItemTitle>{{item.title}}</span>
@@ -30,7 +30,7 @@
             </a>
         }
 
-        @if(authService.userData$ | async){
+        @if(userStore.user()){
             <a (click)="authService.logout(); _bottomSheetRef.dismiss()" mat-list-item >
                 <span matListItemTitle style="color: red;">Sair da conta</span>
             </a>
@@ -40,11 +40,6 @@
             </a>
         }
 
-
-        
     </div>
 
-   
-
-    
   </mat-nav-list>

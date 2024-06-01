@@ -1,18 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { CUSTOM_ELEMENTS_SCHEMA, Component, ViewChild } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, ViewChild, effect, inject } from '@angular/core';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { MaterialModule } from '../../../modules/material/material.module';
 import { FavoritoPipe } from '../../../pipes/favorito.pipe';
 import { UrlFotosPipe } from '../../../pipes/url-fotos.pipe';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Observable, first } from 'rxjs';
-import { StoreService } from '../../../services/store.service';
-import { AllAnuncios } from '../../../store/selectors/anuncio.selector';
-import { ClienteService } from '../../../services/cliente.service';
-import { userData } from '../../../store/selectors/user.selector';
-import { EAction, EGroup } from '../../../store/app.actions';
-import { AllAgendamentos } from '../../../store/selectors/agendamento.selector';
+import { ClientesStore } from '../../../store/cliente-store';
+import { AgendamentosStore } from '../../../store/agendamentos-store';
 
 @Component({
   selector: 'app-list-agendamentos',
@@ -31,43 +26,30 @@ import { AllAgendamentos } from '../../../store/selectors/agendamento.selector';
 })
 export class ListAgendamentosComponent {
 
+  clienteStore = inject(ClientesStore);
+  agendamentoStore = inject(AgendamentosStore);
+
   displayedColumns: string[] = ['cliente', 'codigo', 'anuncio', 'dias', 'horas', 'status', 'acoes'];
   dataSource = new MatTableDataSource<any[]>([]);
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  agendamentos$!: Observable<any[]>
-
   constructor(
-    private storeService: StoreService,
-    private clienteService: ClienteService,
-    ){}
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
+    ){
+      effect(() => this.setDataTable())
+    }
 
   ngOnInit(): void {
     this.getAgendamentos();
   }
 
   getAgendamentos(){
-    let id = this.clienteService.clienteAuth.id;
-    const result$ = this.storeService.dispatchAction({group:EGroup.Agendamento, action: EAction.GetAll, params: {id}});
-    result$.pipe(first()).subscribe(res => {
-
-    })
-
-    this.agendamentos$ = this.storeService.select(AllAgendamentos);
-    this.agendamentos$.subscribe(res => {
-      this.dataSource = new MatTableDataSource<any[]>(res); 
-    } )
-
-
-    
-
+    const cliente = this.clienteStore.isAuth();
+    if(!cliente){return;}
+    this.agendamentoStore.loadAll(cliente.id);
   }
 
-
-  
+  setDataTable(){
+    this.dataSource = new MatTableDataSource<any>(this.agendamentoStore.allItens());
+    this.dataSource.paginator = this.paginator;
+  }
 }

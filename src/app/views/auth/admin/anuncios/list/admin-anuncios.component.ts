@@ -3,14 +3,12 @@ import { MaterialModule } from '../../../../../modules/material/material.module'
 import { CommonModule } from '@angular/common';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { StoreService } from '../../../../../services/store.service';
-import { EAction, EGroup } from '../../../../../store/app.actions';
-import { Observable, first } from 'rxjs';
+import { first } from 'rxjs';
 import { AdminAnuncioEditComponent } from '../edit/edit.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertConfirmComponent } from '../../../../shared/alert-confirm/alert-confirm.component';
 import { UtilsService } from '../../../../../services/utils.service';
-import { AnunciosStore } from '../../../../../store/anuncios';
+import { AnunciosStore } from '../../../../../store/anuncios-store';
 
 @Component({
   selector: 'app-admin-anuncios',
@@ -30,10 +28,7 @@ export class AdminAnunciosComponent implements OnInit {
   dataSource = new MatTableDataSource<any>([]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  anuncios$!: Observable<any[]>
-
   constructor(
-    private storeService: StoreService,
     public dialog: MatDialog,
     private utils: UtilsService
   ){
@@ -44,10 +39,6 @@ export class AdminAnunciosComponent implements OnInit {
 
   ngOnInit(): void {
     this.setDataTable();
-  }
-
-  ngAfterViewInit() {
-
   }
 
   setDataTable(){
@@ -61,18 +52,11 @@ export class AdminAnunciosComponent implements OnInit {
 
   delete(id: string){
     const dialogRef = this.dialog.open(AlertConfirmComponent );
-    dialogRef.afterClosed().pipe(first()).subscribe(res => {
+    dialogRef.afterClosed().pipe(first()).subscribe(async res => {
       if(!res){return};
-      console.log('idd', id);
-      
-
-      const result$ = this.storeService.dispatchAction({group: EGroup.Anuncio, action: EAction.DeleteOne, params: {id}});
-      result$.pipe(first()).subscribe((act) =>{
-        this.utils.showMessage(act.props?.message)
-      })
+      const {message} = await this.anunciosStore.removeOne(id);
+      this.utils.showMessage(message)
     });
-
-
   }
 
 

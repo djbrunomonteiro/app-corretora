@@ -19,7 +19,7 @@ import { LeadEffectsService } from './store/effects/lead-effects.service';
 import { ClienteEffectsService } from './store/effects/cliente-effects.service';
 import { AgendamentoEffectsService } from './store/effects/agendamento-effects.service';
 import { provideClientHydration } from '@angular/platform-browser';
-import { AnunciosStore } from './store/anuncios';
+import { AnunciosStore } from './store/anuncios-store';
 
 
 export const appConfig: ApplicationConfig = {
@@ -32,7 +32,7 @@ export const appConfig: ApplicationConfig = {
         provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
         provideAuth(() => getAuth()),
         provideFirestore(() => getFirestore()),
-        AnunciosStore
+
         
     ]),
 

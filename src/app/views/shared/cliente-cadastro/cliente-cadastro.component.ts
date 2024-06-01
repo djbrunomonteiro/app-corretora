@@ -54,15 +54,12 @@ export class ClienteCadastroComponent {
   constructor(
     public dialogRef: MatDialogRef<ClienteLoginComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-
     private _formBuilder: FormBuilder,
-    private clienteService: ClienteService,
-    private auth: AuthService,
-    private utils: UtilsService,
-    private storeService: StoreService
   ) { }
 
   getResCadastro(res: any){
+    console.log(res);
+    
     if(!res?.id){return}
     this.dialogRef.close(res)
   }

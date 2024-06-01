@@ -1,13 +1,13 @@
 
 
-@if(loading){
+@if(anunciosStore.isLoading()){
     <app-loading/>
 
 }@else {
 
     <div class="row justify-content-center m-0 p-3">
         <div class="col-md-10">
-            @if ((anuncio$ | async); as item) {
+            @if (anuncio; as item) {
             <div class="row container-details">
                 <div class="col-md-9 m-0 p-0">
                     <swiper-container>
@@ -28,19 +28,16 @@
                     <div class="info ">
                         <h3 class="titulo">{{item.titulo}}</h3>
                         <p class="cidade">{{item.end_cidade}} / {{item.end_uf}} - Cód. {{item.codigo}}</p>
-    
-                        <p class="descricao">
-                            {{item.descricao}}
-                        </p>
-    
-                        <button mat-stroked-button> <mat-icon aria-hidden="false" fontIcon="shared"></mat-icon> Compartilhar</button>
+                        <div class="descricao" [innerHTML]="item.descricao"></div>
+                        <!-- <button mat-stroked-button> <mat-icon aria-hidden="false" fontIcon="shared"></mat-icon> Compartilhar</button> -->
                     </div>
     
                 </div>
                 <div class="col-md-3 m-0 p-0">
                     <div class="sticky">
-                        <h3>{{ item.preco | mask: 'separator.2': {thousandSeparator:'.', prefix: 'R$'} }}</h3>
-    
+                        @if(item.preco){
+                            <h3>{{ item.preco | mask: 'separator.2': {thousandSeparator:'.', prefix: 'R$'} }}</h3>
+                        }
     
                         @if (item.condominio) {
                         <p>Cond. {{item.condominio}}</p>
@@ -53,8 +50,6 @@
                             <button (click)="openWhatsapp()" class="whatsapp" mat-raised-button>WhatsApp</button>
                             <button (click)="openContato(item)" mat-raised-button>Fale Comigo</button>
                             <button (click)="agendar(item)" mat-raised-button>Agendar uma visita</button>
-    
-    
                         </div>
     
                     </div>
@@ -73,10 +68,10 @@
     
                         }
     
-                        @if (item.dets_area_comum) {
+                        @if (item.dets_area_comun) {
                             <h3>Área Comum</h3>
                             <mat-list>
-                                @for (det of item.dets_area_comum; track $index) {
+                                @for (det of item.dets_area_comun; track $index) {
                                 <mat-list-item>
                                     <span matListItemTitle><mat-icon color="primary" aria-hidden="false"
                                             fontIcon="check_box"></mat-icon> {{det}}</span>

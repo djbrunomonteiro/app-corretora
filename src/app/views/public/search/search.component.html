@@ -1,16 +1,16 @@
 <div class="row justify-content-between m-0 p-2" [formGroup]="form">
     <div class="col-md-3 m-0">
-        <app-search-filter (search)="pesquisar($event)" (clean)="listarTodos()" />
+        <app-search-filter (search)="pesquisar($event); searchFilter = $event" (clean)="listarTodos()" />
     </div>
 
     <div class="col-md-9 m-0">
 
-        @if(loading$ |async){
+        @if(anunciosStore.isLoading()){
             <app-loading/>
 
         }@else {
             <div class="d-md-flex justify-content-between align-items-center title-filter">
-                <h4>{{(anuncios$ | async)?.length}} Resultados encontrados</h4>
+                <h4>{{anuncios().length}} Resultados encontrados</h4>
                 <mat-form-field appearance="outline">
                     <mat-label>Ordenar por</mat-label>
                     <mat-select formControlName="ordenar" >
@@ -22,7 +22,7 @@
             </div>
 
             <div class="row">
-                @for (item of anuncios$ | async; track $index; let last = $last) {
+                @for (item of anuncios(); track $index; let last = $last) {
                     @if (($index + 1) <= count ) { 
                         <div class="col-lg-4 my-2">
                             <app-card-anuncio [item]="item" />
@@ -33,7 +33,7 @@
                 <h4>Ops, Nenhum anúncio encontrado para sua busca.</h4>
                 <p>Altere os filtros de pesquisa ou confira anúncios que recomendamos</p>
     
-                    @for (item of recomendados$ | async; track $index) {
+                    @for (item of recomendados(); track $index) {
                         <div class="col-lg-4 my-2">
                             <app-card-anuncio [item]="item" />
                         </div>

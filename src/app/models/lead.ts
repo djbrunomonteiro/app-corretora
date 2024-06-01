@@ -1,0 +1,15 @@
+export interface ILead {
+    id: string,
+    status?: string,
+    tipo?: string,
+    nome?: string,
+    whatsapp?: string,
+    email?: string,
+    mensagem?: string,
+    id_cliente?: string,
+    id_anuncio?: string,
+    dia_semana?: string,
+    horarios?: string,
+    historico?: any,
+    created_at?: string,
+}

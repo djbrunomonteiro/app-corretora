@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { StoreService } from '../../services/store.service';
-import { EGroup, EAction } from '../../store/app.actions';
+import { Component, OnInit, inject } from '@angular/core';
+import { AnunciosStore } from '../../store/anuncios-store';
+import { LeadsStore } from '../../store/leads-store';
+import { ClientesStore } from '../../store/cliente-store';
+import { UserStore } from '../../store/user-store';
 
 @Component({
   selector: 'app-auth',
@@ -10,12 +12,19 @@ import { EGroup, EAction } from '../../store/app.actions';
 })
 export class AuthComponent implements OnInit {
 
-  constructor(
-    private storeService: StoreService
-  ){}
+  userStore = inject(UserStore)
+  anuncioStore = inject(AnunciosStore);
+  leadStore = inject(LeadsStore);
+  clienteStore = inject(ClientesStore);
 
   ngOnInit(): void {
-    this.storeService.dispatchAction({group: EGroup.Anuncio, action: EAction.GetAll});
+    this.anuncioStore.loadAll();
+    if(this.userStore.user()){
+      this.leadStore.loadAll();
+      this.clienteStore.loadAll();
+    }
+
+
   }
 
 }

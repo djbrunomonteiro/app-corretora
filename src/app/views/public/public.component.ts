@@ -1,7 +1,8 @@
-import { AfterViewInit, Component, OnInit, afterNextRender } from '@angular/core';
+import { AfterViewInit, Component, OnInit, afterNextRender, inject } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { StoreService } from '../../services/store.service';
 import { EAction, EGroup } from '../../store/app.actions';
+import { AnunciosStore } from '../../store/anuncios-store';
 
 @Component({
   selector: 'app-public',
@@ -10,18 +11,21 @@ import { EAction, EGroup } from '../../store/app.actions';
 })
 export class PublicComponent implements OnInit, AfterViewInit {
 
+  anunciosStore = inject(AnunciosStore)
+
   constructor(
     private auth: AuthService,
     private storeService: StoreService
   ){
 
-    afterNextRender(() => {
-      this.storeService.dispatchAction({group: EGroup.Anuncio, action: EAction.GetAll});
-      this.checkAuth();    
-    });
+    // afterNextRender(() => {
+    //   this.storeService.dispatchAction({group: EGroup.Anuncio, action: EAction.GetAll});
+    //   this.checkAuth();    
+    // });
   }
 
   ngOnInit(): void {
+    this.anunciosStore.loadAll();
   }
 
   ngAfterViewInit(): void {

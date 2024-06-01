@@ -16,7 +16,7 @@
             }@else {
         
                 <button  mat-stroked-button [routerLink]="'auth/cliente'" color="primary">
-                    @if((cliente$ | async); as cliente){
+                    @if(clienteStore.isAuth(); as cliente){
                         Bem vindo(a) {{cliente?.nome}}
                     }@else {
                         ÁREA DO CLIENTE

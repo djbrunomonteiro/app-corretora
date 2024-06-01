@@ -1,7 +1,11 @@
 <footer>
     <div class="block">
         <h4 class="sub-titulo">Endereço</h4>
-        <p>Turu - São Luís / MA</p>
+        <p>Rua Ceará lote D casa 01 Chácara Brasil Turu - São Luís / MA</p>
+        <p><b>Consultora de Imóveis CRECI 6489</b></p>
+        <p>Todos os direitos reservados © {{fullYear}}</p>
+        <a style="color: aliceblue; text-decoration: none;" href="https://djbrunomonteiro.com.br/" target="_blank"><em>Desenvolvido por DJBM</em> </a>
+        
     </div>
     <div class="block">
         <mat-nav-list>
@@ -13,22 +17,10 @@
         </mat-nav-list>
     </div>
     <div class="block">
-        <mat-nav-list>
-            @for (item of redesMenu; track $index) {
-                <a [href]="item.url" [target]="item.target" mat-list-item>
-                    <span matListItemTitle><mat-icon aria-hidden="false" class="mx-3" [fontIcon]="item.icon"></mat-icon> {{item.title}}</span>
-                </a>
-            }
-        </mat-nav-list>
+        <div class="logo-remax">
+            <img src="assets/imgs/logo-remax.png" alt="">
+            <p class="p-0 m-0">Parceira RE/MAX DREAMS</p>
+            <p class="p-0 m-0" style="font-size: 0.6rem;">Franquia da Rede imobiliária RE/MAX</p>
+        </div>
     </div>
-    <!-- <div class="block">
-        <h4 class="sub-titulo">Endereço</h4>
-        <p>Avenida das Nações Unidas, 18802, NovAmérica Office </p>
-        <p>Conj. 309 - Vila Almeida - São Paulo - SP</p>
-    </div> 
-    <div class="block">
-        <h4 class="sub-titulo">Endereço</h4>
-        <p>Avenida das Nações Unidas, 18802, NovAmérica Office </p>
-        <p>Conj. 309 - Vila Almeida - São Paulo - SP</p>
-    </div>  -->
 </footer>

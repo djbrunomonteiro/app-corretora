@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, effect, inject } from '@angular/core';
 import { MaterialModule } from '../../../../../modules/material/material.module';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -9,11 +9,9 @@ import { StoreService } from '../../../../../services/store.service';
 import { UtilsService } from '../../../../../services/utils.service';
 import { AlertConfirmComponent } from '../../../../shared/alert-confirm/alert-confirm.component';
 import { EGroup, EAction } from '../../../../../store/app.actions';
-import { AllAnuncios } from '../../../../../store/selectors/anuncio.selector';
-import { AdminAnuncioEditComponent } from '../../anuncios/edit/edit.component';
 import { Router } from '@angular/router';
-import { AllClientes } from '../../../../../store/selectors/cliente.selector';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { ClientesStore } from '../../../../../store/cliente-store';
 
 @Component({
   selector: 'app-admin-clientes-list',
@@ -27,46 +25,38 @@ import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
   templateUrl: './admin-clientes-list.component.html',
   styleUrl: './admin-clientes-list.component.scss'
 })
-export class AdminClientesListComponent {
+export class AdminClientesListComponent implements OnInit {
 
+  clientesStore = inject(ClientesStore);
   displayedColumns: string[] = ['nome', 'cpf_cnpj', 'whatsapp', 'email', 'tipo_compra', 'cidade', 'acoes'];
   dataSource = new MatTableDataSource<any>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  clientes$!: Observable<any[]>
 
   constructor(
     private storeService: StoreService,
     public dialog: MatDialog,
     private utils: UtilsService,
     private router: Router
-  ) { }
-
+  ) {
+    effect(() => {
+      this.setDataTable()
+    })
+  }
   ngOnInit(): void {
-    this.getItens();
-    // this.openEdit()
-
+    this.setDataTable();
   }
 
-  ngAfterViewInit() {
+  setDataTable(){
+    this.dataSource = new MatTableDataSource<any>(this.clientesStore.allItens());
     this.dataSource.paginator = this.paginator;
   }
 
-  getItens() {
-    const result$ = this.storeService.dispatchAction({ group: EGroup.Cliente, action: EAction.GetAll });
-    result$.pipe(first()).subscribe((r) => {
-      this.clientes$ = this.storeService.select(AllClientes);
-      this.clientes$.subscribe(res => {
-        if (res?.length) {
-          this.dataSource = new MatTableDataSource<any>(res);
-        }
-      })
-    })
-
-  }
 
   openEdit(item?: any) {
+    console.log('item', item);
+    
     if(item){
       this.router.navigate([`/auth/admin/clientes/edit/${item.id}`])
     }else{

@@ -6,7 +6,9 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { AuthService } from './services/auth.service';
 import { register } from 'swiper/element/bundle';
 import { UtilsService } from './services/utils.service';
-import { AnunciosStore } from './store/anuncios';
+import { AnunciosStore } from './store/anuncios-store';
+import { CoreService } from './services/core.service';
+import { CookiesComponent } from './views/shared/cookies/cookies.component';
 
 register();
 
@@ -18,6 +20,7 @@ register();
     RouterOutlet,
     HeaderComponent,
     FooterComponent,
+    CookiesComponent
 
   ],
   providers: [
@@ -32,6 +35,7 @@ export class AppComponent implements OnInit {
   anunciosStore = inject(AnunciosStore)
 
   constructor(
+    private core: CoreService,
     private auth: AuthService,
     private utils: UtilsService,
     @Inject(PLATFORM_ID) public platformId: Object,
@@ -44,11 +48,6 @@ export class AppComponent implements OnInit {
       this.auth.isAuth();
       this.utils.widthSize.next(window.innerWidth);
       this.utils.heigthSize.next(window.innerHeight);
-      this.anunciosStore.loadAll();
-
-      
-      // console.log(this.anunciosStore.entities());
-
     }
   }
   

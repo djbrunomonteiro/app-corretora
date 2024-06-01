@@ -1,19 +1,15 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, effect, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Observable, first } from 'rxjs';
-import { StoreService } from '../../../../services/store.service';
+import { first } from 'rxjs';
 import { UtilsService } from '../../../../services/utils.service';
 import { AlertConfirmComponent } from '../../../shared/alert-confirm/alert-confirm.component';
-import { EGroup, EAction } from '../../../../store/app.actions';
-import { AllAnuncios } from '../../../../store/selectors/anuncio.selector';
-import { AdminAnuncioEditComponent } from '../anuncios/edit/edit.component';
-import { AllLeads } from '../../../../store/selectors/lead.selector';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../../../modules/material/material.module';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { AdminLeadEditComponent } from '../admin-lead-edit/admin-lead-edit.component';
+import { LeadsStore } from '../../../../store/leads-store';
 
 @Component({
   selector: 'app-admin-leads',
@@ -28,43 +24,30 @@ import { AdminLeadEditComponent } from '../admin-lead-edit/admin-lead-edit.compo
   templateUrl: './admin-leads.component.html',
   styleUrl: './admin-leads.component.scss'
 })
-export class AdminLeadsComponent implements OnInit, AfterViewInit {
+export class AdminLeadsComponent implements OnInit{
 
+  leadsStore = inject(LeadsStore);
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   displayedColumns: string[] = ['tipo', 'nome', 'mensagem','whatsapp', 'horarios', 'created', 'status','acoes'];
   dataSource = new MatTableDataSource<any>([]);
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-  leads$!: Observable<any[]>
-
   constructor(
-    private storeService: StoreService,
     public dialog: MatDialog,
     private utils: UtilsService
-  ){}
+  ){
+    effect(() => {
+      this.setDataTable()
+    })
+  }
 
   ngOnInit(): void {
-    this.getItens();
-    // this.openEdit()
-
+    this.setDataTable();
   }
 
-  ngAfterViewInit() {
+  setDataTable(){
+    this.dataSource = new MatTableDataSource<any>(this.leadsStore.allItens());
     this.dataSource.paginator = this.paginator;
-  }
-
-  getItens(){
-    // const result$ = this.storeService.dispatchAction({group: EGroup.Lead, action: EAction.GetAll});
-
-    // result$.pipe(first()).subscribe((r) =>{
-    //   this.leads$ = this.storeService.select(AllLeads);
-    //   this.leads$.subscribe(res => {
-    //     if(res?.length){
-    //       this.dataSource = new MatTableDataSource<any>(res); 
-    //     }
-    //   } )
-    // })
-
   }
 
   openEdit(item?: any){
@@ -73,19 +56,11 @@ export class AdminLeadsComponent implements OnInit, AfterViewInit {
 
   delete(id: string){
     const dialogRef = this.dialog.open(AlertConfirmComponent );
-    dialogRef.afterClosed().pipe(first()).subscribe(res => {
-      if(!res){return}
-
-      const result$ = this.storeService.dispatchAction({group: EGroup.Lead, action: EAction.DeleteOne, params: {id}});
-      result$.pipe(first()).subscribe((act) =>{
-        this.utils.showMessage(act.props?.message)
-      })
+    dialogRef.afterClosed().pipe(first()).subscribe(async res => {
+      if(!res){return};
+      const {message} = await this.leadsStore.removeOne(id);
+      this.utils.showMessage(message)
     });
-
-
   }
-
-
-
 
 }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, inject } from '@angular/core';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { MaterialModule } from '../../../../modules/material/material.module';
 import { Validators, FormControl, FormBuilder, FormsModule, ReactiveFormsModule, FormArray, FormGroup } from '@angular/forms';
@@ -18,6 +18,8 @@ import { UrlFotosPipe } from '../../../../pipes/url-fotos.pipe';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { MatDatepickerIntl } from '@angular/material/datepicker';
+import { LeadsStore } from '../../../../store/leads-store';
+import { ILead } from '../../../../models/lead';
 
 @Component({
   selector: 'app-admin-lead-edit',
@@ -75,17 +77,17 @@ export class AdminLeadEditComponent {
   });
 
   ctrlHistorico = this.form.get('historico') as FormArray;
-
   tipo_status = ['aberto', 'andamento', 'finalizado'];
 
+  leadStore = inject(LeadsStore);
+
   constructor(
-    public dialogRef: MatDialogRef<AdminAnuncioEditComponent>,
+    public dialogRef: MatDialogRef<AdminLeadEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
 
     private _formBuilder: FormBuilder,
     private utils: UtilsService,
     public uploadService: UploadService,
-    private storeService: StoreService,
     public core: CoreService,
 
   ) {
@@ -119,7 +121,6 @@ export class AdminLeadEditComponent {
         date: [new Date().toISOString()]
       })
     }
-
     this.ctrlHistorico.push(grupo)
   }
 
@@ -127,22 +128,13 @@ export class AdminLeadEditComponent {
     this.ctrlHistorico.removeAt(index);
   }
 
-  ngAfterViewInit(): void {
-  }
-
-
-
-  salvar() {
+  async salvar() {
     const historico = this.ctrlHistorico.value.map((elem: any) => ({...elem, date: new Date(elem.date).toISOString()}))
-    const item = {...this.form.value, historico};
-
-    const result$ = this.storeService.dispatchAction({ group: EGroup.Lead, action: EAction.UpdateOne, props: { item }});
-    result$.pipe(first()).subscribe(res => {
-      this.utils.showMessage(res?.props?.message);
-      if (!res.props?.error) {
-        this.dialogRef.close();
-      }
-    })
+    const item = {...this.form.value, historico} as ILead;
+    const {error, message} = await this.leadStore.saveOne(item);
+    this.utils.showMessage(message);
+    if(error){return}
+    this.dialogRef.close();
   }
 
 }

@@ -8,9 +8,9 @@ import { StoreService } from '../../services/store.service';
 import { ClienteIsAuth } from '../../store/selectors/cliente.selector';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MenuComponent } from '../menu/menu.component';
-import { userData } from '../../store/selectors/user.selector';
 import { UtilsService } from '../../services/utils.service';
-import { UserStore } from '../../store/user';
+import { UserStore } from '../../store/user-store';
+import { ClientesStore } from '../../store/cliente-store';
 
 @Component({
   selector: 'app-header',
@@ -49,15 +49,12 @@ export class HeaderComponent implements OnInit {
     }
   ];
 
-
-  cliente$ = this.storeService.select(ClienteIsAuth)
-
+  clienteStore = inject(ClientesStore)
   showFiller = false;
 
   constructor(
     private router: Router,
     public auth: AuthService,
-    private storeService: StoreService,
     private _bottomSheet: MatBottomSheet,
     public utils: UtilsService
     ){}
@@ -65,8 +62,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.currentUrl$.next(this.router.url);
     this.isAdmin$.next(this.router.url.includes('admin'));
-    console.log();
-    
   }
 
   openBottomSheet(): void {

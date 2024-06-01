@@ -1,16 +1,14 @@
 import { Inject, Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { Auth, signInWithPopup, GoogleAuthProvider } from '@angular/fire/auth';
 import { StoreService } from './store.service';
-import { EAction, EGroup } from '../store/app.actions';
 import { Router } from '@angular/router';
-import { CollectionReference, Firestore, and, collection, doc, getDocs, limit, query, setDoc, where } from '@angular/fire/firestore';
+import { CollectionReference, Firestore,  collection, getDocs, limit, query, where } from '@angular/fire/firestore';
 import { IResponse } from '../models/response';
-import { userData } from '../store/selectors/user.selector';
-import { BehaviorSubject } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
-import { UserStore } from '../store/user';
+import { UserStore } from '../store/user-store';
 import { patchState } from '@ngrx/signals';
-import { addEntity, removeAllEntities } from '@ngrx/signals/entities';
+import { addEntity, removeAllEntities, setEntity } from '@ngrx/signals/entities';
+import { ClientesStore } from '../store/cliente-store';
 
 @Injectable({
   providedIn: 'root'
@@ -18,12 +16,10 @@ import { addEntity, removeAllEntities } from '@ngrx/signals/entities';
 export class AuthService {
 
   userStore = inject(UserStore);
+  clienteStore = inject(ClientesStore);
   googleAuthProvider = new GoogleAuthProvider();
 
   collectionRef: CollectionReference | undefined;
-
-  userData$ = new BehaviorSubject<any>(undefined);
-
 
   constructor(
     private auth: Auth,
@@ -54,25 +50,37 @@ export class AuthService {
   }
 
   isAuth() {
-    this.auth.onAuthStateChanged((user) => {
-      if (!user) { return }
-      const item = { nome: user.displayName, email: user.email, id: user.uid, foto: user.photoURL };
-      patchState(this.userStore, addEntity(item))
+    this.auth.onAuthStateChanged(async (user) => {
+      if (user) { 
+        const item = { nome: user.displayName, email: user.email, id: user.uid, foto: user.photoURL };
+        patchState(this.userStore, addEntity(item))
+        return 
+      }
+
+    if(!this.userStore.user()){
+      const access_token = localStorage.getItem('access_token');
+      if(!access_token){return}
+      const isValid = await this.existeHash(access_token);
+      const {error, results} = isValid;
+      if(error){return;}
+      const cliente = { ...results, auth: true};
+      patchState(this.clienteStore, setEntity(cliente) )
+    }
+
     });
+
+
 
   }
 
   logout() {
     this.auth.signOut();
-    this.router.navigate(['/']);
-    this.storeService.dispatchAction({group: EGroup.Cliente, action:EAction.Clear})
-    this.storeService.dispatchAction({group: EGroup.Lead, action:EAction.Clear})
-    this.storeService.dispatchAction({group: EGroup.User, action:EAction.Clear})
     if(isPlatformBrowser(this.platformId)){
       localStorage.clear();
       patchState(this.userStore, removeAllEntities())
-      
+      patchState(this.clienteStore, removeAllEntities())
     }
+    this.router.navigate(['/']);
     
 
   }

@@ -41,6 +41,7 @@
     "firebase": "^10.7.2",
     "imagemin-webp": "^8.0.0",
     "ng2-img-max": "^2.2.9",
+    "ngx-cookie-service-ssr": "^17.1.0",
     "ngx-dropzone": "^3.0.0",
     "ngx-editor": "^17.0.2",
     "ngx-mask": "^17.0.4",

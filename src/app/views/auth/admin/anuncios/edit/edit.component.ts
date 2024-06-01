@@ -17,7 +17,7 @@ import { EAction, EGroup, IAction, MyAction } from '../../../../../store/app.act
 import { CoreService } from '../../../../../services/core.service';
 import { NgxEditorModule } from 'ngx-editor';
 import { Editor } from 'ngx-editor';
-import { AnunciosStore } from '../../../../../store/anuncios';
+import { AnunciosStore } from '../../../../../store/anuncios-store';
 import { IAnuncio } from '../../../../../models/anuncio';
 import {toSignal} from '@angular/core/rxjs-interop'
 import { IResponse } from '../../../../../models/response';

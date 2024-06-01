@@ -1,6 +1,6 @@
 @if (item) {
-    <mat-card class="card-anuncio">
-        <swiper-container>
+    <mat-card class="card-anuncio" (click)="goDetails(item.url)">
+        <swiper-container (click)="goDetails(item.url)">
             @for (path of item?.fotos; track $index) {
                 @if ((path | urlFotos: 'anuncios' | async); as src) {
                 <swiper-slide>
@@ -23,12 +23,7 @@
                 @if (item.qtd_vaga) {<mat-chip> {{item.qtd_vaga}} vaga(s) </mat-chip>}
             </div>
     
-            <div>
-                <p class="descricao">
-                    {{item.descricao}}
-
-                </p>
-            </div>
+            <div [innerHTML]="item.descricao" class="descricao"></div>
             <h5 class="preco">{{item.preco | mask: 'separator.2': {thousandSeparator:'.', prefix: 'R$'} }}</h5>
     
             <div class="btns">

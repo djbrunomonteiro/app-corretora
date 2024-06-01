@@ -1,26 +1,7 @@
 <div class="row m-0">
-    <div class="col-12">
-      @if ((cliente$ | async); as cliente) {
-        <!-- <mat-drawer-container class="drawer-container" autosize>
-          <mat-drawer #drawer class="sidenav" mode="side" color="primary">
-            <button (click)="auth.logout()" mat-stroked-button color="accent"><mat-icon>logout</mat-icon> LOGOUT</button>
-          </mat-drawer>
-
-          <mat-toolbar color="primary">
-              <button (click)="drawer.toggle()" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-                <mat-icon>settings</mat-icon>
-              </button>
-              <span>Bem vindo(a) {{cliente.nome}}</span>
-          </mat-toolbar>
-
-        </mat-drawer-container> -->
-        <app-admin-clientes-edit [cliente$]="cliente$"></app-admin-clientes-edit>
-      }@else {
-        <div class="loading">
-          <h3>Aguarde carregando dados...</h3>
-          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-        </div>
-      }
-
-    </div>
+  <div class="col-12">
+    @if ((clienteStore.isAuth()); as cliente) {
+    <app-admin-clientes-edit></app-admin-clientes-edit>
+    }
+  </div>
 </div>

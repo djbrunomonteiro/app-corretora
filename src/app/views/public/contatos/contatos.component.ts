@@ -39,8 +39,8 @@ export class ContatosComponent {
       url: 'https://www.facebook.com/telma.monteiro.79?mibextid=ZbWKwL'
     },
     {
-      title: 'Email: contato@telmamonteiro.com.br',
-      value: 'telma.monteiro@email.com',
+      title: 'Email: telmamatos2005@gmail.com',
+      value: 'telmamatos2005@gmail.com',
       iconlabel: 'email',
       icon: 'email',
       url: 'contatos'

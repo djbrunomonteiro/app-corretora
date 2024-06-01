@@ -80,7 +80,7 @@ export class ClienteEffectsService {
           map((res: IResponse) => {
             if (res.status === 200 || res.status === 201) {
               item = this.utils.paramsJsonParse(res.results);
-              if(!this.auth.userData$.value){item = {...item, auth: true}}
+              // if(!this.auth.userData$.value){item = {...item, auth: true}}
               this.storeService.dispatchAction({ group: EGroup.Cliente, action: EAction.SetOneStore, props: { item } })
             }
             return res;

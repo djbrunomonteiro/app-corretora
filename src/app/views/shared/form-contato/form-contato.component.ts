@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit, inject } from '@angular/core';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { MaterialModule } from '../../../modules/material/material.module';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -8,9 +8,10 @@ import { CoreService } from '../../../services/core.service';
 import { StoreService } from '../../../services/store.service';
 import { UtilsService } from '../../../services/utils.service';
 import { EAction, EGroup } from '../../../store/app.actions';
-import { BehaviorSubject, first } from 'rxjs';
+import { first } from 'rxjs';
 import { ClienteService } from '../../../services/cliente.service';
-import { ClienteIsAuth } from '../../../store/selectors/cliente.selector';
+import { ClientesStore } from '../../../store/cliente-store';
+import { LeadsStore } from '../../../store/leads-store';
 
 @Component({
   selector: 'app-form-contato',
@@ -54,8 +55,10 @@ export class FormContatoComponent implements OnInit {
     horarios: ['', Validators.required],
     status: ['aberto'],
     historico: [[]],
-  })
+  });
 
+  clienteStore = inject(ClientesStore);
+  leadStore = inject(LeadsStore)
   loading = false;
 
   constructor(
@@ -73,18 +76,17 @@ export class FormContatoComponent implements OnInit {
 
   ngOnInit(): void {
     this.anuncio = this.data?.anuncio;
-    this.storeService.select(ClienteIsAuth).subscribe(res => {
-      if(res){
-        this.form.patchValue({
-          id_anuncio: this.anuncio.id,
-          id_cliente: res.id,
-          nome: res.nome,
-          whatsapp: res.whatsapp,
-          email: res.email,
-        })
-      }
-    });
+    const cliente = this.clienteStore.isAuth()
 
+    if(cliente){
+      this.form.patchValue({
+        id_anuncio: this.anuncio.id,
+        id_cliente: cliente.id,
+        nome: cliente.nome,
+        whatsapp: cliente.whatsapp,
+        email: cliente.email,
+      })
+    }
   }
 
 
@@ -107,26 +109,20 @@ export class FormContatoComponent implements OnInit {
     this.checkHorarios.opts.forEach((t: { completed: boolean; }) => (t.completed = completed));
   }
 
-  salvar() {
+  async salvar() {
     this.loading = true;
     let item: any;
 
     let horarios = this.checkHorarios?.opts?.filter((elem: any) => elem.completed).map((elem: any )=> elem.name);
     horarios = horarios.length ? horarios : ['Manhã', 'Tarde']
-    item = {...item, horarios}
+    item = {...this.form.value, horarios}
 
-    item = this.form.value;
-
-    const result$ = this.storeService.dispatchAction({ group: EGroup.Lead, action: EAction.SetOne, props: { item } })
-    result$.pipe(first()).subscribe(act =>{
-      this.utils.showMessage(act.props?.message, undefined, {duration: 5000});
-      this.loading = true;
-      if(!act.props?.error){
-        this.dialogRef.close();
-      }
-    })
-
-
+    const result = await this.leadStore.saveOne(item);
+    const {error, message} = result;
+    this.loading = true;
+    this.utils.showMessage(message, undefined, {duration: 5000});
+    if(error){return}
+    this.dialogRef.close();
   }
 
 

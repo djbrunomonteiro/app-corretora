@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MaterialModule } from '../../modules/material/material.module';
 import { CommonModule } from '@angular/common';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { IMenu } from '../../models/menu';
 import { NavigationExtras, Router, RouterModule } from '@angular/router';
-import { ClienteService } from '../../services/cliente.service';
 import { ETabs } from '../../enums/tabs';
-import { CoreService } from '../../services/core.service';
 import { AuthService } from '../../services/auth.service';
+import { ClientesStore } from '../../store/cliente-store';
+import { UserStore } from '../../store/user-store';
 
 @Component({
   selector: 'app-menu',
@@ -36,12 +36,6 @@ export class MenuComponent {
       url: ETabs.preferencia
     },
     {
-      title: 'Envio de Documentos',
-      subtitle: 'Área de envio de arquivos e documentos',
-      icon: '',
-      url: ETabs.upload
-    },
-    {
       title: 'Seus Favoritos',
       subtitle: 'Lista com todos os seus favoritos',
       icon: '',
@@ -67,18 +61,18 @@ export class MenuComponent {
       icon: 'perm_phone_msg',
       url: 'contatos'
     },
-    {
-      title: 'Depoimentos',
-      iconlabel: 'comment',
-      icon: 'comment',
-      url: 'depoimentos'
-    },
-    {
-      title: 'Parceiros',
-      iconlabel: 'group icon',
-      icon: 'group',
-      url: 'parceiros'
-    },
+    // {
+    //   title: 'Depoimentos',
+    //   iconlabel: 'comment',
+    //   icon: 'comment',
+    //   url: 'depoimentos'
+    // },
+    // {
+    //   title: 'Parceiros',
+    //   iconlabel: 'group icon',
+    //   icon: 'group',
+    //   url: 'parceiros'
+    // },
     {
       title: 'Politica de privacidade',
       iconlabel: 'report icon',
@@ -87,10 +81,13 @@ export class MenuComponent {
     },
   ]
 
+  clienteStore = inject(ClientesStore);
+  userStore = inject(UserStore)
+  
+
   constructor(
     public _bottomSheetRef: MatBottomSheetRef<MenuComponent>,
     private router: Router,
-    public clienteService: ClienteService,
     public authService: AuthService
     ) { }
 
@@ -102,7 +99,8 @@ export class MenuComponent {
   goCliente(item: any){
     if(item){
       const queryParams = {tab: item.url} as NavigationExtras;
-      this.router.navigate([`auth/cliente/${this.clienteService.clienteAuth.id}`], {queryParams});
+      const cliente = this.clienteStore.isAuth();
+      this.router.navigate([`auth/cliente/${cliente.id}`], {queryParams});
     }else{
       this.router.navigate([`auth/cliente`]);
     }

@@ -1,6 +1,22 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  effect,
+  inject,
+} from '@angular/core';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { DropzoneCdkModule } from '@ngx-dropzone/cdk';
 import { DropzoneMaterialModule } from '@ngx-dropzone/material';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
@@ -9,19 +25,19 @@ import { UrlFotosPipe } from '../../../../pipes/url-fotos.pipe';
 import { CoreService } from '../../../../services/core.service';
 import { StoreService } from '../../../../services/store.service';
 import { UtilsService } from '../../../../services/utils.service';
-import { Observable, first } from 'rxjs';
-import { MyAction, EGroup, EAction, IAction } from '../../../../store/app.actions';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OneCliente } from '../../../../store/selectors/cliente.selector';
 import { UploadService } from '../../../../services/upload.service';
-import { favoritosAnuncio, recomendadosAnuncio } from '../../../../store/selectors/anuncio.selector';
-import { ClienteService } from '../../../../services/cliente.service';
 import { CardAnuncioComponent } from '../../../shared/card-anuncio/card-anuncio.component';
-import { ETabs } from '../../../../enums/tabs';
 import { ListAnuncioRecentesComponent } from '../../../shared/list-anuncio-recentes/list-anuncio-recentes.component';
 import { CentralAjudaComponent } from '../../../shared/central-ajuda/central-ajuda.component';
 import { ClienteDuvidaComponent } from '../../../shared/cliente-duvida/cliente-duvida.component';
 import { ListAgendamentosComponent } from '../../../shared/list-agendamentos/list-agendamentos.component';
+import { ClientesStore } from '../../../../store/cliente-store';
+import { ICliente } from '../../../../models/cliente';
+import { IAnuncio } from '../../../../models/anuncio';
+import { AnunciosStore } from '../../../../store/anuncios-store';
+import { ETabs } from '../../../../enums/tabs';
+import { UserStore } from '../../../../store/user-store';
 
 @Component({
   selector: 'app-admin-clientes-edit',
@@ -40,18 +56,21 @@ import { ListAgendamentosComponent } from '../../../shared/list-agendamentos/lis
     ListAnuncioRecentesComponent,
     CentralAjudaComponent,
     ClienteDuvidaComponent,
-    ListAgendamentosComponent
+    ListAgendamentosComponent,
   ],
-  
+
   templateUrl: './admin-clientes-edit.component.html',
-  styleUrl: './admin-clientes-edit.component.scss'
+  styleUrl: './admin-clientes-edit.component.scss',
 })
 export class AdminClientesEditComponent implements OnInit, AfterViewInit {
-
-  @Input() cliente$: any;
   @Input() isCadastroPublic: boolean = false;
-  @Output()resCadastroPublicEvent = new EventEmitter<any>();
+  @Output() resCadastroPublicEvent = new EventEmitter<any>();
 
+  clienteStore = inject(ClientesStore);
+  userStore = inject(UserStore);
+  anuncioStore = inject(AnunciosStore);
+
+  clienteRef!: ICliente;
   form = this._formBuilder.group({
     id: [''],
     nome: ['', Validators.required],
@@ -102,7 +121,7 @@ export class AdminClientesEditComponent implements OnInit, AfterViewInit {
     favoritos: [[]],
     recomendados: [[]],
     hash: [''],
-    created_at: ['']
+    created_at: [''],
   });
 
   estados: any[] = [];
@@ -111,16 +130,16 @@ export class AdminClientesEditComponent implements OnInit, AfterViewInit {
   ctrlDocumentacao = this.form.get('documentacao') as FormArray;
   filesCtrl = new FormControl();
 
-  displayedColumns: string[] = ['index', 'tipo_cliente', 'tipo_arquivo', 'nome', 'acoes'];
+  displayedColumns: string[] = [
+    'index',
+    'tipo_cliente',
+    'tipo_arquivo',
+    'nome',
+    'acoes',
+  ];
   dataSource = [];
-
   loadingUpload = false;
-
   tabIndex = 0;
-
-  favoritos$!: Observable<any[]>;
-  recomendados$!: Observable<any[]>;
-
   folders: any[] = [
     {
       name: 'Photos',
@@ -146,181 +165,167 @@ export class AdminClientesEditComponent implements OnInit, AfterViewInit {
     },
   ];
 
+  favoritos: IAnuncio[] = [];
+
   constructor(
     private _formBuilder: FormBuilder,
-    private storeService: StoreService,
     private utils: UtilsService,
     public core: CoreService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private uploadService: UploadService,
-    private clienteService: ClienteService
-  ) { }
-
+    private uploadService: UploadService
+  ) {
+    effect(() =>{
+      this.getFavoritos();
+    })
+  }
 
   async ngOnInit(): Promise<void> {
     this.utils.getLocalidades().subscribe((res: any) => {
       this.estados = res?.estados;
       setTimeout(() => {
-        this.form.patchValue({ end_uf: 'MA' })
-      }, 500)
+        this.form.patchValue({ end_uf: 'MA' });
+      }, 500);
     });
-    if (this.cliente$) {
 
-      this.cliente$.pipe(first()).subscribe((res: any) => {
-        this.form.patchValue({ ...res, auth: true });
-        for (let index = 0; index < res.documentacao.length; index++) {
-          const elem =  res.documentacao[index]
-          const grupo = this._formBuilder.group({
-            tipo_cliente: [elem?.tipo_cliente],
-            tipo_arquivo: [elem?.tipo_arquivo],
-            path: [elem?.path],
-            nome: [elem?.nome]
-          });
-          this.ctrlDocumentacao.push(grupo)          
-        };
-
-        this.dataSource = this.ctrlDocumentacao.value;
-      })
-
-    } else {
-      const id = this.activatedRoute.snapshot.paramMap.get('id');
-      if (id) {
-        this.getItem(id);
-      }
-    }
+    this.getCliente();
 
     this.activatedRoute.queryParams.subscribe((q: any) =>{
       switch(q?.tab){
         case ETabs.favorito:
-          this.tabIndex = 5
-          break;
-        case ETabs.agendamento:
-          this.tabIndex = 4
-          break;
-        case ETabs.upload:
           this.tabIndex = 3
           break;
-        case ETabs.preferencia:
+        case ETabs.agendamento:
           this.tabIndex = 2
+          break;
+        case ETabs.preferencia:
+          this.tabIndex = 1
           break;
         default:
           this.tabIndex = 0
           break;
-
       }
-
-
     });
+  }
 
-    if(this.form.value.id){
-      this.favoritos$ = this.storeService.select(favoritosAnuncio(this.form.value.id));
-      this.recomendados$ = this.storeService.select(recomendadosAnuncio(this.form.value.id));
-    }
+  getCliente() {
+    const id = this.activatedRoute.snapshot.params['id'];
+    if (!id) {return;}
+    this.clienteRef = this.clienteStore.selectOne(id);
+    if (!this.clienteRef) { return;}
+    this.form.patchValue({ ...this.clienteRef });
+    this.getFavoritos();
+  }
 
+  getFavoritos() {
+    if(!this.clienteRef){return}
+    this.favoritos = this.clienteRef.favoritos.map((id: string) => {
+      const anuncio = this.anuncioStore.selectOne(id);
+      return anuncio;
+    });
   }
 
   ngAfterViewInit(): void {
-    this.form.valueChanges.subscribe(c => {
+    this.form.valueChanges.subscribe((c) => {
       if (c?.end_uf) {
-        this.cidades = this.estados.filter((elem: any) => elem?.sigla === c.end_uf).map((elem: any) => elem.cidades)[0] ?? [];
+        this.cidades =
+          this.estados
+            .filter((elem: any) => elem?.sigla === c.end_uf)
+            .map((elem: any) => elem.cidades)[0] ?? [];
         setTimeout(() => {
           if (c?.end_uf === 'MA') {
-            this.form.patchValue({ end_cidade: 'São Luís' })
+            this.form.patchValue({ end_cidade: 'São Luís' });
           }
-        }, 500)
+        }, 500);
       }
     });
-
-    this.filesCtrl.valueChanges.subscribe(c => {
-      if (!c?.length) { return; }
-      this.upload(c);
-    });
-
-
-
-
   }
 
-  salvar() {
-    const item = { ...this.form.value, data_nasc: String(this.form.value.data_nasc), url: this.createUrl() };
+  async salvar() {
+    const item = {
+      ...this.form.value,
+      data_nasc: String(this.form.value.data_nasc),
+      url: this.createUrl(),
+    } as ICliente;
+    
+    const { error, message, results } = await this.clienteStore.saveOne(item);
+    this.utils.showMessage(message);
+    if (error || item.id) {
+      return;
+    };
 
-    return;
-    let action: MyAction;
-    let result$: Observable<IAction>;
-    if (item.id) {
-      action = { group: EGroup.Cliente, action: EAction.UpdateOne, props: { item } }
-      result$ = this.storeService.dispatchAction(action)
-      result$.pipe(first()).subscribe(res => {
-        this.utils.showMessage(res?.props?.message);
-      })
+    if(this.isCadastroPublic){
+      console.log(results);
+      localStorage.setItem('access_token', results.hash)
+      this.router.navigate([`auth/cliente/${results.id}`]);
+      return;
+    };
 
-    } else {
-      action = { group: EGroup.Cliente, action: EAction.SetOne, props: { item } }
-      result$ = this.storeService.dispatchAction(action)
-      result$.pipe(first()).subscribe(res => {
-        this.utils.showMessage(res?.props?.message);
-        if (!res.props?.error) {
-          
-          if(!this.isCadastroPublic && !this.cliente$){
-            this.router.navigate([`auth/admin/clientes`]);
-          }else if(this.cliente$){
-            this.router.navigate([`auth/cliente`]);
-          }else{
-            const updateItem = res.props?.item as any;
-            if(!updateItem){return;}
-            this.resCadastroPublicEvent.emit(updateItem);
-          }
-        }
-      })
-    }
 
+    this.router.navigate([`auth/admin/clientes`]);
 
   }
 
   createUrl() {
     const nome = String(this.form.value.nome).toLocaleLowerCase();
-    let cpf_cnpj = String(this.form.value.cpf_cnpj).toLocaleLowerCase()
+    let cpf_cnpj = String(this.form.value.cpf_cnpj).toLocaleLowerCase();
     cpf_cnpj = cpf_cnpj.slice(cpf_cnpj.length - 4);
 
     let result = `${nome} ${cpf_cnpj}`;
-    result = result.replace(/[áàãâäéèêëíìîïóòõôöúùûü]/g, (match) => {
-      switch (match) {
-        case "á": return "a";
-        case "à": return "a";
-        case "ã": return "a";
-        case "â": return "a";
-        case "ä": return "a";
-        case "é": return "e";
-        case "è": return "e";
-        case "ê": return "e";
-        case "ë": return "e";
-        case "í": return "i";
-        case "ì": return "i";
-        case "î": return "i";
-        case "ï": return "i";
-        case "ó": return "o";
-        case "ò": return "o";
-        case "õ": return "o";
-        case "ô": return "o";
-        case "ö": return "o";
-        case "ú": return "u";
-        case "ù": return "u";
-        case "û": return "u";
-        case "ü": return "u";
-        default: return match;
-      }
-    }).replace(/\s+/g, '-');
+    result = result
+      .replace(/[áàãâäéèêëíìîïóòõôöúùûü]/g, (match) => {
+        switch (match) {
+          case 'á':
+            return 'a';
+          case 'à':
+            return 'a';
+          case 'ã':
+            return 'a';
+          case 'â':
+            return 'a';
+          case 'ä':
+            return 'a';
+          case 'é':
+            return 'e';
+          case 'è':
+            return 'e';
+          case 'ê':
+            return 'e';
+          case 'ë':
+            return 'e';
+          case 'í':
+            return 'i';
+          case 'ì':
+            return 'i';
+          case 'î':
+            return 'i';
+          case 'ï':
+            return 'i';
+          case 'ó':
+            return 'o';
+          case 'ò':
+            return 'o';
+          case 'õ':
+            return 'o';
+          case 'ô':
+            return 'o';
+          case 'ö':
+            return 'o';
+          case 'ú':
+            return 'u';
+          case 'ù':
+            return 'u';
+          case 'û':
+            return 'u';
+          case 'ü':
+            return 'u';
+          default:
+            return match;
+        }
+      })
+      .replace(/\s+/g, '-');
 
     return `cliente/${result}`;
-
-  }
-
-  getItem(id: string) {
-    const result$ = this.storeService.dispatchAction({ group: EGroup.Cliente, action: EAction.GetOne, params: { id } });
-    this.storeService.select(OneCliente(id)).subscribe(res => {
-      this.form.patchValue({ ...res })
-    })
   }
 
   async upload(files: File[]) {
@@ -328,30 +333,25 @@ export class AdminClientesEditComponent implements OnInit, AfterViewInit {
 
     for (let index = 0; index < files.length; index++) {
       const file = files[index];
-      const folder = `documentos/${this.form.value.id}`
+      const folder = `documentos/${this.form.value.id}`;
       const res = await this.uploadService.uploadFILE(file, folder);
       if (res) {
-        this.addDocumento(res)
+        this.addDocumento(res);
       }
     }
 
     this.loadingUpload = false;
-
-
   }
 
   addDocumento(path: string) {
-    const nome = path.split('/')[2]
+    const nome = path.split('/')[2];
     const grupo = this._formBuilder.group({
       tipo_cliente: ['principal'],
       tipo_arquivo: ['Outros'],
       path: [path],
-      nome: [nome]
-    })
+      nome: [nome],
+    });
     this.ctrlDocumentacao.push(grupo);
-    this.dataSource = this.ctrlDocumentacao.value
+    this.dataSource = this.ctrlDocumentacao.value;
   }
-
-
-
 }
