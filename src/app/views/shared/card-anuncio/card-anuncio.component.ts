@@ -43,8 +43,6 @@ export class CardAnuncioComponent implements OnInit {
   ){
   }
   ngOnInit(): void {
-    console.log(this.item);
-    
   }
 
   goDetails(url: any){
@@ -53,7 +51,6 @@ export class CardAnuncioComponent implements OnInit {
 
   async addFavorito(id: string){
     let cliente = this.clienteStore.isAuth();
-    console.log(id);
     if(!cliente){return}
     let favoritos = cliente.favoritos as any[] ?? []
     favoritos.push(id)

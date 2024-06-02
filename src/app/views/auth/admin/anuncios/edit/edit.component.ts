@@ -123,9 +123,6 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit, OnDestr
 
 
   async ngOnInit(): Promise<void> {
-    console.log(this.meus());
-    
-    
     this.editor = new Editor();
     this.utils.getLocalidades().subscribe((res: any) => {
       this.estados = res?.estados;
@@ -191,8 +188,6 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit, OnDestr
     const nvs = [...this.fotos$.value, fullPath];
     this.fotos$.next(nvs);
 
-    console.log(this.fotos$.value);
-    
   }
 
   remove(index: number){

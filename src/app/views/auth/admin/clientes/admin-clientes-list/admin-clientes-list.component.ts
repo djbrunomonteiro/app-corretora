@@ -41,9 +41,6 @@ export class AdminClientesListComponent implements OnInit {
   ) {
     effect(() => {
       this.clientes = this.clientesStore.allItens();
-      console.log(this.clientes);
-      
-      
     })
   }
   ngOnInit(): void {

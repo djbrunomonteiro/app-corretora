@@ -52,8 +52,6 @@ export class AppComponent implements OnInit {
   }
   
   getAll(){
-    console.log('get alll');
-    
 
   }
 

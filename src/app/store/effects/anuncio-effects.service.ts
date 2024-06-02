@@ -25,8 +25,6 @@ export class AnuncioEffectsService {
       ofType(getAction(EGroup.Anuncio, EAction.GetAll)),
       concatLatestFrom(() => this.storeService.select(AllAnuncios)),
       switchMap(([_, anuncios]) => {
-        console.log('anuncios', anuncios);
-        
         if(anuncios.length){ 
           return of({error: false, message: 'Itens obtidos com sucesso!', results: anuncios}).pipe(delay(1000))
         }
@@ -41,8 +39,6 @@ export class AnuncioEffectsService {
         )
       }),
       map((res: IResponse) => {
-        console.log('exiwsteewe', res);
-        
         if (res.error) {
           return appActions({ group: EGroup.Anuncio, action: EAction.GetAllError, props: { error: res?.error, message: res?.message } })
         } else {

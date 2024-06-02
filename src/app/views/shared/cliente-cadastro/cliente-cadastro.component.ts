@@ -58,8 +58,6 @@ export class ClienteCadastroComponent {
   ) { }
 
   getResCadastro(res: any){
-    console.log(res);
-    
     if(!res?.id){return}
     this.dialogRef.close(res)
   }

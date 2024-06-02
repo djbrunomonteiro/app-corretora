@@ -42,7 +42,6 @@ export const AnunciosStore = signalStore(
 
             let anuncios = results as IAnuncio[];
             anuncios = utils.ordenarItens(anuncios, 'created_at')
-            console.log(anuncios);
             patchState(store, setEntities(anuncios));
             patchState(store, { isLoading: false });
           },
@@ -105,8 +104,6 @@ export const AnunciosStore = signalStore(
       return computed(() => {
         const allAnuncios = store.allItens();
         const { all, termo, categoria, tipo, preco_max, preco_min } = form;
-        console.log('is alll', all);
-        
         let results = allAnuncios;
         if (!all) {
           if (termo) {

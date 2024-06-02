@@ -19,8 +19,7 @@ export class StoreService {
 
     if (String(action.type).includes('Store')) {
       this.store.dispatch(action);
-      console.log(action);
-      
+
       return of(); // para actions que salvam apenas no Store
     } else {
       const typeS = myAction.action + 'Sucess' as EAction;

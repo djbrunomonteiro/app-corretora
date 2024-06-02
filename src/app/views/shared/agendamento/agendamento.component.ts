@@ -101,7 +101,6 @@ export class AgendamentoComponent implements OnInit {
     const {error, message} = await this.agendamentoStore.saveOne(item);
     this.utils.showMessage(message, undefined, {duration: 5000});
     this.loading = false;
-    console.log(error, message);
     if(error){return}
     this.dialogRef.close();
   }

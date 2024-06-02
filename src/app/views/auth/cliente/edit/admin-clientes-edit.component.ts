@@ -255,7 +255,6 @@ export class AdminClientesEditComponent implements OnInit, AfterViewInit {
     };
 
     if(this.isCadastroPublic){
-      console.log(results);
       localStorage.setItem('access_token', results.hash)
       this.router.navigate([`auth/cliente/${results.id}`]);
       return;

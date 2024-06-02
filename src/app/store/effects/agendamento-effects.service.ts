@@ -91,7 +91,6 @@ export class AgendamentoEffectsService {
         if (res.error) {
           return appActions({ group: EGroup.Agendamento, action: EAction.UpdateOneError, props: { status: res.status, error: res.error, message: res?.message } })
         } else {
-          console.log('existe rror', res.error);
           return appActions({ group: EGroup.Agendamento, action: EAction.UpdateOneSucess, props: { status: res.status, error: res.error, message: res?.message } })
         }
       })
