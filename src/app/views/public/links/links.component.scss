@@ -1,0 +1,58 @@
+.container-links{
+    width: 100%;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('../../../../assets/imgs/telma-monteiro-links.webp');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+   
+    // filter: blur(10px);
+    // z-index: -1000;
+    .links{
+        // position: absolute;
+        // background-color: red;
+        margin-top: 310px !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        a{
+            width: 400px;
+            padding: 30px 20px;
+            margin: 10px 20px;
+            // background-color: red;
+            border: 1px solid rgb(255, 255, 255);
+            // border-radius: 25px;
+        }
+
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .container-links{
+        width: 100%;
+        min-height: 90vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-image: url('../../../../assets/imgs/telma-monteiro-links.webp');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        // filter: blur(10px);
+        // z-index: -1000;
+        .links{
+            a{
+                width: 98% !important;
+            }
+    
+        }
+    }
+
+
+
+}

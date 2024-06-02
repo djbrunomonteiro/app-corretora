@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IMenu } from '../../../models/menu';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../../modules/material/material.module';
 import { UtilsService } from '../../../services/utils.service';
+import { CoreService } from '../../../services/core.service';
+import { EMeta } from '../../../enums/meta';
 
 @Component({
   selector: 'app-contatos',
@@ -14,7 +16,7 @@ import { UtilsService } from '../../../services/utils.service';
   templateUrl: './contatos.component.html',
   styleUrl: './contatos.component.scss'
 })
-export class ContatosComponent {
+export class ContatosComponent implements OnInit {
 
   contatos: IMenu[] = [
     {
@@ -47,7 +49,15 @@ export class ContatosComponent {
     },
   ]
 
-  constructor(public utils: UtilsService) {
+  constructor(
+    public core: CoreService,
+    public utils: UtilsService
+    ) {
+  }
+  ngOnInit(): void {
+    this.core.setTitle(`Telma Monteiro - página de contato e informações sobre imóveis no maranhão`);
+    this.core.updateMeta('Telma Monteiro - página de contato e informações sobre imóveis no maranhão', EMeta.KEY_DEFAULT)
+
   }
 
 

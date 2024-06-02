@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
 import { MaterialModule } from '../../../modules/material/material.module';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -11,6 +11,7 @@ import { IConfigSlides } from '../../../models/configslides';
 import { ESlides } from '../../../enums/slides';
 import { BannerPrincipalComponent } from '../../shared/banner-principal/banner-principal.component';
 import { IMenu } from '../../../models/menu';
+import { EMeta } from '../../../enums/meta';
 
 @Component({
   selector: 'app-home',
@@ -31,7 +32,7 @@ import { IMenu } from '../../../models/menu';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
   form = this.fb.group({
     tipo: ['apartamento'],
@@ -79,6 +80,11 @@ export class HomeComponent {
     private fb: FormBuilder,
     public core: CoreService,
   ){}
+
+  ngOnInit(): void {
+    this.core.setTitle('Telma Monteiro - Corretora de Imóveis no Maranhão');
+    this.core.updateMeta(EMeta.DESC_HOME, EMeta.KEY_SOU);
+  }
 
 
   getUrl(url: string) {

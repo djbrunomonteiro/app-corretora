@@ -1,4 +1,6 @@
-import { Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { SsrCookieService } from 'ngx-cookie-service-ssr';
 import { BehaviorSubject } from 'rxjs';
 
@@ -119,8 +121,31 @@ export class CoreService {
 
   constructor(
     private ssrCookieService: SsrCookieService,
+    private title: Title,
+    @Inject(PLATFORM_ID) public platformId: Object
   ) { 
     this.generateNums()
+  }
+
+  setTitle(value: string){
+    if(isPlatformBrowser(this.platformId)){
+      this.title.setTitle(value)
+    }
+  }
+
+  updateMeta(description: string, keys: string) {
+    if(isPlatformBrowser(this.platformId)){
+      const metaTags = document.head.querySelectorAll('meta');
+      metaTags.forEach(tag => {
+        if (tag.name === 'description') {
+          tag.setAttribute('content', description)
+        }
+        if (tag.name === 'keywords') {
+          tag.setAttribute('content', keys)
+        }
+      })
+    }
+
   }
 
   generateNums(){

@@ -18,6 +18,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UtilsService } from '../../../services/utils.service';
 import { AnunciosStore } from '../../../store/anuncios-store';
 import { IAnuncio } from '../../../models/anuncio';
+import { EMeta } from '../../../enums/meta';
 
 
 @Component({
@@ -65,9 +66,7 @@ export class SearchComponent implements OnInit {
 
   constructor(
     public core: CoreService,
-    private storeService: StoreService,
     private formBuilder: FormBuilder,
-    private utils: UtilsService,
     @Inject(PLATFORM_ID) public platformId: Object,
 
   ) {
@@ -75,6 +74,8 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.core.setTitle(`Telma Monteiro - Encontre os melhores imóveis no Maranhão para compra, venda ou aluguel com a corretora especializada.`);
+    this.core.updateMeta(EMeta.DESC_SEARCH, EMeta.KEY_SEARCH);
     this.listarTodos();
     this.form.valueChanges
     .pipe(takeUntil(this.unsub$))
@@ -83,7 +84,6 @@ export class SearchComponent implements OnInit {
         this.anuncios = this.anunciosStore.allItens;
         return
       }
-      console.log('c order', c);
       this.pesquisar(this.searchFilter)
     })
 

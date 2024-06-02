@@ -1,0 +1,10 @@
+<div class="container-links">
+    <div class="links">
+        @for (link of links; track $index) {
+            <a [href]="link.url" [target]="link.target" mat-flat-button color="primary">{{link.title}}</a>
+
+        }
+
+    </div>
+
+</div>

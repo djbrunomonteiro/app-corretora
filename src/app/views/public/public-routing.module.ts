@@ -9,6 +9,7 @@ import { ParceirosComponent } from './parceiros/parceiros.component';
 import { DepoimentosComponent } from './depoimentos/depoimentos.component';
 import { PoliticaPrivacidadeComponent } from './politica-privacidade/politica-privacidade.component';
 import { ContatosComponent } from './contatos/contatos.component';
+import { LinksComponent } from './links/links.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,10 @@ const routes: Routes = [
         path: '',
         component: HomeComponent,
         
+      },
+      {
+        path: 'links',
+        component: LinksComponent,
       },
       {
         path: 'buscar',
