@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { CUSTOM_ELEMENTS_SCHEMA, Component, Input, Signal, effect, inject, signal } from '@angular/core';
+import {
+  CUSTOM_ELEMENTS_SCHEMA,
+  Component,
+  Input,
+  Signal,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { SwiperOptions } from 'swiper/types';
@@ -11,7 +19,6 @@ import { IConfigSlides } from '../../../models/configslides';
 import { NavigationExtras, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AnunciosStore } from '../../../store/anuncios-store';
-import { IAnuncio } from '../../../models/anuncio';
 
 @Component({
   selector: 'app-slides',
@@ -28,23 +35,20 @@ import { IAnuncio } from '../../../models/anuncio';
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './slides.component.html',
-  styleUrl: './slides.component.scss'
+  styleUrl: './slides.component.scss',
 })
 export class SlidesComponent {
-
   @Input() slidesConfig!: IConfigSlides;
 
   private readonly store = inject(Store);
 
-  
   breakpoints: SwiperOptions['breakpoints'] = {
     // when window width is >= 320px
     320: {
       slidesPerView: 1,
       spaceBetween: 5,
       slidesOffsetAfter: 0.2,
-      slidesOffsetBefore:0.5
-
+      slidesOffsetBefore: 0.5,
     },
     // when window width is >= 480px
     480: {
@@ -59,47 +63,51 @@ export class SlidesComponent {
     800: {
       slidesPerView: 4,
       spaceBetween: 10,
-    }
+    },
   };
 
   slides!: Signal<any[]>;
 
-  anunciosStore = inject(AnunciosStore)
+  anunciosStore = inject(AnunciosStore);
 
-  countSLider = signal(3)
-  
+  countSLider = signal(3);
 
-  constructor(
-    private storeService: StoreService,
-    private router: Router
-    ) {
+  constructor(private storeService: StoreService, private router: Router) {
+    effect(() => this.setItensSlides())
+  }
 
-    }
   ngOnInit(): void {
-    this.setItensSlides()
+    this.setItensSlides();
   }
 
-  setItensSlides(){
-    if(!this.slidesConfig){return;}
+  setItensSlides() {
+    if (!this.slidesConfig) {
+      return;
+    }
 
-    this.slides = this.anunciosStore.selectItensSlider(this.slidesConfig.tipo, this.slidesConfig.start, this.slidesConfig.end)
-    
+    this.slides = this.anunciosStore.selectItensSlider(
+      this.slidesConfig.tipo,
+      this.slidesConfig.start,
+      this.slidesConfig.end
+    );
+
     // this.slidesSignal = this.store.selectSignal(anunciosSlides(this.slidesConfig.tipo, this.slidesConfig.start, this.slidesConfig.end))
-    
+
     // this.storeService.select(anunciosSlides(this.slidesConfig.tipo, this.slidesConfig.start, this.slidesConfig.end)).subscribe(res => this.slides = res);
-    if(!this.slidesConfig.breakpoints){return;}
+    if (!this.slidesConfig.breakpoints) {
+      return;
+    }
     this.breakpoints = this.slidesConfig.breakpoints;
-
   }
 
-  openAnuncio(url: string){
-    this.router.navigate([`/anuncios/${url}`])
+  openAnuncio(url: string) {
+    this.router.navigate([`/anuncios/${url}`]);
   }
 
-  openMais(){
-    const queryParams = { termo: String(this.slidesConfig.tipo).toLowerCase() } as NavigationExtras
-    this.router.navigate(['buscar'], {queryParams} )
-    
+  openMais() {
+    const queryParams = {
+      termo: String(this.slidesConfig.tipo).toLowerCase(),
+    } as NavigationExtras;
+    this.router.navigate(['buscar'], { queryParams });
   }
-
 }

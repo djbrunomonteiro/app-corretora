@@ -12,6 +12,7 @@ import { ESlides } from '../../../enums/slides';
 import { BannerPrincipalComponent } from '../../shared/banner-principal/banner-principal.component';
 import { IMenu } from '../../../models/menu';
 import { EMeta } from '../../../enums/meta';
+import { SlidesUltimosComponent } from '../../shared/slides-ultimos/slides-ultimos.component';
 
 @Component({
   selector: 'app-home',
@@ -25,10 +26,10 @@ import { EMeta } from '../../../enums/meta';
     UrlFotosPipe,
     SlidesComponent,
     BannerVenderHomeComponent,
-    BannerPrincipalComponent
+    BannerPrincipalComponent,
+    SlidesUltimosComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -41,9 +42,9 @@ export class HomeComponent implements OnInit {
   });
 
   slidesConfig: IConfigSlides[] = [
-    {titulo: 'Apartamentos', subtitulo: 'Padrão, Duplex, Garden e Loft...', tipo: ESlides.apartamento,  start: 0, end: 10},
     {titulo: 'Casas', subtitulo: 'Em Condominios, Soltas, Alto padrão, Vila...', tipo: ESlides.casa, start: 0, end: 10},
-    {titulo: 'Empreendimentos Comerciais', subtitulo: 'Lojas, Salas, Escritórios, Galpões...', tipo: ESlides.comercial, start: 0, end: 10},
+    {titulo: 'Empreendimentos', subtitulo: 'Lojas, Salas, Escritórios, Galpões, Sitios, Fazendas...', tipo: ESlides.comercial, start: 0, end: 10},
+    {titulo: 'Apartamentos', subtitulo: 'Padrão, Duplex, Garden e Loft...', tipo: ESlides.apartamento,  start: 0, end: 10},
   ]
 
   empresaMenu: IMenu[] = [

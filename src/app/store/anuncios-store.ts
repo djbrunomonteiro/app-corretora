@@ -168,6 +168,13 @@ export const AnunciosStore = signalStore(
       })
     }
 
+    function selectUltimos(max = 10) {
+      let result = store.allItens();
+      result = utils.ordenarItens(result, 'created_at');
+      result = result.filter((_, i) => i <= max);
+      return result
+    }
+
     function selectOne(key: string) {
       return store.allItens().filter(elem => elem.url === key || elem.id === key)[0]
     }
@@ -185,6 +192,7 @@ export const AnunciosStore = signalStore(
       search, 
       selectItensSlider,
       selectOne,
+      selectUltimos,
       isFavorito
     }
 

@@ -13,6 +13,7 @@ import { AnunciosStore } from '../../../store/anuncios-store';
 import { IAnuncio } from '../../../models/anuncio';
 import { CoreService } from '../../../services/core.service';
 import { EMeta } from '../../../enums/meta';
+import { UploadService } from '../../../services/upload.service';
 
 @Component({
   selector: 'app-anuncio-details',
@@ -33,6 +34,7 @@ import { EMeta } from '../../../enums/meta';
 export class AnuncioDetailsComponent implements OnInit {
 
   anunciosStore = inject(AnunciosStore);
+  uploadService = inject(UploadService);
   anuncio!: IAnuncio
 
   size = ESize;
@@ -62,6 +64,8 @@ export class AnuncioDetailsComponent implements OnInit {
       const key = this.removeHtmlTags(this.anuncio.descricao);
       this.core.setTitle(`${this.anuncio.titulo} - ${this.anuncio.tipo} - ${key} - ${this.anuncio.end_cidade} / ${this.anuncio.end_uf}`);
       this.core.updateMeta(`Telma Monteiro - ${this.anuncio.tipo} - ${this.anuncio.titulo} - ${this.anuncio.end_cidade} / ${this.anuncio.end_uf}`, `${key} ${this.anuncio.end_cidade}, ${this.anuncio.end_uf}`);
+      console.log(this.anuncio);
+      
     }
   }
 
