@@ -61,11 +61,9 @@ export class UploadService {
   };
 
   async getFoto(name: string, folder: string, size: string = ESize.large) {
-    const path = `${folder}/${size}/${name}`
+    const path = `${folder}/${size}/${name}`;
     this.storageRef = ref(this.storage, path);
     return await getDownloadURL(this.storageRef)
-
-
   }
 
   /* Como default criará 2 arquivos de tamanhos diferentes mas com o mesmo name.*/

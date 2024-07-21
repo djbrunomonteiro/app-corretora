@@ -1,5 +1,5 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { CUSTOM_ELEMENTS_SCHEMA, Component, Inject, OnInit, PLATFORM_ID, effect, inject } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, Inject, OnInit, PLATFORM_ID, effect, inject, signal } from '@angular/core';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { MaterialModule } from '../../../modules/material/material.module';
 import { UrlFotosPipe } from '../../../pipes/url-fotos.pipe';
@@ -14,6 +14,7 @@ import { IAnuncio } from '../../../models/anuncio';
 import { CoreService } from '../../../services/core.service';
 import { EMeta } from '../../../enums/meta';
 import { UploadService } from '../../../services/upload.service';
+import { BehaviorSubject, combineLatestAll, from, map } from 'rxjs';
 
 @Component({
   selector: 'app-anuncio-details',
@@ -37,7 +38,9 @@ export class AnuncioDetailsComponent implements OnInit {
   uploadService = inject(UploadService);
   anuncio!: IAnuncio
 
+  fotos$ = new BehaviorSubject<string[]>([])
   size = ESize;
+  loadedImgs = signal<boolean>(false)
   
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -55,18 +58,30 @@ export class AnuncioDetailsComponent implements OnInit {
     this.getAnuncio();
   }
 
-  getAnuncio(){
+  async getAnuncio(){
     if(isPlatformBrowser(this.platformId)){
       const url = this.activatedRoute.snapshot.paramMap.get('url');
       if (!url) { return };
-      this.anuncio = this.anunciosStore.selectOne(url);
+      this.anuncio = this.anunciosStore.selectOne(url)
       if(!this.anuncio){return}
       const key = this.removeHtmlTags(this.anuncio.descricao);
       this.core.setTitle(`${this.anuncio.titulo} - ${this.anuncio.tipo} - ${key} - ${this.anuncio.end_cidade} / ${this.anuncio.end_uf}`);
       this.core.updateMeta(`Telma Monteiro - ${this.anuncio.tipo} - ${this.anuncio.titulo} - ${this.anuncio.end_cidade} / ${this.anuncio.end_uf}`, `${key} ${this.anuncio.end_cidade}, ${this.anuncio.end_uf}`);
-      console.log(this.anuncio);
-      
+      const {fotos} = this.anuncio;
+      this.getImgs(fotos);
     }
+  }
+
+  async getImgs(fotos: any[] | undefined){
+    if(!fotos || !fotos.length){return};
+
+    from(fotos).pipe(
+      map(async (foto) => await this.uploadService.getFoto(foto, 'anuncios', this.size.large)),
+      combineLatestAll()
+    ).subscribe(res => {
+      this.fotos$.next(res);
+    } )
+
   }
 
   removeHtmlTags(input: string | undefined): string {

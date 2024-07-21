@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Firestore, collection, CollectionReference, doc, setDoc, getDocs, updateDoc, deleteDoc } from '@angular/fire/firestore';
 import { Observable} from 'rxjs';
 import { IResponse } from '../models/response';
+import { isPlatformBrowser } from '@angular/common';
 
 
 @Injectable({
@@ -12,7 +13,8 @@ export class AnuncioService {
   collectionRef: CollectionReference | undefined;
 
   constructor(
-    private firestore: Firestore
+    private firestore: Firestore,
+    @Inject(PLATFORM_ID) public platformId: Object,
   ) {
     this.collectionRef = collection(this.firestore, 'anuncios');
   }
@@ -21,15 +23,36 @@ export class AnuncioService {
   getAll() {
     return new Observable<IResponse>(sub => {
       let response: IResponse = {};
-      this.queryDocs().then(res =>{
-        response = { status: 200, error: false, results: res, message: 'Itens obtidos com sucesso!' };
-        sub.next(response)
-      }).catch(err => {
-        console.error(err);
+      
+      if(isPlatformBrowser(this.platformId)){
+        let stateAnuncios = localStorage.getItem("state-anuncios");
+        if(stateAnuncios){
+          stateAnuncios = JSON.parse(stateAnuncios)
+          response = { status: 200, error: false, results: stateAnuncios, message: 'Itens obtidos com sucesso!' };
+          sub.next(response)
+        }else{
+          this.queryDocs().then(res =>{
+            localStorage.setItem("state-anuncios", JSON.stringify(res))
+            response = { status: 200, error: false, results: res, message: 'Itens obtidos com sucesso!' };
+            sub.next(response)
+          }).catch(err => {
+            console.error(err);
+            response = { status: 401, error: true, results: undefined, message: 'Error ao obter itens. Tente novamente!' }
+            sub.next(response)
+          })
+        }
+
         
-        response = { status: 401, error: true, results: undefined, message: 'Error ao obter itens. Tente novamente!' }
-        sub.next(response)
-      })
+      }else{
+        this.queryDocs().then(res =>{
+          response = { status: 200, error: false, results: res, message: 'Itens obtidos com sucesso!' };
+          sub.next(response)
+        }).catch(err => {
+          console.error(err);
+          response = { status: 401, error: true, results: undefined, message: 'Error ao obter itens. Tente novamente!' }
+          sub.next(response)
+        })
+      }
 
 
     })
