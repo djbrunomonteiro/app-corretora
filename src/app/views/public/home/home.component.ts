@@ -13,6 +13,7 @@ import { BannerPrincipalComponent } from '../../shared/banner-principal/banner-p
 import { IMenu } from '../../../models/menu';
 import { EMeta } from '../../../enums/meta';
 import { SlidesUltimosComponent } from '../../shared/slides-ultimos/slides-ultimos.component';
+import { GridPostsComponent } from '../../shared/grid-posts/grid-posts.component';
 
 @Component({
   selector: 'app-home',
@@ -27,7 +28,8 @@ import { SlidesUltimosComponent } from '../../shared/slides-ultimos/slides-ultim
     SlidesComponent,
     BannerVenderHomeComponent,
     BannerPrincipalComponent,
-    SlidesUltimosComponent
+    SlidesUltimosComponent,
+    GridPostsComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './home.component.html',

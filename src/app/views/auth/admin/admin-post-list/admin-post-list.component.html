@@ -1,0 +1,41 @@
+<mat-card>
+    <mat-card-header class="d-flex justify-content-between align-items-center">
+      <mat-card-title>Posts</mat-card-title>
+      <button (click)="openEdit()" class="btn p-4" mat-raised-button color="primary">Criar Post</button>
+    </mat-card-header>
+    <mat-card-content>
+
+        <table mat-table [dataSource]="dataSource">
+
+          <ng-container matColumnDef="foto">
+            <th mat-header-cell *matHeaderCellDef> Capa </th>
+            <td mat-cell *matCellDef="let element"> {{element.titulo}} </td>
+          </ng-container>  
+
+            <ng-container matColumnDef="titulo">
+              <th mat-header-cell *matHeaderCellDef> Titulo </th>
+              <td mat-cell *matCellDef="let element"> {{element.titulo}} </td>
+            </ng-container>           
+            
+
+            <ng-container matColumnDef="acoes">
+              <th mat-header-cell *matHeaderCellDef> Ações </th>
+              <td mat-cell *matCellDef="let element" >
+                <button (click)="openEdit(element)" mat-stroked-button color="primary">Ver</button>
+                <button (click)="delete(element.id)" mat-stroked-button color="warn">Deletar</button>
+
+              </td>
+            </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        
+          <mat-paginator [pageSizeOptions]="[ 10, 20, 50]"
+                         showFirstLastButtons
+                         aria-label="Select page of periodic elements">
+          </mat-paginator>
+
+    </mat-card-content>
+</mat-card>
+

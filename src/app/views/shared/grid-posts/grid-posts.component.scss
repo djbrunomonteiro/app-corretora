@@ -1,0 +1,37 @@
+.post{
+    mat-card-content{
+        // height: 300px;
+        overflow-y: hidden;
+
+        .title{
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .descricao{
+            font-size: 14px !important;
+            position: relative;
+            max-height: 6em; /* Define a altura para aproximadamente 2 linhas de texto */
+            overflow: hidden;
+        }
+
+        .descricao::before{
+            content: '...';
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            background: white; /* Cor de fundo para esconder o texto por trás */
+            padding-left: 5px;
+        }
+        .descricao::before{
+            white-space: nowrap;
+            width: 100%;
+        }
+    }
+    // max-height: 400px;
+    // border: 1px solid red;
+
+}
+.post:hover{
+    cursor: pointer;
+}

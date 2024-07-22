@@ -43,7 +43,7 @@
     "ng2-img-max": "^2.2.9",
     "ngx-cookie-service-ssr": "^17.1.0",
     "ngx-dropzone": "^3.0.0",
-    "ngx-editor": "^17.0.2",
+    "ngx-editor": "^17.5.4",
     "ngx-mask": "^17.0.4",
     "rxjs": "~7.8.0",
     "swiper": "^11.0.5",

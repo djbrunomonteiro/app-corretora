@@ -90,7 +90,7 @@ export class SearchComponent implements OnInit {
   }
 
   listarTodos(){
-    this.anuncios = this.anunciosStore.allItens
+    this.anuncios = this.anunciosStore.allItens;
   }
 
   pesquisar(form: any) {

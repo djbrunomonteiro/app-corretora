@@ -1,0 +1,23 @@
+<section class="slides">
+    <swiper-container [breakpoints]="breakpoints" navigation="true" pagination="true" slidesOffsetAfter="0.5" loop="true" autoplay-delay="7000">
+        @for (item of blogStore.selectPosts(); track $index) {
+            <swiper-slide [routerLink]="[item.url]" class="post">
+                <mat-card appearance="outlined">
+                    @if ((item.foto | urlFotos: 'anuncios' | async); as src) {
+                        <img mat-card-image [src]="src">
+                    }
+                    <mat-card-content>
+                        <h3 class="title">{{item.titulo}}</h3>
+                      <p class="descricao" [innerHTML]="item.post">
+                      </p>
+                    </mat-card-content>
+                  </mat-card>
+            </swiper-slide>
+        }
+
+    </swiper-container>
+    <!-- <div class="d-flex justify-content-center">
+        <button class="w-50 p-4 my-3" mat-stroked-button color="primary">Ver Mais publicações</button>
+    </div> -->
+
+</section>

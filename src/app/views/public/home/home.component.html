@@ -21,7 +21,7 @@
 
 
 
-<section class="row m-0 p-0 justify-content-center my-3">
+<section class="row m-0 p-0 justify-content-center my-3" >
     <div class="col-md-10">
         @for (item of slidesConfig; track $index) {
             <div class="align-items-center p-3">
@@ -35,8 +35,21 @@
 
 </section>
 
-<section class="row m-0 p-0 my-3 justify-content-center align-items-center">
+
+
+<section class="row m-0 p-0 my-0 justify-content-center align-items-center gradient-background">
     <div class="col-md-12">
         <app-banner-vender-home/>
     </div>
+    <div class="col-md-10 py-3">
+        <app-grid-posts />
+    </div>
 </section> 
+
+<!-- <section id="posts" class="row m-0 p-0 justify-content-center" style="background-color: #FFFFFF">
+    <div class="col-md-10 py-3">
+        <app-grid-posts />
+    </div>
+</section> -->
+
+

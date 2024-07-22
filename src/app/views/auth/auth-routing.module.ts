@@ -8,6 +8,7 @@ import { AdminLeadsComponent } from './admin/admin-leads/admin-leads.component';
 import { AdminClientesListComponent } from './admin/clientes/admin-clientes-list/admin-clientes-list.component';
 import { AdminClientesEditComponent } from './cliente/edit/admin-clientes-edit.component';
 import { ClienteHomeComponent } from './cliente/cliente-home/cliente-home.component';
+import { AdminPostListComponent } from './admin/admin-post-list/admin-post-list.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,10 @@ const routes: Routes = [
       {
         path: 'anuncios',
         loadComponent: () => AdminAnunciosComponent,
+      },      
+      {
+        path: 'blog',
+        loadComponent: () => AdminPostListComponent,
       },
       {
         path: 'clientes',

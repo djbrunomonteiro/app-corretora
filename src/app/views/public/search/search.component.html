@@ -23,11 +23,9 @@
 
             <div class="row">
                 @for (item of anuncios(); track $index; let last = $last) {
-                    @if (($index + 1) <= count ) { 
-                        <div class="col-lg-4 my-2">
-                            <app-card-anuncio [item]="item" />
-                        </div>
-                    }
+                    <div class="col-lg-4 my-2">
+                        <app-card-anuncio [item]="item" />
+                    </div>
     
                 }@empty {
                 <h4>Ops, Nenhum anúncio encontrado para sua busca.</h4>

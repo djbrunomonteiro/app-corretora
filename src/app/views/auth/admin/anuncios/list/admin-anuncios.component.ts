@@ -16,7 +16,8 @@ import { AnunciosStore } from '../../../../../store/anuncios-store';
   imports: [
     MaterialModule, 
     CommonModule, 
-    AdminAnuncioEditComponent],
+    AdminAnuncioEditComponent
+  ],
   templateUrl: './admin-anuncios.component.html',
   styleUrl: './admin-anuncios.component.scss'
 })
@@ -55,7 +56,7 @@ export class AdminAnunciosComponent implements OnInit {
     dialogRef.afterClosed().pipe(first()).subscribe(async res => {
       if(!res){return};
       const {message} = await this.anunciosStore.removeOne(id);
-      this.utils.showMessage(message)
+      this.utils.showMessage(message);
     });
   }
 

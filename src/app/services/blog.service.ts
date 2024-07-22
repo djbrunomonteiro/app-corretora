@@ -1,14 +1,13 @@
+import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Firestore, collection, CollectionReference, doc, setDoc, getDocs, updateDoc, deleteDoc } from '@angular/fire/firestore';
-import { Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 import { IResponse } from '../models/response';
-import { isPlatformBrowser } from '@angular/common';
-
 
 @Injectable({
   providedIn: 'root'
 })
-export class AnuncioService {
+export class BlogService {
 
   collectionRef: CollectionReference | undefined;
 
@@ -16,7 +15,7 @@ export class AnuncioService {
     private firestore: Firestore,
     @Inject(PLATFORM_ID) public platformId: Object,
   ) {
-    this.collectionRef = collection(this.firestore, 'anuncios');
+    this.collectionRef = collection(this.firestore, 'blog');
   }
 
 
@@ -32,7 +31,7 @@ export class AnuncioService {
         response = { status: 401, error: true, results: undefined, message: 'Error ao obter itens. Tente novamente!' }
         sub.next(response)
       })
-
+      
     })
 
   }
@@ -83,7 +82,7 @@ export class AnuncioService {
     return new Observable<IResponse>(sub => {
       let response: IResponse = {};
       if (this.collectionRef) {
-        const ref = doc(this.firestore, 'anuncios', item.id);
+        const ref = doc(this.firestore, 'blog', item.id);
         const newItem = { ...item, id: ref.id, created_at: new Date().toISOString() };
         updateDoc(ref, newItem)
           .then(res => {

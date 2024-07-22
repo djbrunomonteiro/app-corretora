@@ -10,6 +10,7 @@ import { DepoimentosComponent } from './depoimentos/depoimentos.component';
 import { PoliticaPrivacidadeComponent } from './politica-privacidade/politica-privacidade.component';
 import { ContatosComponent } from './contatos/contatos.component';
 import { LinksComponent } from './links/links.component';
+import { PostDetailsComponent } from './post-details/post-details.component';
 
 const routes: Routes = [
   {
@@ -48,6 +49,10 @@ const routes: Routes = [
       {
         path: 'depoimentos',
         loadComponent: () => DepoimentosComponent
+      },
+      {
+        path: 'blog/post/:url',
+        loadComponent: () => PostDetailsComponent
       },
       {
         path: 'politica-de-privacidade',

@@ -3,6 +3,7 @@ import { AuthService } from '../../services/auth.service';
 import { StoreService } from '../../services/store.service';
 import { EAction, EGroup } from '../../store/app.actions';
 import { AnunciosStore } from '../../store/anuncios-store';
+import { BlogStore } from '../../store/blog-store';
 
 @Component({
   selector: 'app-public',
@@ -11,7 +12,8 @@ import { AnunciosStore } from '../../store/anuncios-store';
 })
 export class PublicComponent implements OnInit, AfterViewInit {
 
-  anunciosStore = inject(AnunciosStore)
+  anunciosStore = inject(AnunciosStore);
+  blogStore = inject(BlogStore)
 
   constructor(
     private auth: AuthService,
@@ -26,6 +28,7 @@ export class PublicComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.anunciosStore.loadAll();
+    this.blogStore.loadAll()
   }
 
   ngAfterViewInit(): void {

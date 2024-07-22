@@ -202,19 +202,10 @@ export class AdminAnuncioEditComponent implements OnInit, AfterViewInit, OnDestr
     const item = {...this.form.value, url: this.createUrl()} as Partial<IAnuncio>;
     const response = await this.anunciosStore.saveOne(item);
     this.loadingSave = false;
-    const {error, message} = response;
+    const {error, message,results} = response;
     this.utils.showMessage(message);
     if(error){return}
     this.dialogRef.close();
-
-    // const result$ = this.storeService.dispatchAction(action)
-    // result$.pipe(first()).subscribe(res => {
-    //   this.utils.showMessage(res?.props?.message);
-    //   if(!res.props?.error){
-    //    this.dialogRef.close();
-    //   }
-      
-    // })
   }
   
   createUrl(){

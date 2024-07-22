@@ -43,6 +43,11 @@ export class HeaderComponent implements OnInit {
       url: '/auth/admin/anuncios'
     },
     {
+      titulo: 'Blog',
+      icon: '',
+      url: '/auth/admin/blog'
+    },
+    {
       titulo: 'Clientes',
       icon: '',
       url: '/auth/admin/clientes'

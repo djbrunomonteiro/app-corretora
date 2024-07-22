@@ -10,6 +10,9 @@
         display: flex;
         flex-direction: column;
         margin: 10px 10px 10px 40px;
+        img{
+            max-width: 200px;
+        }
 
         .titulo {
             font-size: 2rem;
@@ -69,6 +72,9 @@
     .logo {
         display: flex;
         flex-direction: column;
+        img{
+            max-width: 150px;
+        }
         .titulo {
             font-size: 1.5rem;
             font-weight: 800;

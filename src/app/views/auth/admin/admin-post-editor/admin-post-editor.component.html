@@ -1,0 +1,54 @@
+<h2 mat-dialog-title>Editor de Post</h2>
+
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="form">
+
+    <mat-form-field appearance="outline" class="mt-2">
+      <mat-label>Titulo</mat-label>
+      <input matInput formControlName="titulo" required>
+    </mat-form-field>
+
+    <div class="NgxEditor__Wrapper my-3" style="min-height: 200px;">
+        <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
+        <ngx-editor [editor]="editor" [(ngModel)]="html" [ngModelOptions]="{standalone: true}" [disabled]="false" [placeholder]="'Ex. casa próximo de tudo...'"></ngx-editor>
+    </div>
+
+    <p>Foto de capa</p>
+
+    @if(loadingUpload){
+    Enviando
+    <mat-progress-bar mode="buffer"></mat-progress-bar>
+    }@else{
+
+      <div class="row">
+        <div class="col-md-12">
+          <mat-form-field appearance="fill">
+            <mat-label>Arraste seu arquivo ou clique aqui!</mat-label>
+            <ngx-mat-dropzone>
+              <input type="file" [multiple]="false" fileInput  formControlName="fotoInput" accept="image/*" />
+            </ngx-mat-dropzone>
+            <mat-icon matSuffix color="primary">cloud_upload</mat-icon>
+          </mat-form-field>
+        </div>
+        <div class="col-md-12">
+          <div class="d-flex justify-content-center flex-wrap">
+            @if(foto$ | async; as item){
+              <img [src]="item" alt="" style="max-height: 250px;">
+            }
+          </div>
+        </div>
+      </div>
+    }
+  </form>
+</mat-dialog-content>
+
+@if (loadingSave) {
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+}@else {
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button (click)="salvar()" class="w-25" [disabled]="form.invalid || loadingUpload" mat-raised-button color="primary" cdkFocusInitial>SALVAR</button>
+  </mat-dialog-actions>
+
+}
+
