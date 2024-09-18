@@ -1,27 +1,26 @@
 @if(!none){
 <div class="cookies 'd-none'" [@fade]="true">
-  <p><b>Aceitação de Cookies</b></p>
   <p>
-    Este site utiliza cookies para oferecer uma experiência de navegação
-    personalizada e melhorar nossos serviços. Ao clicar em 'SIM', você concorda
+    <b>Aceitação de Cookies!!!</b>
+    Este site utiliza cookies para oferecer uma experiência de navegação. Ao clicar em 'SIM', você concorda
     com o uso de cookies de acordo com nossa Política de Cookies.
   </p>
-  <button
-    (click)="setAcceptCookies('yes')"
-    mat-stroked-button
-    color="primary"
-    class="w-100 mt-3"
-  >
-    SIM
-  </button>
-  <button
-    (click)="setAcceptCookies('no')"
-    mat-stroked-button
-    color="primary"
-    class="w-100 mt-3"
-  >
-    NÃO
-  </button>
+  <div>
+    <button
+      (click)="setAcceptCookies('yes')"
+      mat-stroked-button
+      color="primary"
+    >
+      SIM
+    </button>
+    <button
+      (click)="setAcceptCookies('no')"
+      mat-stroked-button
+      color="primary"
+    >
+      NÃO
+    </button>
+  </div>
 </div>
 
 }

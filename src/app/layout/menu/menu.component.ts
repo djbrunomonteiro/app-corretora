@@ -61,6 +61,12 @@ export class MenuComponent {
       icon: 'perm_phone_msg',
       url: 'contatos'
     },
+    {
+      title: 'Links',
+      iconlabel: 'perm_phone_msg',
+      icon: 'perm_phone_msg',
+      url: 'links'
+    },
     // {
     //   title: 'Depoimentos',
     //   iconlabel: 'comment',

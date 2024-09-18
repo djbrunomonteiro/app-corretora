@@ -1,6 +1,9 @@
 @if (anuncio) {
 <form [formGroup]="form">
     <div class="container-default">
+        <div class="close" mat-dialog-actions align="end">
+            <button mat-raised-button mat-dialog-close color="warn">Fechar</button>
+        </div>
         <h5>Agendar uma Visita para</h5>
         <h3> {{anuncio?.titulo}}
             @if (anuncio?.codigo) {
@@ -9,6 +12,71 @@
             | {{anuncio.end_cidade}}/{{anuncio.end_uf}}
 
         </h3>
+        <div class="my-3">
+            <div class="my-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Seu Nome</mat-label>
+                    <input formControlName="nome_cliente" matInput placeholder="" required>
+                </mat-form-field>
+                <div class="d-sm-flex">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Seu WhatsApp</mat-label>
+                        <input formControlName="whatsapp" matInput mask="(00)00000000 || (00)0 0000-0000">
+                    </mat-form-field>
+    
+                    <mat-form-field appearance="outline">
+                        <mat-label>Seu Email</mat-label>
+                        <input formControlName="email" matInput placeholder="">
+                    </mat-form-field>
+    
+                </div>
+    
+    
+    
+                <mat-form-field appearance="outline">
+                    <mat-label>Mensagem</mat-label>
+                    <textarea formControlName="mensagem" matInput placeholder="Ex. estou disponível..."></textarea>
+                </mat-form-field>
+
+            </div>
+
+            <p class="my-3"><b>Quais são os melhores dias?</b></p>
+
+            <mat-button-toggle-group formControlName="dias" name="dia_semana" aria-label="dia de semana para visita"
+                multiple>
+                @for (dia of core.diasSemana; track $index) {
+                <mat-button-toggle [value]="dia">{{dia}}</mat-button-toggle>
+                }
+            </mat-button-toggle-group>
+
+            <p class="my-3"><b>Preferência de horário?</b> </p>
+            <mat-button-toggle-group formControlName="horarios" name="horario"
+                aria-label="horário de agendamento de visita" multiple>
+                <mat-button-toggle value="manhã">MANHÃ</mat-button-toggle>
+                <mat-button-toggle value="tarde">TARDE</mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+
+        <div class="my-3">
+            @if (loading) {
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            <p class="text-center">Enviando aguarde :)</p>
+            }@else {
+                <re-captcha (resolved)="resolved($event)" [siteKey]="keyRecaptcha"></re-captcha>
+                <button (click)="salvar()" [disabled]="form.invalid || form.valid && showRecaptcha" class="w-100 p-3 my-3" mat-raised-button
+                    color="primary">SOLICITAR AGENDAMENTO <mat-icon aria-hidden="false" aria-label="event_available"
+                        fontIcon="event_available" iconPositionEnd></mat-icon></button>
+
+            }
+
+            
+
+        </div>
+
+
+
+
+<!--         
         @if (clienteStore.isAuth(); as cliente) {
         <div class="my-3">
             <p class="my-3"> {{cliente.nome}},</p>
@@ -56,13 +124,11 @@
                 color="accent">
                 CRIAR UMA CONTA
             </button>
-        }
+        } -->
 
     </div>
 
-    <div mat-dialog-actions align="end">
-        <button mat-button mat-dialog-close color="warn">Cancelar</button>
-    </div>
+
 
 </form>
 

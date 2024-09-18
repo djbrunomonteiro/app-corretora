@@ -12,6 +12,8 @@ import { first } from 'rxjs';
 import { ClienteService } from '../../../services/cliente.service';
 import { ClientesStore } from '../../../store/cliente-store';
 import { LeadsStore } from '../../../store/leads-store';
+import { environment } from '../../../../environments/environment';
+import { RecaptchaModule } from 'ng-recaptcha';
 
 @Component({
   selector: 'app-form-contato',
@@ -23,6 +25,7 @@ import { LeadsStore } from '../../../store/leads-store';
     ReactiveFormsModule,
     NgxMaskDirective,
     NgxMaskPipe,
+    RecaptchaModule
   ],
   templateUrl: './form-contato.component.html',
   styleUrl: './form-contato.component.scss'
@@ -60,6 +63,9 @@ export class FormContatoComponent implements OnInit {
   clienteStore = inject(ClientesStore);
   leadStore = inject(LeadsStore)
   loading = false;
+
+  showRecaptcha = true;
+  keyRecaptcha = environment.recaptcha;
 
   constructor(
     public dialogRef: MatDialogRef<FormContatoComponent>,
@@ -123,6 +129,12 @@ export class FormContatoComponent implements OnInit {
     this.utils.showMessage(message, undefined, {duration: 5000});
     if(error){return}
     this.dialogRef.close();
+  }
+
+  resolved(captchaResponse: any) {
+    console.log(`Resolved captcha with response: ${captchaResponse}`);
+    if(!captchaResponse){return}
+    this.showRecaptcha = false;
   }
 
 

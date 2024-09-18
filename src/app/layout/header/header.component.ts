@@ -21,10 +21,10 @@ import { ClientesStore } from '../../store/cliente-store';
 })
 export class HeaderComponent implements OnInit {
 
+  #router = inject(Router);
   readonly currentUrl$ = new BehaviorSubject<string>('');
   userStore = inject(UserStore)
   isAdmin$ = new BehaviorSubject<boolean>(true);
-
 
   menuAdmin = [
     {
@@ -56,6 +56,7 @@ export class HeaderComponent implements OnInit {
 
   clienteStore = inject(ClientesStore)
   showFiller = false;
+  isLinks = false
 
   constructor(
     private router: Router,
@@ -67,10 +68,17 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.currentUrl$.next(this.router.url);
     this.isAdmin$.next(this.router.url.includes('admin'));
+    this.checkIsLinks()
   }
 
   openBottomSheet(): void {
     this._bottomSheet.open(MenuComponent, {panelClass: 'menu-container'});
+  }
+
+  checkIsLinks(){
+    this.isLinks = String(this.#router.url).includes('links');
+    this.#router.events.subscribe(() =>  this.isLinks = String(this.#router.url).includes('links'))
+
   }
 
 }

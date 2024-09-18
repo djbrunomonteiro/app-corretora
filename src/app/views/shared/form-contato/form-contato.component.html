@@ -1,5 +1,8 @@
 <form [formGroup]="form">
     <div class="container-default">
+        <div class="close" mat-dialog-actions align="end">
+            <button mat-raised-button mat-dialog-close color="warn">Fechar</button>
+        </div>
         <div class="titulo">
             <h4>Fale Comigo</h4>
             <p>Será um prazer em atender e tirar suas dúvidas.</p>
@@ -10,8 +13,6 @@
                 <input formControlName="nome" matInput placeholder="" required>
             </mat-form-field>
             <div class="d-sm-flex">
-
-    
                 <mat-form-field appearance="outline">
                     <mat-label>Seu WhatsApp</mat-label>
                     <input formControlName="whatsapp" matInput mask="(00)00000000 || (00)0 0000-0000">
@@ -48,7 +49,9 @@
             <mat-progress-bar mode="indeterminate"></mat-progress-bar>
             <p class="text-center">Enviando aguarde :)</p>
             }@else {
-            <button (click)="salvar()" [disabled]="form.invalid" class="w-100 p-3" mat-raised-button color="primary">Enviar</button>
+                <re-captcha (resolved)="resolved($event)" [siteKey]="keyRecaptcha"></re-captcha>
+                <button (click)="salvar()" [disabled]="form.invalid || form.valid && showRecaptcha" class="w-100 my-3 p-3" mat-raised-button color="primary">Enviar</button>
+
             }
         </div>
     </div>

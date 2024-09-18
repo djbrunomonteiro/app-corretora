@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { IMenu } from '../../../models/menu';
+import { environment } from '../../../../environments/environment';
+import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-links',
@@ -13,13 +15,16 @@ import { IMenu } from '../../../models/menu';
   templateUrl: './links.component.html',
   styleUrl: './links.component.scss'
 })
-export class LinksComponent {
+export class LinksComponent implements OnInit {
+
+  #scroller = inject(ViewportScroller);
+
 
   links: IMenu[] = [
     {
       title: "Fale comigo no Whatsapp",
       icon: '',
-      url: 'https://api.whatsapp.com/send?phone=5598970278027&text=Estou%20entrando%20em%20contato%20atrav%C3%A9s%20do%20site%20telmamonteiro.com.br%20e%20gostaria%20de%20solicitar%20atendimento.',
+      url: environment.whatsapp,
       target: '_blank'
     },
     {
@@ -38,5 +43,9 @@ export class LinksComponent {
       
     }
   ]
+
+  ngOnInit(): void {
+    this.#scroller.scrollToPosition([0,0]);
+  }
 
 }

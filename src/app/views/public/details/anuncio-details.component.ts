@@ -15,6 +15,7 @@ import { CoreService } from '../../../services/core.service';
 import { EMeta } from '../../../enums/meta';
 import { UploadService } from '../../../services/upload.service';
 import { BehaviorSubject, combineLatestAll, from, map } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-anuncio-details',
@@ -41,6 +42,8 @@ export class AnuncioDetailsComponent implements OnInit {
   fotos$ = new BehaviorSubject<string[]>([])
   size = ESize;
   loadedImgs = signal<boolean>(false)
+
+  whatsapp = environment.whatsapp
   
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -92,17 +95,17 @@ export class AnuncioDetailsComponent implements OnInit {
 
 
   openContato(anuncio?: any){
-    const dialogRef = this.dialog.open(FormContatoComponent, {disableClose: false, data: {anuncio}} );
+    const dialogRef = this.dialog.open(FormContatoComponent, {disableClose: false, data: {anuncio}, maxHeight: 900, minWidth: 375,} );
   }
 
   agendar(anuncio: any){
     if(!anuncio){return;};
-    const dialogRef = this.dialog.open(AgendamentoComponent, {disableClose: false, data: {anuncio }} );
+    const dialogRef = this.dialog.open(AgendamentoComponent, {disableClose: false, data: {anuncio }, maxHeight: 900, minWidth: 375, panelClass: 'dialog-custom'} );
   }
 
   openWhatsapp() {
     if(isPlatformBrowser(this.platformId)){
-      window.open('https://api.whatsapp.com/send?phone=5598970278027&text=Estou%20entrando%20em%20contato%20atrav%C3%A9s%20do%20site%20telmamonteiro.com.br%20e%20gostaria%20de%20solicitar%20atendimento.', '_blank');
+      window.open(this.whatsapp, '_blank');
     }
     
   }

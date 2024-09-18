@@ -15,6 +15,8 @@ import { first } from 'rxjs';
 import { ClientesStore } from '../../../store/cliente-store';
 import { AgendamentosStore } from '../../../store/agendamentos-store';
 import { IAgendamento } from '../../../models/agendamento';
+import { RecaptchaModule } from 'ng-recaptcha';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-agendamento',
@@ -26,7 +28,8 @@ import { IAgendamento } from '../../../models/agendamento';
     ReactiveFormsModule,
     NgxMaskDirective,
     NgxMaskPipe,
-    ClienteLoginComponent
+    ClienteLoginComponent,
+    RecaptchaModule
   ],
   templateUrl: './agendamento.component.html',
   styleUrl: './agendamento.component.scss'
@@ -40,10 +43,13 @@ export class AgendamentoComponent implements OnInit {
 
   form = this.fb.group({
     id_anuncio: [''],
-    id_cliente: [''],
+    id_cliente: ['0'],
     titulo_anuncio: [''],
     cod_anuncio: [''],
     nome_cliente: [''],
+    whatsapp: ['', Validators.required],
+    email: [''],
+    mensagem: [''],
     dias: ['', Validators.required],
     horarios: ['', Validators.required],
     status: ['aberto'],
@@ -51,7 +57,10 @@ export class AgendamentoComponent implements OnInit {
   });
 
   loading = false;
-  clienteTemplate = EClientetemplate
+  clienteTemplate = EClientetemplate;
+
+  showRecaptcha = true;
+  keyRecaptcha = environment.recaptcha;
 
   
 
@@ -70,8 +79,15 @@ export class AgendamentoComponent implements OnInit {
   }
   ngOnInit(): void {
     this.anuncio = this.data?.anuncio;
+    this.showRecaptcha = true
 
    
+  }
+
+  resolved(captchaResponse: any) {
+    console.log(`Resolved captcha with response: ${captchaResponse}`);
+    if(!captchaResponse){return}
+    this.showRecaptcha = false;
   }
 
   openLogin(item?: string, template = EClientetemplate.login) {
@@ -91,10 +107,8 @@ export class AgendamentoComponent implements OnInit {
     this.loading = true;
     this.form.patchValue({
       id_anuncio: this.anuncio.id,
-      id_cliente: this.clienteStore.isAuth().id,
       titulo_anuncio: this.anuncio.titulo ?? '',
       cod_anuncio: this.anuncio.codigo ?? '',
-      nome_cliente: this.clienteStore.isAuth().nome,
     });
 
     const item = {...this.form.value} as IAgendamento;

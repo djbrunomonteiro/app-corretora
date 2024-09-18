@@ -1,4 +1,4 @@
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { CommonModule, isPlatformBrowser, ViewportScroller } from '@angular/common';
 import { Component, Inject, PLATFORM_ID, effect, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CoreService } from '../../../services/core.service';
@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { IMenu } from '../../../models/menu';
 import { MaterialModule } from '../../../modules/material/material.module';
 import { MatButtonModule } from '@angular/material/button';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-post-details',
@@ -23,6 +24,7 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './post-details.component.scss'
 })
 export class PostDetailsComponent {
+  #scroller = inject(ViewportScroller);
   blogStore = inject(BlogStore);
   post: any;
 
@@ -31,7 +33,7 @@ export class PostDetailsComponent {
       title: 'Whatsapp',
       iconlabel: 'perm_phone_msg',
       icon: 'perm_phone_msg',
-      url: 'https://api.whatsapp.com/send?phone=5598970278027&text=Estou%20entrando%20em%20contato%20atrav%C3%A9s%20do%20site%20telmamonteiro.com.br%20e%20gostaria%20de%20solicitar%20atendimento.',
+      url: environment.whatsapp,
       target: '_blank'
     },    
     {
@@ -62,6 +64,7 @@ export class PostDetailsComponent {
 
   ngOnInit(): void {
     this.getPost();
+    this.#scroller.scrollToPosition([0,0]);
   }
 
   async getPost(){

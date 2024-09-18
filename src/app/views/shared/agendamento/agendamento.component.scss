@@ -3,13 +3,45 @@
     // flex-direction: column;
     // justify-content: center;
     // align-items: center;
-    max-height: 96vh;
-    max-width: 600px;
-    padding: 50px;
+    // max-height: 96vh;
+    max-width: 700px;
+    padding: 20px;
+    margin: 20px;
 
     .btn{
         width: 100%;
     }
+}
 
-    
+.close{
+    position: absolute;
+    top: 0;
+    right: 5px;
+}
+
+@media (max-width: 768px){
+    .container-default{
+        margin: 0px;
+        padding: 20px;
+        margin-bottom: 40px;
+ 
+
+    }
+}
+
+@media (max-width: 380px){
+    .container-default{
+        max-height: 450px !important;
+        h5{
+            font-size: 14px;
+        };
+        h3{
+            font-size: 16px;
+        }
+        margin: 10px !important;
+        padding: 20px !important;
+        margin-bottom: 70px !important;
+ 
+
+    }
 }

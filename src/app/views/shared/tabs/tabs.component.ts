@@ -26,7 +26,7 @@ export class TabsComponent {
     ){}
 
   search(){
-    const queryParams = { categoria: 'comprar', tipo: 'apartamento', termo: '' } as NavigationExtras
+    const queryParams = { anuncios: 'todos-os-imoveis-publicados-compra-venda-aluguel-sao-luis-maranhao'} as NavigationExtras
     this.router.navigate(['buscar'], {queryParams} );
     if(this.openSheet) {
       this.closeBottomSheet();

@@ -5,6 +5,7 @@ import { MaterialModule } from '../../../modules/material/material.module';
 import { UtilsService } from '../../../services/utils.service';
 import { CoreService } from '../../../services/core.service';
 import { EMeta } from '../../../enums/meta';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-contatos',
@@ -21,10 +22,10 @@ export class ContatosComponent implements OnInit {
   contatos: IMenu[] = [
     {
       title: 'Tel/Whatsapp: (98) 98201-7027',
-      value: '98970278027',
+      value: '98982017027',
       iconlabel: 'perm_phone_msg',
       icon: 'perm_phone_msg',
-      url: 'https://api.whatsapp.com/send?phone=5598970278027&text=Estou%20entrando%20em%20contato%20atrav%C3%A9s%20do%20site%20telmamonteiro.com.br%20e%20gostaria%20de%20solicitar%20atendimento.'
+      url: environment.whatsapp
     },
     {
       title: 'Instagram.com/telmamonteirodematos',

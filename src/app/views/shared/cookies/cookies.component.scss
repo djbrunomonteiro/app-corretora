@@ -1,17 +1,48 @@
 .cookies{
     position: fixed;
     bottom: 2px;
-    right: 2px;
     padding: 10px;
-    width: 300px;
+    width: 100%;
     border-radius: 5px;
     background-color: rgb(255, 255, 255);
     border: 1px solid #090cd8;
     color: rgb(83, 83, 83);
     z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     p{
-        font-size: 0.8r
+        font-size: 0.8r;
+        padding: 0px;
+        margin: 0px;
+        b{
+            margin-right: 5px;
+        }
 
     }
 
+    button{
+        width: 120px;
+        margin-right: 10px;
+    }
+
+
+}
+
+@media (max-width: 450px){
+    .cookies{
+        bottom: 70px;
+        width: 100%;
+        justify-content: start;
+        p {
+            font-size: 0.6rem;
+            text-align: start;
+        }
+        button{
+            width: 50px;
+        }
+
+    
+    
+    }
 }

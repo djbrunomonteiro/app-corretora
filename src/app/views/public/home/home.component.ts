@@ -14,6 +14,7 @@ import { IMenu } from '../../../models/menu';
 import { EMeta } from '../../../enums/meta';
 import { SlidesUltimosComponent } from '../../shared/slides-ultimos/slides-ultimos.component';
 import { GridPostsComponent } from '../../shared/grid-posts/grid-posts.component';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -61,7 +62,7 @@ export class HomeComponent implements OnInit {
       title: 'Whatsapp',
       iconlabel: 'perm_phone_msg',
       icon: 'perm_phone_msg',
-      url: 'https://api.whatsapp.com/send?phone=5598970278027&text=Estou%20entrando%20em%20contato%20atrav%C3%A9s%20do%20site%20telmamonteiro.com.br%20e%20gostaria%20de%20solicitar%20atendimento.',
+      url: environment.whatsapp,
       target: '_blank'
     },    
     {
