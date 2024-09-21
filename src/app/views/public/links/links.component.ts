@@ -4,6 +4,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { IMenu } from '../../../models/menu';
 import { environment } from '../../../../environments/environment';
 import { ViewportScroller } from '@angular/common';
+import { AnalyticsService } from '../../../services/analytics.service';
+import { EEventsAnalytics } from '../../../enums/events-analitycs';
 
 @Component({
   selector: 'app-links',
@@ -18,6 +20,7 @@ import { ViewportScroller } from '@angular/common';
 export class LinksComponent implements OnInit {
 
   #scroller = inject(ViewportScroller);
+  analyticsService = inject(AnalyticsService);
 
 
   links: IMenu[] = [
@@ -46,6 +49,7 @@ export class LinksComponent implements OnInit {
 
   ngOnInit(): void {
     this.#scroller.scrollToPosition([0,0]);
+    this.analyticsService.setLog(EEventsAnalytics.open_page, {pagina: 'link'})
   }
 
 }

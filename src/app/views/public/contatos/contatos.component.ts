@@ -21,8 +21,8 @@ export class ContatosComponent implements OnInit {
 
   contatos: IMenu[] = [
     {
-      title: 'Tel/Whatsapp: (98) 98201-7027',
-      value: '98982017027',
+      title: 'Tel/Whatsapp: (98) 98127-2751',
+      value: environment.whatsapp,
       iconlabel: 'perm_phone_msg',
       icon: 'perm_phone_msg',
       url: environment.whatsapp

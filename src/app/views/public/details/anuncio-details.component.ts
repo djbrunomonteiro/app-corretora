@@ -1,3 +1,4 @@
+import { AnalyticsService } from './../../../services/analytics.service';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, Component, Inject, OnInit, PLATFORM_ID, effect, inject, signal } from '@angular/core';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
@@ -29,6 +30,7 @@ import { shareIcons } from 'ngx-sharebuttons/icons';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
+import { EEventsAnalytics } from '../../../enums/events-analitycs';
 
 @Component({
   selector: 'app-anuncio-details',
@@ -107,7 +109,8 @@ export class AnuncioDetailsComponent implements OnInit {
     public dialog: MatDialog,
     private library: FaIconLibrary,
     @Inject(PLATFORM_ID) public platformId: Object,
-    private core: CoreService
+    private core: CoreService,
+    private analyticsService: AnalyticsService
   ){
     effect(() => {
       this.getAnuncio();
@@ -119,6 +122,7 @@ export class AnuncioDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.getAnuncio();
   }
+
 
   async getAnuncio(){
     if(isPlatformBrowser(this.platformId)){
@@ -132,6 +136,7 @@ export class AnuncioDetailsComponent implements OnInit {
       const {fotos, tour_virtual} = this.anuncio;
       this.getVideoId(tour_virtual)
       this.getImgs(fotos);
+      this.analyticsService.setLog(EEventsAnalytics.view_item, {anuncio_titulo: this.anuncio.titulo, anuncio_id: this.anuncio.id})
     }
   }
 
@@ -161,16 +166,21 @@ export class AnuncioDetailsComponent implements OnInit {
 
   openContato(anuncio?: any){
     const dialogRef = this.dialog.open(FormContatoComponent, {disableClose: false, data: {anuncio}, maxHeight: 900, minWidth: 375,} );
+    this.analyticsService.setLog(EEventsAnalytics.open_formulario, {anuncio_titulo: this.anuncio.titulo, anuncio_id: this.anuncio.id})
+
   }
 
   agendar(anuncio: any){
     if(!anuncio){return;};
     const dialogRef = this.dialog.open(AgendamentoComponent, {disableClose: false, data: {anuncio }, maxHeight: 900, minWidth: 375, panelClass: 'dialog-custom'} );
+    this.analyticsService.setLog(EEventsAnalytics.open_formulario, {anuncio_titulo: this.anuncio.titulo, anuncio_id: this.anuncio.id})
+
   }
 
   openWhatsapp() {
     if(isPlatformBrowser(this.platformId)){
       window.open(this.whatsapp, '_blank');
+      this.analyticsService.setLog(EEventsAnalytics.open_whatsapp, {anuncio_titulo: this.anuncio.titulo, anuncio_id: this.anuncio.id})
     }
     
   }

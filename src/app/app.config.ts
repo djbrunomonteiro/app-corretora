@@ -14,6 +14,7 @@ import { provideEnvironmentNgxMask } from 'ngx-mask';
 import { provideClientHydration } from '@angular/platform-browser';
 import localePt from '@angular/common/locales/pt'
 import { registerLocaleData } from '@angular/common';
+import { provideAnalytics, getAnalytics } from '@angular/fire/analytics';
 
 registerLocaleData(localePt, 'pt');
 
@@ -27,8 +28,7 @@ export const appConfig: ApplicationConfig = {
         provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
         provideAuth(() => getAuth()),
         provideFirestore(() => getFirestore()),
-
-        
+        provideAnalytics(() => getAnalytics()),
     ]),
 
     // provideStore(appReducers, { metaReducers, runtimeChecks: {strictActionImmutability: false, strictStateImmutability: false} }),
