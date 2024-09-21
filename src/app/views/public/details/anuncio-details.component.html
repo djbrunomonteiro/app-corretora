@@ -27,6 +27,11 @@
                         <h3 class="titulo">{{item.titulo}}</h3>
                         <p class="cidade">{{item.end_cidade}} / {{item.end_uf}} - Cód. {{item.codigo}}</p>
                         <div class="descricao" [innerHTML]="item.descricao"></div>
+                        @if(videoId){
+                            <div class="video">
+                                <youtube-player [videoId]="videoId" placeholderImageQuality="standard"/>
+                            </div>
+                        }
                         <!-- <button mat-stroked-button> <mat-icon aria-hidden="false" fontIcon="shared"></mat-icon> Compartilhar</button> -->
                     </div>
     

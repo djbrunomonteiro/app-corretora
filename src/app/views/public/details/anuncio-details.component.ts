@@ -16,6 +16,7 @@ import { EMeta } from '../../../enums/meta';
 import { UploadService } from '../../../services/upload.service';
 import { BehaviorSubject, combineLatestAll, from, map } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+import { YOUTUBE_PLAYER_CONFIG, YouTubePlayer } from '@angular/youtube-player';
 
 @Component({
   selector: 'app-anuncio-details',
@@ -27,9 +28,16 @@ import { environment } from '../../../../environments/environment';
     NgxMaskPipe,
     UrlFotosPipe,
     FormContatoComponent,
-    LoadingComponent
+    LoadingComponent,
+    YouTubePlayer
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [{
+    provide: YOUTUBE_PLAYER_CONFIG,
+    useValue: {
+      disablePlaceholder: true
+    }
+  }],
   templateUrl: './anuncio-details.component.html',
   styleUrl: './anuncio-details.component.scss'
 })
@@ -43,7 +51,8 @@ export class AnuncioDetailsComponent implements OnInit {
   size = ESize;
   loadedImgs = signal<boolean>(false)
 
-  whatsapp = environment.whatsapp
+  whatsapp = environment.whatsapp;
+  videoId = '';
   
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -70,9 +79,18 @@ export class AnuncioDetailsComponent implements OnInit {
       const key = this.removeHtmlTags(this.anuncio.descricao);
       this.core.setTitle(`${this.anuncio.titulo} - ${this.anuncio.tipo} - ${key} - ${this.anuncio.end_cidade} / ${this.anuncio.end_uf}`);
       this.core.updateMeta(`Telma Monteiro - ${this.anuncio.tipo} - ${this.anuncio.titulo} - ${this.anuncio.end_cidade} / ${this.anuncio.end_uf}`, `${key} ${this.anuncio.end_cidade}, ${this.anuncio.end_uf}`);
-      const {fotos} = this.anuncio;
+      const {fotos, tour_virtual} = this.anuncio;
+      this.getVideoId(tour_virtual)
       this.getImgs(fotos);
     }
+  }
+
+  getVideoId(tour_virtual: string){
+    if(!tour_virtual){return}
+    this.videoId = tour_virtual.split('watch?v=')[1] ?? '';
+
+    console.log(this.videoId);
+    
   }
 
   async getImgs(fotos: any[] | undefined){
