@@ -19,6 +19,17 @@ import { environment } from '../../../../environments/environment';
 import { YOUTUBE_PLAYER_CONFIG, YouTubePlayer } from '@angular/youtube-player';
 import { IMenu } from '../../../models/menu';
 
+import {
+  provideShareButtonsOptions,
+  SharerMethods,
+  withConfig,
+} from 'ngx-sharebuttons';
+import { ShareButtons } from 'ngx-sharebuttons/buttons';
+import { shareIcons } from 'ngx-sharebuttons/icons';
+import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+
 @Component({
   selector: 'app-anuncio-details',
   standalone: true,
@@ -30,7 +41,9 @@ import { IMenu } from '../../../models/menu';
     UrlFotosPipe,
     FormContatoComponent,
     LoadingComponent,
-    YouTubePlayer
+    YouTubePlayer,
+    FontAwesomeModule,
+    ShareButtons
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [{
@@ -38,7 +51,15 @@ import { IMenu } from '../../../models/menu';
     useValue: {
       disablePlaceholder: true
     }
-  }],
+  },
+  provideShareButtonsOptions(
+    shareIcons(),
+    withConfig({
+      debug: true,
+      sharerMethod: SharerMethods.Anchor,
+    })
+  ),
+],
   templateUrl: './anuncio-details.component.html',
   styleUrl: './anuncio-details.component.scss'
 })
@@ -77,17 +98,21 @@ export class AnuncioDetailsComponent implements OnInit {
       url: 'https://www.facebook.com/telma.monteiro.79?mibextid=ZbWKwL',
       target: '_blank'
     },
-  ]
+  ];
+
+  excludeBtns = ['pinterest',  'reddit', 'viber', 'sms', 'vk', 'mix', 'xing', 'line', 'tumblr', 'whatsapp'];
   
   constructor(
     private activatedRoute: ActivatedRoute,
     public dialog: MatDialog,
+    private library: FaIconLibrary,
     @Inject(PLATFORM_ID) public platformId: Object,
     private core: CoreService
   ){
     effect(() => {
       this.getAnuncio();
-    })
+    });
+    library.addIconPacks(fas, fab)
 
   }
 
@@ -113,9 +138,6 @@ export class AnuncioDetailsComponent implements OnInit {
   getVideoId(tour_virtual: string){
     if(!tour_virtual){return}
     this.videoId = tour_virtual.split('watch?v=')[1] ?? '';
-
-    console.log(this.videoId);
-    
   }
 
   async getImgs(fotos: any[] | undefined){
