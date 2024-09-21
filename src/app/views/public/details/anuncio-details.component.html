@@ -32,7 +32,14 @@
                                 <youtube-player [videoId]="videoId" placeholderImageQuality="standard"/>
                             </div>
                         }
-                        <!-- <button mat-stroked-button> <mat-icon aria-hidden="false" fontIcon="shared"></mat-icon> Compartilhar</button> -->
+                        <section class="sub-menu">
+                            
+                            @for (item of empresaMenu; track $index) {
+                                <a [href]="item.url" [target]="item.target" mat-button color="accent" class="m-2">
+                                    <mat-icon aria-hidden="false" [fontIcon]="item.icon"></mat-icon> {{item.title}}
+                                </a>
+                            }
+                        </section>
                     </div>
     
                 </div>

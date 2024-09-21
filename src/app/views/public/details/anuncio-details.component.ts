@@ -17,6 +17,7 @@ import { UploadService } from '../../../services/upload.service';
 import { BehaviorSubject, combineLatestAll, from, map } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { YOUTUBE_PLAYER_CONFIG, YouTubePlayer } from '@angular/youtube-player';
+import { IMenu } from '../../../models/menu';
 
 @Component({
   selector: 'app-anuncio-details',
@@ -53,6 +54,30 @@ export class AnuncioDetailsComponent implements OnInit {
 
   whatsapp = environment.whatsapp;
   videoId = '';
+
+
+  empresaMenu: IMenu[] = [
+    {
+      title: 'Whatsapp',
+      iconlabel: 'perm_phone_msg',
+      icon: 'perm_phone_msg',
+      url: environment.whatsapp,
+      target: '_blank'
+    },    
+    {
+      title: 'Instagram',
+      iconlabel: 'perm_phone_msg',
+      icon: 'perm_phone_msg',
+      url: 'https://www.instagram.com/telmamonteirodematos?igsh=MTl0ZXoycmY2YTNvYQ==',
+      target: '_blank'
+    },    {
+      title: 'Facebook',
+      iconlabel: 'perm_phone_msg',
+      icon: 'perm_phone_msg',
+      url: 'https://www.facebook.com/telma.monteiro.79?mibextid=ZbWKwL',
+      target: '_blank'
+    },
+  ]
   
   constructor(
     private activatedRoute: ActivatedRoute,
