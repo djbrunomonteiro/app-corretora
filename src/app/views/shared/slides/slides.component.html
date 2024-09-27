@@ -9,7 +9,7 @@
                 <div class="titulo-container">
                     <span class="titulo">{{item.titulo}}</span>
                     <span class="subtitulo">{{item.end_cidade}}/{{item.end_uf}}</span>
-                    <span class="preco">{{item.preco | mask: 'separator.2': {thousandSeparator:'.', prefix: 'R$'} }}</span>
+                    <span class="preco ">Valor: <span [ngClass]="{'blur-price': !leadService.collectedContact$.value}">{{item.preco | mask: 'separator.2': {thousandSeparator:'.', prefix: 'R$'} }}</span> </span>
                 </div>
             </swiper-slide>
         }

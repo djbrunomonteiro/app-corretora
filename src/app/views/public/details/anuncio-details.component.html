@@ -55,14 +55,29 @@
                 </div>
                 <div class="col-md-3 m-0 p-0">
                     <div class="sticky">
+                        <p>Vamos negóciar ?</p>
+
                         @if(item.preco){
-                            <h3>{{ item.preco | mask: 'separator.2': {thousandSeparator:'.', prefix: 'R$'} }}</h3>
-                        }
+                            @if(!leadService.collectedContact$.value){
+                                <div class="acoes">
+                                    <button (click)="desbloquearPreco()" class="p-4" mat-raised-button color="warn">
+                                        Visualizar Preço R$ 
+                                        <span class="blur-price">{{ item.preco | mask: 'separator.2': {thousandSeparator:'.', prefix: 'R$'} }}</span>
+                                    </button>
+                                    
+                                </div>
     
-                        @if (item.condominio) {
+                            }@else {
+                                <h3  [ngClass]="{'blur-price': !leadService.collectedContact$.value }" >{{ item.preco | mask: 'separator.2': {thousandSeparator:'.', prefix: 'R$'} }}</h3>
+                            }
+
+                        }
+
+    
+                        @if (item.condominio && leadService.collectedContact$.value) {
                         <p>Cond. {{item.condominio}}</p>
                         }
-                        @if (item.iptu) {
+                        @if (item.iptu && leadService.collectedContact$.value) {
                         <p>IPTU {{item.iptu}}</p>
                         }
     

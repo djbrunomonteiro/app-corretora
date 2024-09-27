@@ -1,3 +1,4 @@
+import { LeadService } from './../../../services/lead.service';
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, Inject, OnInit, inject } from '@angular/core';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
@@ -61,7 +62,8 @@ export class FormContatoComponent implements OnInit {
   });
 
   clienteStore = inject(ClientesStore);
-  leadStore = inject(LeadsStore)
+  leadStore = inject(LeadsStore);
+  leadService = inject(LeadService)
   loading = false;
 
   showRecaptcha = true;
@@ -128,6 +130,8 @@ export class FormContatoComponent implements OnInit {
     this.loading = true;
     this.utils.showMessage(message, undefined, {duration: 5000});
     if(error){return}
+    localStorage.setItem('telmamonteiro_collectedContact', 'true');
+    this.leadService.checkCollectedContact();
     this.dialogRef.close();
   }
 

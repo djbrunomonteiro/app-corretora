@@ -19,6 +19,7 @@ import { IConfigSlides } from '../../../models/configslides';
 import { NavigationExtras, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AnunciosStore } from '../../../store/anuncios-store';
+import { LeadService } from '../../../services/lead.service';
 
 @Component({
   selector: 'app-slides',
@@ -41,6 +42,7 @@ export class SlidesComponent {
   @Input() slidesConfig!: IConfigSlides;
 
   private readonly store = inject(Store);
+  leadService = inject(LeadService);
 
   breakpoints: SwiperOptions['breakpoints'] = {
     // when window width is >= 320px
@@ -78,6 +80,7 @@ export class SlidesComponent {
 
   ngOnInit(): void {
     this.setItensSlides();
+    this.leadService.checkCollectedContact();
   }
 
   setItensSlides() {

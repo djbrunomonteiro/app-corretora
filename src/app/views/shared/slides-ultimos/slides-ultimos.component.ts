@@ -6,6 +6,7 @@ import { AnunciosStore } from '../../../store/anuncios-store';
 import { UrlFotosPipe } from '../../../pipes/url-fotos.pipe';
 import { SwiperOptions } from 'swiper/types';
 import { Router } from '@angular/router';
+import { LeadService } from '../../../services/lead.service';
 
 @Component({
   selector: 'app-slides-ultimos',
@@ -24,7 +25,8 @@ import { Router } from '@angular/router';
 export class SlidesUltimosComponent {
 
   anunciosStore = inject(AnunciosStore);
-  router = inject(Router)
+  router = inject(Router);
+  leadService = inject(LeadService);
 
   breakpoints: SwiperOptions['breakpoints'] = {
     // when window width is >= 320px
@@ -55,6 +57,7 @@ export class SlidesUltimosComponent {
   };
 
   ngOnInit(): void {
+    this.leadService.checkCollectedContact()
   }
 
   openAnuncio(url: string | undefined) {

@@ -1,0 +1,33 @@
+<form [formGroup]="form">
+    <div class="container-default">
+        <div class="close" mat-dialog-actions align="end">
+            <button mat-raised-button mat-dialog-close color="warn">Fechar</button>
+        </div>
+        <div class="titulo">
+            <h4>Para ver o preço do imóvel 😊</h4>
+            <p>Adicione seu nome e contato uma única vez. Após isso, todas as informações estarão disponíveis</p>
+        </div>
+        <div class="my-3">
+            <mat-form-field appearance="outline">
+                <mat-label>Seu Nome</mat-label>
+                <input formControlName="nome" matInput placeholder="" required>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Seu WhatsApp</mat-label>
+                <input formControlName="whatsapp" matInput mask="(00)00000000 || (00)0 0000-0000">
+            </mat-form-field>
+        </div>
+
+
+        <div class="my-3">
+            @if (loading) {
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            <p class="text-center">Enviando aguarde :)</p>
+            }@else {
+                <re-captcha (resolved)="resolved($event)" [siteKey]="keyRecaptcha"></re-captcha>
+                <button (click)="salvar()" [disabled]="form.invalid || !form.invalid && showRecaptcha" class="w-100 my-3 p-3" mat-raised-button color="primary">Visualizar Preço R$ <span class="blur-price">000000</span></button>
+
+            }
+        </div>
+    </div>
+</form>

@@ -31,7 +31,9 @@ import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontaweso
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { EEventsAnalytics } from '../../../enums/events-analitycs';
-
+import { LeadService } from '../../../services/lead.service';
+import {MatChipsModule} from '@angular/material/chips';
+import { FormDesbloquearPrecoComponent } from '../../shared/form-desbloquear-preco/form-desbloquear-preco.component';
 @Component({
   selector: 'app-anuncio-details',
   standalone: true,
@@ -45,7 +47,9 @@ import { EEventsAnalytics } from '../../../enums/events-analitycs';
     LoadingComponent,
     YouTubePlayer,
     FontAwesomeModule,
-    ShareButtons
+    ShareButtons,
+    MatChipsModule,
+    FormDesbloquearPrecoComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [{
@@ -69,6 +73,7 @@ export class AnuncioDetailsComponent implements OnInit {
 
   anunciosStore = inject(AnunciosStore);
   uploadService = inject(UploadService);
+  leadService = inject(LeadService);
   anuncio!: IAnuncio
 
   fotos$ = new BehaviorSubject<string[]>([])
@@ -114,6 +119,7 @@ export class AnuncioDetailsComponent implements OnInit {
   ){
     effect(() => {
       this.getAnuncio();
+      this.leadService.checkCollectedContact()
     });
     library.addIconPacks(fas, fab)
 
@@ -121,6 +127,7 @@ export class AnuncioDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAnuncio();
+    
   }
 
 
@@ -163,11 +170,14 @@ export class AnuncioDetailsComponent implements OnInit {
     return input.replace(regex, '');
 }
 
+  desbloquearPreco(){
+    const dialogRef = this.dialog.open(FormDesbloquearPrecoComponent, {disableClose: false, maxHeight: 900, minWidth: 375, panelClass: 'dialog-custom'} );
+    this.analyticsService.setLog(EEventsAnalytics.open_formulario, {anuncio_titulo: this.anuncio.titulo, anuncio_id: this.anuncio.id})
+  }
 
   openContato(anuncio?: any){
     const dialogRef = this.dialog.open(FormContatoComponent, {disableClose: false, data: {anuncio}, maxHeight: 900, minWidth: 375,} );
     this.analyticsService.setLog(EEventsAnalytics.open_formulario, {anuncio_titulo: this.anuncio.titulo, anuncio_id: this.anuncio.id})
-
   }
 
   agendar(anuncio: any){

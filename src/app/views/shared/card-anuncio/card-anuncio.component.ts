@@ -12,6 +12,7 @@ import { UtilsService } from '../../../services/utils.service';
 import { ClientesStore } from '../../../store/cliente-store';
 import { patchState } from '@ngrx/signals';
 import { AnunciosStore } from '../../../store/anuncios-store';
+import { LeadService } from '../../../services/lead.service';
 
 @Component({
   selector: 'app-card-anuncio',
@@ -34,6 +35,7 @@ export class CardAnuncioComponent implements OnInit {
 
   clienteStore = inject(ClientesStore);
   anunciosStore = inject(AnunciosStore);
+  leadService = inject(LeadService);
  
   constructor(
     public core: CoreService,
@@ -43,6 +45,7 @@ export class CardAnuncioComponent implements OnInit {
   ){
   }
   ngOnInit(): void {
+    this.leadService.checkCollectedContact();
   }
 
   goDetails(url: any){

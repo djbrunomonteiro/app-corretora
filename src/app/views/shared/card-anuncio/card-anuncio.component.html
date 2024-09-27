@@ -24,8 +24,8 @@
             </div>
     
             <div [innerHTML]="item.descricao" class="descricao"></div>
-            <h5 class="preco">{{item.preco | mask: 'separator.2': {thousandSeparator:'.', prefix: 'R$'} }}</h5>
-    
+            <h5 class="preco ">Valor: <span [ngClass]="{'blur-price': !leadService.collectedContact$.value }">{{item.preco | mask: 'separator.2': {thousandSeparator:'.', prefix: 'R$'} }}</span> </h5>
+<!--     
             <div class="btns">
                 @if (item.id | isFavorito$ | async) {
                     <button (click)="goFavorito(item.id)" mat-stroked-button color="accent">
@@ -43,7 +43,7 @@
                     <mat-icon>view_in_ar</mat-icon>
                     Visualisar
                 </button>
-            </div>
+            </div> -->
         </mat-card-content>
     </mat-card>
 }

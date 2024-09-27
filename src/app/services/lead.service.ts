@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
 import { Firestore, collection, CollectionReference, doc, setDoc, getDocs, updateDoc, deleteDoc } from '@angular/fire/firestore';
-import { Observable} from 'rxjs';
+import { BehaviorSubject, Observable} from 'rxjs';
 import { IResponse } from '../models/response';
+import { isPlatformBrowser } from '@angular/common';
 @Injectable({
   providedIn: 'root'
 })
@@ -9,10 +10,25 @@ export class LeadService {
 
   collectionRef: CollectionReference | undefined;
 
+  collectedContact$ = new BehaviorSubject<boolean>(false);
+
   constructor(
-    private firestore: Firestore
+    private firestore: Firestore,
+    @Inject(PLATFORM_ID) public platformId: Object,
+
   ) {
     this.collectionRef = collection(this.firestore, 'leads');
+  }
+
+  checkCollectedContact(){
+    if(isPlatformBrowser(this.platformId)){
+    const collected = localStorage.getItem('telmamonteiro_collectedContact');
+
+    console.log('collected', collected);
+    
+    if(!collected){return}
+    this.collectedContact$.next(true)
+    }
   }
 
 
