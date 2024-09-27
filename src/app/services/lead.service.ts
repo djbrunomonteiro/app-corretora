@@ -23,9 +23,6 @@ export class LeadService {
   checkCollectedContact(){
     if(isPlatformBrowser(this.platformId)){
     const collected = localStorage.getItem('telmamonteiro_collectedContact');
-
-    console.log('collected', collected);
-    
     if(!collected){return}
     this.collectedContact$.next(true)
     }

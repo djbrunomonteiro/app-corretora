@@ -96,6 +96,14 @@
     }
 }
 
+.finalizado{
+    background-color: red;
+    color: #fff;
+    padding: 20px;
+    font-size: large;
+    width: 100%;
+}
+
 @media (max-width: 960px){
     .container-details{
         swiper-container{

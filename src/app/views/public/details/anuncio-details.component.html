@@ -8,8 +8,16 @@
     <div class="row justify-content-center m-0 p-3">
         <div class="col-md-10">
             @if (anuncio; as item) {
+
             <div class="row container-details">
                 <div class="col-md-9 m-0 p-0">
+                    @if(anuncio.status ==='finalizado'){
+                        <div class="finalizado">
+                            <span class="mr-3">Anúncio Finalizado com sucesso. </span>
+                            <mat-chip (click)="goPage()"  color="accent">Ver outros imóveis</mat-chip>
+                        </div>
+    
+                    }
                     <swiper-container loop="false" navigation="true" pagination="true">
                         @for (path of fotos$ | async; track $index) {
                             <swiper-slide>

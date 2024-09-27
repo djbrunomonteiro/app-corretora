@@ -4,7 +4,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, Component, Inject, OnInit, PLATFORM_ID, effect,
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { MaterialModule } from '../../../modules/material/material.module';
 import { UrlFotosPipe } from '../../../pipes/url-fotos.pipe';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormContatoComponent } from '../../shared/form-contato/form-contato.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AgendamentoComponent } from '../../shared/agendamento/agendamento.component';
@@ -49,7 +49,8 @@ import { FormDesbloquearPrecoComponent } from '../../shared/form-desbloquear-pre
     FontAwesomeModule,
     ShareButtons,
     MatChipsModule,
-    FormDesbloquearPrecoComponent
+    FormDesbloquearPrecoComponent,
+    RouterModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [{
@@ -74,6 +75,7 @@ export class AnuncioDetailsComponent implements OnInit {
   anunciosStore = inject(AnunciosStore);
   uploadService = inject(UploadService);
   leadService = inject(LeadService);
+  router = inject(Router);
   anuncio!: IAnuncio
 
   fotos$ = new BehaviorSubject<string[]>([])
@@ -130,6 +132,10 @@ export class AnuncioDetailsComponent implements OnInit {
     
   }
 
+  goPage(){
+    this.router.navigate(['/buscar'])
+  }
+
 
   async getAnuncio(){
     if(isPlatformBrowser(this.platformId)){
@@ -140,10 +146,12 @@ export class AnuncioDetailsComponent implements OnInit {
       const key = this.removeHtmlTags(this.anuncio.descricao);
       this.core.setTitle(`${this.anuncio.titulo} - ${this.anuncio.tipo} - ${key} - ${this.anuncio.end_cidade} / ${this.anuncio.end_uf}`);
       this.core.updateMeta(`Telma Monteiro - ${this.anuncio.tipo} - ${this.anuncio.titulo} - ${this.anuncio.end_cidade} / ${this.anuncio.end_uf}`, `${key} ${this.anuncio.end_cidade}, ${this.anuncio.end_uf}`);
-      const {fotos, tour_virtual} = this.anuncio;
+      const {fotos, tour_virtual, status} = this.anuncio;
       this.getVideoId(tour_virtual)
       this.getImgs(fotos);
       this.analyticsService.setLog(EEventsAnalytics.view_item, {anuncio_titulo: this.anuncio.titulo, anuncio_id: this.anuncio.id})
+   console.log(status);
+   
     }
   }
 

@@ -6,6 +6,14 @@
     <mat-stepper #stepper>
       <mat-step [stepControl]="ctrltitulo && ctrldescricao" errorMessage="Itens requerido">
         <ng-template matStepLabel>Dados Básicos</ng-template>
+        <mat-form-field class="w-25 m-rigth mt-2" appearance="outline">
+          <mat-label>STATUS</mat-label>
+          <mat-select formControlName="status">
+            <mat-option value="aberto">Aberto</mat-option>
+            <mat-option value="finalizado">Finalizado</mat-option>
+          </mat-select>
+        </mat-form-field>
+
         <mat-form-field appearance="outline" class="mt-2">
           <mat-label>Titulo</mat-label>
           <input matInput placeholder="ex: Casa de Vila em Moema " formControlName="titulo" required>
