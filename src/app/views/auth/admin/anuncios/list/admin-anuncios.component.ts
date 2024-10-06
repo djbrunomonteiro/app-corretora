@@ -9,6 +9,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { AlertConfirmComponent } from '../../../../shared/alert-confirm/alert-confirm.component';
 import { UtilsService } from '../../../../../services/utils.service';
 import { AnunciosStore } from '../../../../../store/anuncios-store';
+import { NgxMaskPipe } from 'ngx-mask';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-admin-anuncios',
@@ -16,7 +18,9 @@ import { AnunciosStore } from '../../../../../store/anuncios-store';
   imports: [
     MaterialModule, 
     CommonModule, 
-    AdminAnuncioEditComponent
+    AdminAnuncioEditComponent,
+    NgxMaskPipe,
+    RouterModule
   ],
   templateUrl: './admin-anuncios.component.html',
   styleUrl: './admin-anuncios.component.scss'
@@ -25,7 +29,7 @@ export class AdminAnunciosComponent implements OnInit {
 
   anunciosStore = inject(AnunciosStore)
 
-  displayedColumns: string[] = ['codigo','titulo', 'categoria', 'tipo', 'cidade', 'status', 'acoes'];
+  displayedColumns: string[] = ['codigo','titulo', 'categoria', 'tipo', 'cidade', 'status', 'preco', 'acoes'];
   dataSource = new MatTableDataSource<any>([]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 

@@ -36,10 +36,20 @@
               <td mat-cell *matCellDef="let element">{{element.status}} </td>
             </ng-container>
 
+            <ng-container matColumnDef="preco">
+              <th mat-header-cell *matHeaderCellDef> Preço </th>
+              <td mat-cell *matCellDef="let element">
+                @if (element.preco) {
+                  {{ element.preco | mask: 'separator.2': {thousandSeparator:'.', prefix: 'R$ '} }}
+              }
+            </ng-container>
+
             <ng-container matColumnDef="acoes">
               <th mat-header-cell *matHeaderCellDef> Ações </th>
               <td mat-cell *matCellDef="let element" >
-                <button (click)="openEdit(element)" mat-stroked-button color="primary">Ver</button>
+                <a  [routerLink]="'/anuncios/'+element.url" target="_blank"  mat-stroked-button color="primary">Link Norm.</a>
+                <a [routerLink]="'/destaque/'+element.id" target="_blank" mat-stroked-button color="primary">Link Dest.</a>
+                <button (click)="openEdit(element)" mat-stroked-button color="primary">Editar</button>
                 <button (click)="delete(element.id)" mat-stroked-button color="warn">Deletar</button>
 
               </td>
