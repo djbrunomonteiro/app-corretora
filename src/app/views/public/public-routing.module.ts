@@ -11,6 +11,7 @@ import { PoliticaPrivacidadeComponent } from './politica-privacidade/politica-pr
 import { ContatosComponent } from './contatos/contatos.component';
 import { LinksComponent } from './links/links.component';
 import { PostDetailsComponent } from './post-details/post-details.component';
+import { DestaqueComponent } from './destaque/destaque.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
         path: '',
         component: HomeComponent,
         
+      },
+      {
+        path: 'destaque/:id',
+        component: DestaqueComponent,
       },
       {
         path: 'links',

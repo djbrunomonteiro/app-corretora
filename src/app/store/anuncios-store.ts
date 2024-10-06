@@ -48,7 +48,22 @@ export const AnunciosStore = signalStore(
           error: console.error,
         })
       ).subscribe()
+    };
 
+    function loadOne(id:string) {
+      patchState(store, { isLoading: true });
+      return anuncioService.getOne(id).pipe(
+        tapResponse({
+          next: (res: any) => {
+            const { results } = res;
+
+            let anuncio = results as IAnuncio;
+            patchState(store, setEntity(anuncio));
+            patchState(store, { isLoading: false });
+          },
+          error: console.error,
+        })
+      )
     };
 
 
@@ -176,6 +191,8 @@ export const AnunciosStore = signalStore(
     }
 
     function selectOne(key: string) {
+      console.log(store.allItens());
+      
       return store.allItens().filter(elem => elem.url === key || elem.id === key)[0]
     }
 
@@ -187,6 +204,7 @@ export const AnunciosStore = signalStore(
 
     return { 
       loadAll, 
+      loadOne,
       saveOne, 
       removeOne, 
       search, 

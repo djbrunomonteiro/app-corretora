@@ -1,0 +1,141 @@
+@if(anuncio){
+    <div class="row m-0">
+        <div class="col-12">
+            <div class="destaque-container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div>
+                            <span>Oportunidade imperdível e pode ser a sua !!!</span>
+                            <h1>{{anuncio.titulo}}</h1>
+                            <p class="cidade">no bairro  {{anuncio.end_bairro}} na cidade de {{anuncio.end_cidade}} / {{anuncio.end_uf}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 m-0 p-0">
+            <swiper-container [breakpoints]="breakpoints" slidesOffsetAfter="0.5" loop="false" navigation="true" pagination="true" >
+                @for (path of fotos$ | async; track $index) {
+                    <swiper-slide>
+                        <img [src]="path">
+                    </swiper-slide>
+                }
+
+                
+            </swiper-container>
+
+        </div>
+    </div>
+    
+
+    <div class="row m-0 justify-content-center section-1">
+        <div class="col-md-10 p-5">
+            <h4 class="text-center  my-3">"MUITO MAIS CONFORTO E PRATICIDADE com todos esses diferenciais!"</h4>
+            <div class="d-flex flex-wrap justify-content-center">
+                @for (item of anuncio.dets_imovel; track $index) {
+                    <mat-chip class="m-2 ">{{item}}</mat-chip>
+                }
+                @for (item of anuncio.dets_outros; track $index) {
+                    <mat-chip class="m-2">{{item}}</mat-chip>
+                }
+            </div>
+
+            <h4 class="text-center my-3">Próximo de tudo, com fácil e rápido acesso para o seu dia a dia!</h4>
+            <div class="d-flex justify-content-center flex-wrap">
+                @for (item of anuncio.dets_proximidades; track $index) {
+                    <mat-chip class="m-2">{{item}}</mat-chip>
+                }
+
+            </div>
+          
+        </div>
+
+
+    </div>
+
+    <div class="row m-0 justify-content-center align-items-center">
+        <div class="col-md-6 p-3">
+            <div class="descricao" [innerHTML]="anuncio.descricao"></div>
+        </div>
+
+        <div class="col-md-3 p-3">
+            <p>Tudo isso e muito mais por</p>
+            <span class="preco">
+                @if (anuncio.preco) {
+                    {{ anuncio.preco | mask: 'separator.2': {thousandSeparator:'.', prefix: 'R$ '} }}
+                }
+            </span>
+            <a [href]="urlWhatsapp" target="_blank" mat-flat-button color="warn" class="w-100">FALE COMIGO NO WHATSAPP</a>
+        </div>
+
+    </div>
+
+    <div class="row m-0 justify-content-center align-items-center">
+
+        <div class="col-md-5 p-3">
+            <form [formGroup]="form" (ngSubmit)="salvar()" class="form">
+                <div class="titulo">
+                    <h4>Vamos agendar uma visita sem compromisso?  😊</h4>
+                    <p>Prometo não incomodar, apenas informar exatamente o que você deseja saber.</p>
+                </div>
+                <div class="my-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Seu Nome</mat-label>
+                        <input formControlName="nome_cliente" matInput placeholder="" required>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Seu WhatsApp</mat-label>
+                        <input formControlName="whatsapp" matInput mask="(00)00000000 || (00)0 0000-0000">
+                    </mat-form-field>
+                    <p class="my-3"><b>Quais são os melhores dias?</b></p>
+
+                    <mat-button-toggle-group formControlName="dias" name="dia_semana" aria-label="dia de semana para visita"
+                        multiple>
+                        <div class="d-flex flex-wrap">
+                            @for (dia of core.diasSemana; track $index) {
+                            <mat-button-toggle [value]="dia">{{dia}}</mat-button-toggle>
+                            }
+
+                        </div>
+                    </mat-button-toggle-group>
+        
+                    <p class="my-3"><b>Preferência de horário?</b> </p>
+                    <mat-button-toggle-group formControlName="horarios" name="horario"
+                        aria-label="horário de agendamento de visita" multiple>
+                        <mat-button-toggle value="manhã">MANHÃ</mat-button-toggle>
+                        <mat-button-toggle value="tarde">TARDE</mat-button-toggle>
+                    </mat-button-toggle-group>
+                    @if(loading){
+                        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                    }@else {
+                        <button type="submit" [disabled]="form.invalid" mat-flat-button color="primary" class="w-100 my-3">Agendar visita</button>
+                    }
+
+                    @if(isAgendamento){
+                        <p>"Seu agendamento foi recebido. Entrarei em contato o mais breve possível. Obrigada!"</p>
+
+                    }
+                </div>
+            </form>
+            </div>
+    </div>
+
+    <div class="row justify-content-center align-items-center m-0 section-1">
+        <div class="col-md-6 p-4">
+            <h4 class="text-center my-4 p-3">Ainda não encontrou o que procura? Não se preocupe! <br> Confira essas outras opções disponíveis e descubra o imóvel que combina perfeitamente com o que você deseja!</h4>
+            <div class="d-flex justify-content-center">
+                <button routerLink="/buscar" mat-flat-button>Ver mais imóveis</button>
+            </div>
+        </div>
+        <div class="col-md-4 p-4">
+            <div class="d-flex justify-content-center">
+                <div class="corretora">
+                    <img src="../../../../assets/imgs/telma-monteiro-vendo-seu-imovel.webp" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+}

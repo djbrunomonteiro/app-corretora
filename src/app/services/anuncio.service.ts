@@ -1,5 +1,5 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { Firestore, collection, CollectionReference, doc, setDoc, getDocs, updateDoc, deleteDoc } from '@angular/fire/firestore';
+import { Firestore, collection, CollectionReference, doc, setDoc, getDocs, updateDoc, deleteDoc, getDoc } from '@angular/fire/firestore';
 import { Observable} from 'rxjs';
 import { IResponse } from '../models/response';
 import { isPlatformBrowser } from '@angular/common';
@@ -37,6 +37,23 @@ export class AnuncioService {
 
   }
 
+  getOne(id: string) {
+    return new Observable<IResponse>(sub => {
+      let response: IResponse = {};
+
+      this.queryDoc(id).then(res =>{
+        response = { status: 200, error: false, results: res, message: 'Itens obtidos com sucesso!' };
+        sub.next(response)
+      }).catch(err => {
+        console.error(err);
+        response = { status: 401, error: true, results: undefined, message: 'Error ao obter itens. Tente novamente!' }
+        sub.next(response)
+      })
+
+    })
+
+  }
+
   queryDocs() {
     return new Promise<any[]>(resolve => {
       if(!this.collectionRef){return resolve([])}
@@ -47,6 +64,23 @@ export class AnuncioService {
         });
         resolve(itens)
       });
+    })
+
+  }
+
+  queryDoc(id: string) {
+    return new Promise<any>(async resolve => {
+      if(!this.collectionRef){return resolve([])}
+      const itens: any[] = [];
+      const docRef = doc(this.firestore, 'anuncios', id)
+      getDoc(docRef)
+      const docSnap = await getDoc(docRef);
+      if(docSnap.exists()){
+        resolve(docSnap.data())
+      }else{
+        resolve(undefined)
+      }
+
     })
 
   }

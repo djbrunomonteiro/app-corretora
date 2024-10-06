@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit, inject } from '@angular/core';
 import { MaterialModule } from '../../../modules/material/material.module';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -15,6 +15,7 @@ import { EMeta } from '../../../enums/meta';
 import { SlidesUltimosComponent } from '../../shared/slides-ultimos/slides-ultimos.component';
 import { GridPostsComponent } from '../../shared/grid-posts/grid-posts.component';
 import { environment } from '../../../../environments/environment';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -30,13 +31,16 @@ import { environment } from '../../../../environments/environment';
     BannerVenderHomeComponent,
     BannerPrincipalComponent,
     SlidesUltimosComponent,
-    GridPostsComponent
+    GridPostsComponent,
+    RouterModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
+
+  router = inject(Router);
 
   form = this.fb.group({
     tipo: ['apartamento'],
@@ -88,6 +92,11 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.core.setTitle('Telma Monteiro - Corretora de Imóveis no Maranhão');
     this.core.updateMeta(EMeta.DESC_HOME, EMeta.KEY_SOU);
+
+    // setTimeout(() => {
+    //   this.router.navigate(['/destaque/zAO3iuPa9R5D6E5g5Tsh'])
+
+    // },1000)
   }
 
 
