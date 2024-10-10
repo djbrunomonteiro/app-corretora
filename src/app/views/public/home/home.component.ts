@@ -1,3 +1,4 @@
+import { AnalyticsService } from './../../../services/analytics.service';
 import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit, inject } from '@angular/core';
 import { MaterialModule } from '../../../modules/material/material.module';
 import { CommonModule } from '@angular/common';
@@ -16,6 +17,7 @@ import { SlidesUltimosComponent } from '../../shared/slides-ultimos/slides-ultim
 import { GridPostsComponent } from '../../shared/grid-posts/grid-posts.component';
 import { environment } from '../../../../environments/environment';
 import { Router, RouterModule } from '@angular/router';
+import { EEventsAnalytics } from '../../../enums/events-analitycs';
 
 @Component({
   selector: 'app-home',
@@ -82,21 +84,30 @@ export class HomeComponent implements OnInit {
       url: 'https://www.facebook.com/telma.monteiro.79?mibextid=ZbWKwL',
       target: '_blank'
     },
-  ]
+  ];
+
+  urlWhatsapp = '';
 
   constructor(
     private fb: FormBuilder,
     public core: CoreService,
+    private analyticsService: AnalyticsService
   ){}
 
   ngOnInit(): void {
     this.core.setTitle('Telma Monteiro - Corretora de Imóveis no Maranhão');
     this.core.updateMeta(EMeta.DESC_HOME, EMeta.KEY_SOU);
+    this.setUrlWhatsapp();
+  }
 
-    // setTimeout(() => {
-    //   this.router.navigate(['/destaque/zAO3iuPa9R5D6E5g5Tsh'])
+  setUrlWhatsapp() {
+    const texto = `Olá! Estou entrando em contato pelo site, e gostaria de informações sobre os imóveis !`;
+    const textoEncoded = encodeURIComponent(texto);
+    this.urlWhatsapp = `https://api.whatsapp.com/send?phone=5598981272751&text=${textoEncoded}`
+  }
 
-    // },1000)
+  setLOG(){
+    this.analyticsService.setLog(EEventsAnalytics.open_whatsapp, 'whatsapp')
   }
 
 

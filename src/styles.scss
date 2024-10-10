@@ -53,6 +53,27 @@ mat-form-field {
   }
 
 
+/* Animação de pulsar */
+@keyframes pulsate {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(85, 215, 176, 0.7);
+    }
+    50% {
+      transform: scale(1.1);
+      box-shadow: 0 0 15px 10px rgba(85, 215, 176, 0);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(85, 215, 176, 0);
+    }
+  }
+  
+  /* Adicionar a animação ao botão */
+  .button-attention {
+    animation: pulsate 1s infinite;
+  }
+
 
 @media (max-width: 820px) {
     * {

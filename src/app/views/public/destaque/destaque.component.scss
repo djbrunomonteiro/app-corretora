@@ -32,7 +32,7 @@ swiper-container{
     width: 100%;
     swiper-slide{
         width: 100%;
-        max-height: 800px;
+        height: 800px;
         background-color: #b4b8ff;
         display: flex;
         align-items: center;
@@ -40,7 +40,8 @@ swiper-container{
         img{
             // max-width: 1200px;
             width: 100%;
-            // height: 100%;
+            height: 100% !important;
+            object-fit: cover;
         }
     }
 }
@@ -76,3 +77,26 @@ h4{
     font-size: 50px;
     font-weight: 700;
 }
+
+
+@media (max-width: 768px) {
+    swiper-container{
+        width: 100%;
+        swiper-slide{
+            width: 100%;
+            max-height: 500px;
+            background-color: #b4b8ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            img{
+                // max-width: 1200px;
+                width: 100%;
+                height: 100%!important;
+                object-fit: cover;
+            }
+        }
+    }
+    
+}
+

@@ -65,7 +65,7 @@
                     {{ anuncio.preco | mask: 'separator.2': {thousandSeparator:'.', prefix: 'R$ '} }}
                 }
             </span>
-            <a [href]="urlWhatsapp" target="_blank" mat-flat-button color="warn" class="w-100">FALE COMIGO NO WHATSAPP</a>
+            <a (click)="setLOG()" [href]="urlWhatsapp" target="_blank" mat-flat-button color="warn" class="w-100 button-attention">FALE COMIGO NO WHATSAPP</a>
         </div>
 
     </div>
@@ -124,7 +124,7 @@
         <div class="col-md-6 p-4">
             <h4 class="text-center my-4 p-3">Ainda não encontrou o que procura? Não se preocupe! <br> Confira essas outras opções disponíveis e descubra o imóvel que combina perfeitamente com o que você deseja!</h4>
             <div class="d-flex justify-content-center">
-                <button routerLink="/buscar" mat-flat-button>Ver mais imóveis</button>
+                <button class="button-attention" routerLink="/buscar" mat-flat-button>Ver mais imóveis</button>
             </div>
         </div>
         <div class="col-md-4 p-4">

@@ -35,6 +35,8 @@ import { IAgendamento } from '../../../models/agendamento';
 import { AgendamentosStore } from '../../../store/agendamentos-store';
 import { UtilsService } from '../../../services/utils.service';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { AnalyticsService } from '../../../services/analytics.service';
+import { EEventsAnalytics } from '../../../enums/events-analitycs';
 @Component({
   selector: 'app-destaque',
   standalone: true,
@@ -63,6 +65,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 export class DestaqueComponent {
   anunciosStore = inject(AnunciosStore);
   agendamentoStore = inject(AgendamentosStore);
+  analyticsService = inject(AnalyticsService);
   utils = inject(UtilsService);
   uploadService = inject(UploadService);
   leadService = inject(LeadService);
@@ -137,6 +140,7 @@ export class DestaqueComponent {
 
   ngOnInit(): void {
     this.getAnuncio();
+    
   }
 
 
@@ -149,7 +153,7 @@ export class DestaqueComponent {
 
       await firstValueFrom(this.anunciosStore.loadOne(id))
       this.anuncio = this.anunciosStore.selectOne(id);
-      console.log(this.anuncio);
+      this.setLOG(EEventsAnalytics.open_page)
 
       if (!this.anuncio) {
         return;
@@ -207,6 +211,10 @@ export class DestaqueComponent {
     const textoEncoded = encodeURIComponent(texto);
     this.urlWhatsapp = `https://api.whatsapp.com/send?phone=5598981272751&text=${textoEncoded}`
 
+  }
+
+  setLOG(event: EEventsAnalytics = EEventsAnalytics.open_whatsapp){
+    this.analyticsService.setLog(event, '')
   }
 
   async salvar(){
