@@ -22,7 +22,7 @@ export const initialState: ClienteState = {
 
 
 export const ClientesStore = signalStore(
-    { providedIn: 'root' },
+    { providedIn: 'root', protectedState: false },
     withDevtools('clientes'),
     withState(initialState),
     withEntities({ entity: type<ICliente>() }),

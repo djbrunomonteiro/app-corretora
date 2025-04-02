@@ -23,7 +23,7 @@ export const initialState: AgendamentoState = {
 
 
 export const AgendamentosStore = signalStore(
-    { providedIn: 'root' },
+    { providedIn: 'root', protectedState: false },
     withDevtools('agendamentos'),
     withState(initialState),
     withEntities({ entity: type<IAgendamento>() }),

@@ -23,7 +23,7 @@ export const initialState: LeadState = {
 
 
 export const LeadsStore = signalStore(
-    { providedIn: 'root' },
+    { providedIn: 'root', protectedState: false },
     withDevtools('leads'),
     withState(initialState),
     withEntities({ entity: type<ILead>() }),
