@@ -24,7 +24,6 @@ export const initialState: AnuncioState = {
 
 export const AnunciosStore = signalStore(
   { providedIn: 'root', protectedState: false },
-  withDevtools('anuncios'),
   withState(initialState),
   withEntities({ entity: type<IAnuncio>() }),
   withComputed(({ entities }) => ({

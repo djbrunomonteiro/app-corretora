@@ -8,7 +8,6 @@ import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { provideAuth, getAuth} from '@angular/fire/auth';
 import { provideStore } from '@ngrx/store';
-import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideEnvironmentNgxMask } from 'ngx-mask';
 import { provideClientHydration } from '@angular/platform-browser';
@@ -24,22 +23,10 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideHttpClient(withFetch()),
     provideEnvironmentNgxMask(),
-    importProvidersFrom([
-        provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-        provideAuth(() => getAuth()),
-        provideFirestore(() => getFirestore()),
-        provideAnalytics(() => getAnalytics()),
-    ]),
-
-    // provideStore(appReducers, { metaReducers, runtimeChecks: {strictActionImmutability: false, strictStateImmutability: false} }),
-    // provideEffects([
-    //   AnuncioEffectsService, 
-    //   LeadEffectsService,
-    //   ClienteEffectsService,
-    //   AgendamentoEffectsService
-    // ]),
-    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
-    // { provide: LocationStrategy, useClass: HashLocationStrategy },
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
+    provideAnalytics(() => getAnalytics()),
     { provide: LOCALE_ID, useValue: 'pt-BR' }, provideClientHydration(),
     provideStore()
 

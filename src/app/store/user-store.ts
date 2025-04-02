@@ -20,7 +20,6 @@ export const initialState: UserState = {
 
 export const UserStore = signalStore(
     { providedIn: 'root', protectedState: false },
-    withDevtools('user'),
     withState(initialState), 
     withEntities({ entity: type<any>()}),
     withComputed(({entities}) => ({

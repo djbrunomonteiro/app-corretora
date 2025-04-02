@@ -22,7 +22,6 @@ export interface BlogState {
   
   export const BlogStore = signalStore(
     { providedIn: 'root', protectedState: false },
-    withDevtools('blog'),
     withState(initialState),
     withEntities({ entity: type<IPost>() }),
     withComputed(({ entities }) => ({

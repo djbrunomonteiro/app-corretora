@@ -24,7 +24,6 @@ export const initialState: LeadState = {
 
 export const LeadsStore = signalStore(
     { providedIn: 'root', protectedState: false },
-    withDevtools('leads'),
     withState(initialState),
     withEntities({ entity: type<ILead>() }),
     withComputed(({ entities }) => ({
