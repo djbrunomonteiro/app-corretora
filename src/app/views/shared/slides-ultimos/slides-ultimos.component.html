@@ -5,7 +5,47 @@
                 @if(item.fotos){
                     @if((item.fotos[0] | urlFotos: 'anuncios' | async); as src){
                         <swiper-slide (click)="openAnuncio(item.url)" class="slide cursor-pointer" >
-                            <div class="container-img" >
+                            <mat-card class="card-box" appearance="outlined">
+
+                                <img mat-card-image [src]="src" alt="">
+                                <mat-card-content>
+
+                                    <div class="lead-form">
+                                        <div class="featured">
+                                            <span>Disponível</span>
+                                
+                                        </div>
+
+                                        <div class="header">
+                                            <h2>{{item.titulo}}</h2>
+                                            <p>{{item.end_bairro}},{{item.end_cidade}}/{{item.end_uf}}</p>
+                                        </div>
+                                
+                                        <div class="icons">
+                                            <mat-icon>add_task</mat-icon>
+                                            <span>Banheiros, Quartos, Sala de jantar ...</span>
+                                        </div>
+                                
+                                
+                                        <div class="price">
+                                            <p>Á venda por</p>
+                                            @if(item.preco){
+                                                <h1>{{item.preco | mask: 'separator.2': {thousandSeparator:'.', prefix: 'R$'} }}</h1>
+                                            }
+                                        </div>
+                                
+                                
+                                    </div>
+                                </mat-card-content>
+                              </mat-card>
+
+                            <!-- <div class="container-box" >
+                                <div class="image" [ngStyle]="{'background-image': 'url(' + src + ')'}">
+
+                                </div>
+                                <div class="info">
+
+                                </div>
                                 <div class="background-img" [ngStyle]="{'background-image': 'url(' + src + ')'}"></div>
                                 <img [src]="src" class="foreground-img">
                             </div>
@@ -16,7 +56,7 @@
                                 @if(item.preco){
                                     <span class="preco ">Valor: <span [ngClass]="{'blur-price': !leadService.collectedContact$.value}">{{item.preco | mask: 'separator.2': {thousandSeparator:'.', prefix: 'R$'} }}</span> </span>
                                 }
-                            </div>
+                            </div>  -->
                         </swiper-slide>
                     }
     
@@ -26,3 +66,7 @@
     }
 
 </section>
+
+
+    
+ 

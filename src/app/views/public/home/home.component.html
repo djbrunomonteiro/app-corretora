@@ -1,34 +1,35 @@
-
+<app-header/>
 <app-banner-principal/>
-<section class="sub-menu">
-    @for (item of empresaMenu; track $index) {
-        <a [href]="item.url" [target]="item.target" mat-raised-button class="m-2">
-            <mat-icon aria-hidden="false" [fontIcon]="item.icon"></mat-icon> {{item.title}}
-        </a>
-    }
-</section>
 
-<section class="row m-0 p-0 justify-content-center my-3">
+
+<section class="row m-0 p-0 justify-content-center my-5">
     <div class="col-md-10">
-        <div class="align-items-center p-3">
-            <h2>Últimos publicados</h2>
-            <mat-divider></mat-divider>
+
+        <div class="header-section">
+            <h5>Recentes</h5>
+            <h3>Propriedades</h3>
+            <p>Confira algumas das nossas últimas propriedades.</p>
         </div>
         <app-slides-ultimos></app-slides-ultimos>
 
     </div>
 </section>
 
-<div class="d-flex justify-content-center">
-
-    <a (click)="setLOG()" [href]="urlWhatsapp" target="_blank" mat-flat-button color="warn" class="w-50 button-attention">FALE COMIGO NO WHATSAPP</a>
-</div>
-
+<!-- <div class="d-flex justify-content-center">
+    <a (click)="setLOG()" [href]="urlWhatsapp" target="_blank" mat-flat-button color="warn" class="w-50">FALE COMIGO NO WHATSAPP</a>
+</div>  -->
 
 
+<!-- <section class="sub-menu">
+    @for (item of empresaMenu; track $index) {
+        <a [href]="item.url" [target]="item.target" mat-raised-button class="m-2">
+            <mat-icon aria-hidden="false" [fontIcon]="item.icon"></mat-icon> {{item.title}}
+        </a>
+    }
+</section>  -->
 
 
-<section class="row m-0 p-0 justify-content-center my-3" >
+<!-- <section class="row m-0 p-0 justify-content-center my-3" >
     <div class="col-md-10">
         @for (item of slidesConfig; track $index) {
             <div class="align-items-center p-3">
@@ -51,12 +52,8 @@
     <div class="col-md-10 py-3">
         <app-grid-posts />
     </div>
-</section> 
+</section>   -->
 
-<!-- <section id="posts" class="row m-0 p-0 justify-content-center" style="background-color: #FFFFFF">
-    <div class="col-md-10 py-3">
-        <app-grid-posts />
-    </div>
-</section> -->
+
 
 

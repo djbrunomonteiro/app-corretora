@@ -1,6 +1,29 @@
-<div class="container-default">
+<div class="container-default" [ngStyle]="{'backgroundImage': 'url(' + imageUrl + ')'}">
     <app-search-home class="search"></app-search-home>
-    <div class="foto">
-        <img src="assets/imgs/telma-monteiro-corretora-1.webp" alt="">
+    <div class="lead-form">
+        <div class="featured">
+            <span>Novidade</span>
+
+        </div>
+        <div class="header">
+            <h2>Casa de Alto Padrão no Araçagy – 900m² com Alta valorização</h2>
+            <p>Bairro Cohama, SÃO LUIS / MA</p>
+        </div>
+
+        <div class="icons">
+            <mat-icon>add_task</mat-icon>
+            <span>Banheiros, Quartos, Sala de jantar ...</span>
+        </div>
+
+
+        <div class="price">
+            <p>Á venda por</p>
+            <h1>R$ 300.000</h1>
+        </div>
+
+
     </div>
+    <!-- <div class="foto">
+        <img src="assets/imgs/telma-monteiro-corretora-1.webp" alt="">
+    </div> -->
 </div>

@@ -1,5 +1,31 @@
 <form [formGroup]="form">
-    <div class="row m-0">
+    <mat-form-field appearance="outline">
+        <input formControlName="termo" matInput placeholder="ex: Casa em condomínio">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Interesse</mat-label>
+        <mat-select formControlName="categoria">
+            @for (item of core.categorias; track $index) {
+            <mat-option [value]="item">{{item | uppercase}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline">
+        <mat-label>Tipo</mat-label>
+        <mat-select formControlName="tipo">
+            @for (item of core.tipos; track $index) {
+            <mat-option [value]="item">{{item | uppercase}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+    <button (click)="search()" mat-stroked-button color="primary">PESQUISAR</button>
+    <!-- <button (click)="search(true)" class="w-100 my-2" mat-stroked-button color="primary">Ver todos os anúncios</button> -->
+
+
+
+    <!-- <div class="row m-0">
         <div class="col-md-12 my-4">
             <h4 class="text-center">Eu te ajudo a encontrar o imóvel dos Sonhos</h4>
         </div>
@@ -26,8 +52,8 @@
             </mat-form-field>
         </div>
 
-    </div>
-    <div class="container">
+    </div> -->
+    <!-- <div class="container">
         <div class="search">
             <mat-form-field appearance="outline">
                 <input formControlName="termo" matInput placeholder="Procure por um bairro, condomínio ou código">
@@ -35,5 +61,5 @@
         </div>
         <button (click)="search()" class="w-100" mat-raised-button color="primary">PESQUISAR</button>
         <button (click)="search(true)" class="w-100 my-2" mat-stroked-button color="primary">Ver todos os anúncios</button>
-    </div>
+    </div> -->
 </form>

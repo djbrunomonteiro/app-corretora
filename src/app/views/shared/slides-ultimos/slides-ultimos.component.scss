@@ -1,63 +1,91 @@
 .slides{
-    
+    margin-bottom: 70px;
     .slide{
-        height: 400px !important;
+        
+        // height: 550px !important;
         width: 100%;
+
+        .card-box{
+            background-color: #ffff;
+            img{
+                height: 300px;
+                width: 100%;
+            }
+        }
+
+
+    }
+}
+
+
+.lead-form{
+    width: 100%;
+    background-color: #ffff;
+    border-radius: 5px;
+    padding: 10px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 250px;
+
+    .featured{
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100px;
+        height: 40px;
+        background-color: rgb(14, 163, 0);
+        display: flex;
+        justify-content: center;
+        align-items: center;
         border-radius: 10px;
-        // background-color: rgb(207, 207, 207);
-
-        .container-img{
-            display: flex;
-            justify-content: center;
-            text-align: center;
-            width: 100%;
-            height: 100%;
-
-            .background-img {
-                height: 400px !important;
-                width: 100%;
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-size: cover;
-                background-position: center;
-                filter: blur(3px);
-            }
-            
-            .foreground-img {
-                position: relative;
-                max-width: 100%;
-                height: 100%;
-                // z-index: 1;
-            }
+        span{
+            color: #fff;
         }
+    }
+    // .featured::after {
+    //     content: "";
+    //     position: absolute;
+    //     top: 0;
+    //     right: -20px;
+    //     width: 0;
+    //     height: 0;
+    //     border-top: 20px solid transparent;
+    //     border-bottom:20px solid transparent;
+    //     border-left: 20px solid red;
+    //   }
 
 
-        .titulo-container{
-            position: absolute;
-            bottom: 0px;
-            background-color: rgba(42, 41, 112, 0.349);
-            color: white;
-            width: 100%;
-            padding: 20px;
-            font-weight: 600;
-            display: flex;
-            flex-direction: column;
-            border-radius: 0px 0px 10px 10px;
-            .titulo{
-                padding: 0px;
-                width: 100%;
-            }
-            .subtitulo{
-                padding: 0px;
-                width: 100%;
-                font-weight: 300;
-            }
-            
+    .header{
+        h2{
+            font-size: 16px;
+            font-weight: 700;
+            padding: 0px;
         }
+        p{
+            color: #7e7e7e;
+        }
+    }
 
+    .icons{
+        width: 100%;
+        display: flex;
+        color: violet;
+        font-size: 12px;
+        mat-icon{
+            margin-right: 5px;
+        }
+    }
+
+    .price{
+        h1, p{
+            padding: 0px;
+            margin: 0px;
+        }
+        h1{
+            font-size: 16px;
+            font-weight: 900;
+        }
     }
 }
 

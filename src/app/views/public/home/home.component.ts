@@ -18,6 +18,7 @@ import { GridPostsComponent } from '../../shared/grid-posts/grid-posts.component
 import { environment } from '../../../../environments/environment';
 import { Router, RouterModule } from '@angular/router';
 import { EEventsAnalytics } from '../../../enums/events-analitycs';
+import { HeaderComponent } from '../../../layout/header/header.component';
 
 @Component({
   selector: 'app-home',
@@ -34,7 +35,8 @@ import { EEventsAnalytics } from '../../../enums/events-analitycs';
     BannerPrincipalComponent,
     SlidesUltimosComponent,
     GridPostsComponent,
-    RouterModule
+    RouterModule,
+    HeaderComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './home.component.html',

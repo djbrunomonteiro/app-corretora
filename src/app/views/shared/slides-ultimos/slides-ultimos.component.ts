@@ -47,12 +47,12 @@ export class SlidesUltimosComponent {
       spaceBetween: 10,
     },
     800: {
-      slidesPerView: 3,
-      spaceBetween: 10,
-      grid: {
-        rows: 2,
-        fill: 'row'
-      }
+      slidesPerView: 4,
+      spaceBetween: 20,
+      // grid: {
+      //   rows: 1,
+      //   fill: 'row'
+      // }
     },
   };
 

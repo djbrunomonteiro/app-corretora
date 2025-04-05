@@ -20,10 +20,6 @@ export class PublicComponent implements OnInit, AfterViewInit {
     private storeService: StoreService
   ){
 
-    // afterNextRender(() => {
-    //   this.storeService.dispatchAction({group: EGroup.Anuncio, action: EAction.GetAll});
-    //   this.checkAuth();    
-    // });
   }
 
   ngOnInit(): void {

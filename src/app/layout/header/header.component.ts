@@ -11,6 +11,7 @@ import { MenuComponent } from '../menu/menu.component';
 import { UtilsService } from '../../services/utils.service';
 import { UserStore } from '../../store/user-store';
 import { ClientesStore } from '../../store/cliente-store';
+import { IMenu } from '../../models/menu';
 
 @Component({
   selector: 'app-header',
@@ -57,6 +58,33 @@ export class HeaderComponent implements OnInit {
   clienteStore = inject(ClientesStore)
   showFiller = false;
   isLinks = false
+
+    empresaMenu: IMenu[] = [
+      {
+        title: 'Quem sou',
+        iconlabel: 'icon face',
+        icon: 'face_4',
+        url: 'quem-sou'
+      },
+      {
+        title: 'Contatos',
+        iconlabel: 'perm_phone_msg',
+        icon: 'perm_phone_msg',
+        url: 'contatos'
+      },
+      {
+        title: 'Links',
+        iconlabel: 'perm_phone_msg',
+        icon: 'perm_phone_msg',
+        url: 'links'
+      },
+      {
+        title: 'Politica de privacidade',
+        iconlabel: 'report icon',
+        icon: 'report',
+        url: 'politica-de-privacidade'
+      },
+    ]
 
   constructor(
     private router: Router,

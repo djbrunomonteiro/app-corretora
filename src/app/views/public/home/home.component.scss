@@ -1,10 +1,29 @@
-.sub-menu{
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-}
 
-.gradient-background {
-    background: linear-gradient(to top, #000292, #ffff);
+// .sub-menu{
+//     margin-top: 10px;
+//     display: flex;
+//     justify-content: center;
+//     flex-wrap: wrap;
+// }
+
+// .gradient-background {
+//     background: linear-gradient(to top, #000292, #ffff);
+// }
+
+.header-section{
+    margin-top: 70px;
+    text-align: center;
+    h5{
+        font-size: 16px;
+        font-weight: 600;
+        color: aqua;
+    }
+    h3{
+        font-size: 30px;
+        font-weight: 600;
+    }
+    p{
+        font-weight: 200;
+        
+    }
 }
