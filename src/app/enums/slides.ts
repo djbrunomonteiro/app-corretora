@@ -3,4 +3,5 @@ export enum ESlides {
     apartamento = 'apartamento',
     comercial = 'comercial',
     lancamentos = 'lancamentos',
+    all = 'todos'
 }

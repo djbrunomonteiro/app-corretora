@@ -1,8 +1,7 @@
-<app-header/>
-<app-banner-principal/>
+<app-header />
+<app-banner-principal />
 
-
-<section class="row m-0 p-0 justify-content-center my-5">
+<section class="row m-0 p-0 justify-content-center mt-5">
     <div class="col-md-10">
 
         <div class="header-section">
@@ -11,49 +10,46 @@
             <p>Confira algumas das nossas últimas propriedades.</p>
         </div>
         <app-slides-ultimos></app-slides-ultimos>
+        
 
     </div>
 </section>
 
-<!-- <div class="d-flex justify-content-center">
-    <a (click)="setLOG()" [href]="urlWhatsapp" target="_blank" mat-flat-button color="warn" class="w-50">FALE COMIGO NO WHATSAPP</a>
-</div>  -->
-
-
-<!-- <section class="sub-menu">
-    @for (item of empresaMenu; track $index) {
-        <a [href]="item.url" [target]="item.target" mat-raised-button class="m-2">
-            <mat-icon aria-hidden="false" [fontIcon]="item.icon"></mat-icon> {{item.title}}
-        </a>
-    }
-</section>  -->
-
-
-<!-- <section class="row m-0 p-0 justify-content-center my-3" >
+<section class="row m-0 p-0 justify-content-center my-0 bg-cinza">
     <div class="col-md-10">
-        @for (item of slidesConfig; track $index) {
-            <div class="align-items-center p-3">
-                <h2>{{item.titulo}}</h2>
-                <mat-divider></mat-divider>
-                <p>{{item.subtitulo}}</p>
-            </div>
-            <app-slides [slidesConfig]="item"/>
-        }
-    </div>
 
+        <div class="header-section">
+            <h5>Problemas para encontrar</h5>
+            <h3>Precisa de ajuda? Fale comigo.</h3>
+            <p>Sou especialista e posso te ajudar. ou navegue por mais imóveis.</p>
+        </div>
+        <div class="btns-box">
+            <button mat-stroked-button color="primary">Entre em contato</button>
+            <button mat-stroked-button color="primary">Explorar mais</button>
+        </div>
+    </div>
 </section>
 
+<section class="row m-0 p-0 justify-content-center my-0">
+    <div class="col-md-10">
+        <div class="section-info">
+            <div class="left">
+                <h5>Sou Especialista</h5>
+                <h3>Em imóveis, terrenos e empreendimentos </h3>
+                <p>Nas cidades do Maranhão, com destaque na região metropolitana</p>
 
+                <p>Registrada no CRECI/MA sob o número 6489 e formada em administração CRA 3480.
+                </p>
 
-<section class="row m-0 p-0 my-0 justify-content-center align-items-center gradient-background">
-    <div class="col-md-12">
-        <app-banner-vender-home/>
+                <button mat-stroked-button color="primary">Entre em contato</button>
+                <button mat-stroked-button color="primary">Confira meus Imóveis</button>
+                <button mat-stroked-button color="primary">Fale comigo no Whatsapp</button>
+
+            </div>
+            <div class="imagem">
+                <img src="assets/imgs/telma-monteiro-links.webp" alt="">
+            </div>
+
+        </div>
     </div>
-    <div class="col-md-10 py-3">
-        <app-grid-posts />
-    </div>
-</section>   -->
-
-
-
-
+</section>

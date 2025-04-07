@@ -177,7 +177,14 @@ export const AnunciosStore = signalStore(
       return computed(() => {
         let result = store.allItens();
         result = utils.ordenarItens(result, 'created_at');
-        result = result.filter((elem, i) => String(elem.tipo).includes(tipo) && i >= start && i <= end);
+        result = result.filter((elem, i) => {
+          const match1 = i >= start && i <= end;
+          let match2 = true;
+          if(elem.tipo !== ESlides.all){
+            match2 = String(elem.tipo).includes(tipo)
+          }
+           return match1 && match2
+        })
         return result;
       })
     }

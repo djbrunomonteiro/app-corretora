@@ -4,6 +4,7 @@
     background-color: #ffff;
     border-radius: 5px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-top: 10px;
@@ -12,33 +13,33 @@
         margin-top: 10px;
         display: flex;
         justify-content: space-around;
+        align-items: center;
         mat-form-field{
-            margin: 5px;
+            margin: 0px 5px;
             width: 250px;
-            height: 70px;
+            height: 56px;
         }
 
         button{
             // width: 50px;
             border-radius: 5px;
             height: 56px;
-            margin-top: 5px;
+            margin-top: 0px;
             
+        }
+        .btns-box{
+            display: flex;
+            flex-direction: column;
         }
 
 
     }
+
+    .btn-all{
+        border-radius: 5px;
+        margin-top: 20px;
+        width: 100%;
+    }
     
 }
 
-// h4 {
-//     font-size: 1.7rem;
-//     font-weight: 700;
-// }
-
-// @media only screen and (max-width: 600px) {
-//     h4 {
-//         font-size: 1.2rem;
-//         font-weight: 800;
-//     }
-// }

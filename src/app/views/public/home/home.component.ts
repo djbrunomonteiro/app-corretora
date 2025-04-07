@@ -53,9 +53,8 @@ export class HomeComponent implements OnInit {
   });
 
   slidesConfig: IConfigSlides[] = [
-    {titulo: 'Casas', subtitulo: 'Em Condominios, Soltas, Alto padrão, Vila...', tipo: ESlides.casa, start: 0, end: 10},
-    {titulo: 'Empreendimentos', subtitulo: 'Lojas, Salas, Escritórios, Galpões, Sitios, Fazendas...', tipo: ESlides.comercial, start: 0, end: 10},
-    {titulo: 'Apartamentos', subtitulo: 'Padrão, Duplex, Garden e Loft...', tipo: ESlides.apartamento,  start: 0, end: 10},
+    {titulo: 'Todos', subtitulo: 'Em Condominios, Soltas, Alto padrão, Vila...', tipo: ESlides.casa, start: 0, end: 20},
+
   ]
 
   empresaMenu: IMenu[] = [
