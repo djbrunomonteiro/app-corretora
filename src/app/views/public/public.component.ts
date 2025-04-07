@@ -6,9 +6,10 @@ import { AnunciosStore } from '../../store/anuncios-store';
 import { BlogStore } from '../../store/blog-store';
 
 @Component({
-  selector: 'app-public',
-  templateUrl: './public.component.html',
-  styleUrl: './public.component.scss'
+    selector: 'app-public',
+    templateUrl: './public.component.html',
+    styleUrl: './public.component.scss',
+    standalone: false
 })
 export class PublicComponent implements OnInit, AfterViewInit {
 

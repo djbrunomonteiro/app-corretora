@@ -6,11 +6,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { resolve } from 'dns';
 
 @Component({
-  selector: 'app-admin-home',
-  standalone: true,
-  imports: [CommonModule, MaterialModule],
-  templateUrl: './admin-home.component.html',
-  styleUrl: './admin-home.component.scss'
+    selector: 'app-admin-home',
+    imports: [CommonModule, MaterialModule],
+    templateUrl: './admin-home.component.html',
+    styleUrl: './admin-home.component.scss'
 })
 export class AdminHomeComponent implements OnInit {
 

@@ -5,15 +5,14 @@ import { SearchHomeComponent } from '../search-home/search-home.component';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-banner-principal',
-  standalone: true,
-  imports: [
-    CommonModule,
-    SearchHomeComponent,
-    MatIconModule
-  ],
-  templateUrl: './banner-principal.component.html',
-  styleUrl: './banner-principal.component.scss'
+    selector: 'app-banner-principal',
+    imports: [
+        CommonModule,
+        SearchHomeComponent,
+        MatIconModule
+    ],
+    templateUrl: './banner-principal.component.html',
+    styleUrl: './banner-principal.component.scss'
 })
 export class BannerPrincipalComponent {
 

@@ -13,17 +13,16 @@ import { NgxMaskPipe } from 'ngx-mask';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-admin-anuncios',
-  standalone: true,
-  imports: [
-    MaterialModule, 
-    CommonModule, 
-    AdminAnuncioEditComponent,
-    NgxMaskPipe,
-    RouterModule
-  ],
-  templateUrl: './admin-anuncios.component.html',
-  styleUrl: './admin-anuncios.component.scss'
+    selector: 'app-admin-anuncios',
+    imports: [
+        MaterialModule,
+        CommonModule,
+        AdminAnuncioEditComponent,
+        NgxMaskPipe,
+        RouterModule
+    ],
+    templateUrl: './admin-anuncios.component.html',
+    styleUrl: './admin-anuncios.component.scss'
 })
 export class AdminAnunciosComponent implements OnInit {
 

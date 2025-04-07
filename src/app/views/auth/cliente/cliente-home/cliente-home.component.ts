@@ -25,22 +25,21 @@ import { ICliente } from '../../../../models/cliente';
 
 
 @Component({
-  selector: 'app-cliente-home',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    NgxMaskDirective,
-    NgxMaskPipe,
-    DropzoneCdkModule,
-    DropzoneMaterialModule,
-    UrlFotosPipe,
-    AdminClientesEditComponent
-  ],
-  templateUrl: './cliente-home.component.html',
-  styleUrl: './cliente-home.component.scss'
+    selector: 'app-cliente-home',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MaterialModule,
+        NgxMaskDirective,
+        NgxMaskPipe,
+        DropzoneCdkModule,
+        DropzoneMaterialModule,
+        UrlFotosPipe,
+        AdminClientesEditComponent
+    ],
+    templateUrl: './cliente-home.component.html',
+    styleUrl: './cliente-home.component.scss'
 })
 export class ClienteHomeComponent implements OnInit, AfterViewInit {
 

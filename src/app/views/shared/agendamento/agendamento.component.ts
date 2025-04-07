@@ -19,20 +19,19 @@ import { RecaptchaModule } from 'ng-recaptcha';
 import { environment } from '../../../../environments/environment';
 
 @Component({
-  selector: 'app-agendamento',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NgxMaskDirective,
-    NgxMaskPipe,
-    ClienteLoginComponent,
-    RecaptchaModule
-  ],
-  templateUrl: './agendamento.component.html',
-  styleUrl: './agendamento.component.scss'
+    selector: 'app-agendamento',
+    imports: [
+        MaterialModule,
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgxMaskDirective,
+        NgxMaskPipe,
+        ClienteLoginComponent,
+        RecaptchaModule
+    ],
+    templateUrl: './agendamento.component.html',
+    styleUrl: './agendamento.component.scss'
 })
 export class AgendamentoComponent implements OnInit {
 

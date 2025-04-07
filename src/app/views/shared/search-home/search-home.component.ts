@@ -6,15 +6,15 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../../modules/material/material.module';
 
 @Component({
-  selector: 'app-search-home',
-  standalone: true,
-  imports: [
-    MaterialModule, 
-    CommonModule, 
-    FormsModule, 
-    ReactiveFormsModule],
-  templateUrl: './search-home.component.html',
-  styleUrl: './search-home.component.scss'
+    selector: 'app-search-home',
+    imports: [
+        MaterialModule,
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule
+    ],
+    templateUrl: './search-home.component.html',
+    styleUrl: './search-home.component.scss'
 })
 export class SearchHomeComponent {
 

@@ -8,14 +8,13 @@ import { AnalyticsService } from '../../../services/analytics.service';
 import { EEventsAnalytics } from '../../../enums/events-analitycs';
 
 @Component({
-  selector: 'app-links',
-  standalone: true,
-  imports: [
-    MatButtonModule,
-    MatIconModule
-  ],
-  templateUrl: './links.component.html',
-  styleUrl: './links.component.scss'
+    selector: 'app-links',
+    imports: [
+        MatButtonModule,
+        MatIconModule
+    ],
+    templateUrl: './links.component.html',
+    styleUrl: './links.component.scss'
 })
 export class LinksComponent implements OnInit {
 

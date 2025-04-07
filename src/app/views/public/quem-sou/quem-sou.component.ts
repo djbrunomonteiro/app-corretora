@@ -4,13 +4,12 @@ import { CoreService } from '../../../services/core.service';
 import { EMeta } from '../../../enums/meta';
 
 @Component({
-  selector: 'app-quem-sou',
-  standalone: true,
-  imports: [
-    CommonModule
-  ],
-  templateUrl: './quem-sou.component.html',
-  styleUrl: './quem-sou.component.scss'
+    selector: 'app-quem-sou',
+    imports: [
+        CommonModule
+    ],
+    templateUrl: './quem-sou.component.html',
+    styleUrl: './quem-sou.component.scss'
 })
 export class QuemSouComponent implements OnInit {
   core = inject(CoreService);

@@ -35,40 +35,36 @@ import { LeadService } from '../../../services/lead.service';
 import {MatChipsModule} from '@angular/material/chips';
 import { FormDesbloquearPrecoComponent } from '../../shared/form-desbloquear-preco/form-desbloquear-preco.component';
 @Component({
-  selector: 'app-anuncio-details',
-  standalone: true,
-  imports: [
-    MaterialModule, 
-    CommonModule,
-    NgxMaskDirective,
-    NgxMaskPipe,
-    UrlFotosPipe,
-    FormContatoComponent,
-    LoadingComponent,
-    YouTubePlayer,
-    FontAwesomeModule,
-    ShareButtons,
-    MatChipsModule,
-    FormDesbloquearPrecoComponent,
-    RouterModule
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [{
-    provide: YOUTUBE_PLAYER_CONFIG,
-    useValue: {
-      disablePlaceholder: true
-    }
-  },
-  provideShareButtonsOptions(
-    shareIcons(),
-    withConfig({
-      debug: true,
-      sharerMethod: SharerMethods.Anchor,
-    })
-  ),
-],
-  templateUrl: './anuncio-details.component.html',
-  styleUrl: './anuncio-details.component.scss'
+    selector: 'app-anuncio-details',
+    imports: [
+        MaterialModule,
+        CommonModule,
+        NgxMaskDirective,
+        NgxMaskPipe,
+        UrlFotosPipe,
+        FormContatoComponent,
+        LoadingComponent,
+        YouTubePlayer,
+        FontAwesomeModule,
+        ShareButtons,
+        MatChipsModule,
+        FormDesbloquearPrecoComponent,
+        RouterModule
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    providers: [{
+            provide: YOUTUBE_PLAYER_CONFIG,
+            useValue: {
+                disablePlaceholder: true
+            }
+        },
+        provideShareButtonsOptions(shareIcons(), withConfig({
+            debug: true,
+            sharerMethod: SharerMethods.Anchor,
+        })),
+    ],
+    templateUrl: './anuncio-details.component.html',
+    styleUrl: './anuncio-details.component.scss'
 })
 export class AnuncioDetailsComponent implements OnInit {
 

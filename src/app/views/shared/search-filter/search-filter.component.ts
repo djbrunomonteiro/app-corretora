@@ -12,22 +12,21 @@ import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
-  selector: 'app-search-filter',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    NgxMaskDirective,
-    NgxMaskPipe,
-    UrlFotosPipe,
-    FavoritoPipe,
-    CardAnuncioComponent
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  templateUrl: './search-filter.component.html',
-  styleUrl: './search-filter.component.scss'
+    selector: 'app-search-filter',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MaterialModule,
+        NgxMaskDirective,
+        NgxMaskPipe,
+        UrlFotosPipe,
+        FavoritoPipe,
+        CardAnuncioComponent
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    templateUrl: './search-filter.component.html',
+    styleUrl: './search-filter.component.scss'
 })
 export class SearchFilterComponent implements OnInit, OnDestroy {
   @Output() search = new EventEmitter<any>();

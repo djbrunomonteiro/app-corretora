@@ -12,15 +12,14 @@ import { BlogStore } from '../../../../store/blog-store';
 import { AdminPostEditorComponent } from '../admin-post-editor/admin-post-editor.component';
 
 @Component({
-  selector: 'app-admin-post-list',
-  standalone: true,
-  imports: [
-    MaterialModule, 
-    CommonModule,
-    AdminPostEditorComponent
-  ],
-  templateUrl: './admin-post-list.component.html',
-  styleUrl: './admin-post-list.component.scss'
+    selector: 'app-admin-post-list',
+    imports: [
+        MaterialModule,
+        CommonModule,
+        AdminPostEditorComponent
+    ],
+    templateUrl: './admin-post-list.component.html',
+    styleUrl: './admin-post-list.component.scss'
 })
 export class AdminPostListComponent implements OnInit{
 

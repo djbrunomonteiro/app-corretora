@@ -7,22 +7,21 @@ import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-cookies',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatButtonModule
-  ],
-  animations: [
-    trigger('fade', [
-      transition('void => *', [
-        style({ opacity: 0 }),
-        animate(500, style({ opacity: 1 }))
-      ])
-    ])
-  ],
-  templateUrl: './cookies.component.html',
-  styleUrl: './cookies.component.scss'
+    selector: 'app-cookies',
+    imports: [
+        CommonModule,
+        MatButtonModule
+    ],
+    animations: [
+        trigger('fade', [
+            transition('void => *', [
+                style({ opacity: 0 }),
+                animate(500, style({ opacity: 1 }))
+            ])
+        ])
+    ],
+    templateUrl: './cookies.component.html',
+    styleUrl: './cookies.component.scss'
 })
 export class CookiesComponent {
   none = true;

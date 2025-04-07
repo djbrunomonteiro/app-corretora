@@ -7,17 +7,16 @@ import { UrlFotosPipe } from '../../../pipes/url-fotos.pipe';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-grid-posts',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    CommonModule,
-    UrlFotosPipe,
-    RouterModule
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  templateUrl: './grid-posts.component.html',
-  styleUrl: './grid-posts.component.scss'
+    selector: 'app-grid-posts',
+    imports: [
+        MaterialModule,
+        CommonModule,
+        UrlFotosPipe,
+        RouterModule
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    templateUrl: './grid-posts.component.html',
+    styleUrl: './grid-posts.component.scss'
 })
 export class GridPostsComponent implements OnInit {
 

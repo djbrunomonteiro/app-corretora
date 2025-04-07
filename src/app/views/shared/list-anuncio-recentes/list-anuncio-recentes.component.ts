@@ -13,19 +13,18 @@ import { AllAnuncios } from '../../../store/selectors/anuncio.selector';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-list-anuncio-recentes',
-  standalone: true,
-  imports: [
-    MaterialModule, 
-    CommonModule,
-    NgxMaskDirective,
-    NgxMaskPipe,
-    UrlFotosPipe,
-    FavoritoPipe
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  templateUrl: './list-anuncio-recentes.component.html',
-  styleUrl: './list-anuncio-recentes.component.scss'
+    selector: 'app-list-anuncio-recentes',
+    imports: [
+        MaterialModule,
+        CommonModule,
+        NgxMaskDirective,
+        NgxMaskPipe,
+        UrlFotosPipe,
+        FavoritoPipe
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    templateUrl: './list-anuncio-recentes.component.html',
+    styleUrl: './list-anuncio-recentes.component.scss'
 })
 export class ListAnuncioRecentesComponent implements OnInit {
 

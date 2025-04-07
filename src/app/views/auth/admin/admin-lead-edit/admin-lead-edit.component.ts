@@ -22,41 +22,40 @@ import { LeadsStore } from '../../../../store/leads-store';
 import { ILead } from '../../../../models/lead';
 
 @Component({
-  selector: 'app-admin-lead-edit',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    NgxMaskDirective,
-    NgxMaskPipe,
-    DropzoneCdkModule,
-    DropzoneMaterialModule,
-    UrlFotosPipe
-  ],
-  providers: [
-    provideNativeDateAdapter(),
-    {
-      provide: MAT_DATE_LOCALE, useValue: 'pt-BR'
-    },
-    {
-      provide: MAT_DATE_FORMATS,
-      useValue: {
-        parse: {
-          dateInput: ['l', 'LL'],
+    selector: 'app-admin-lead-edit',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MaterialModule,
+        NgxMaskDirective,
+        NgxMaskPipe,
+        DropzoneCdkModule,
+        DropzoneMaterialModule,
+        UrlFotosPipe
+    ],
+    providers: [
+        provideNativeDateAdapter(),
+        {
+            provide: MAT_DATE_LOCALE, useValue: 'pt-BR'
         },
-        display: {
-          dateInput: 'L',
-          monthYearLabel: 'MMM YYYY',
-          dateA11yLabel: 'LL',
-          monthYearA11yLabel: 'MMMM YYYY',
-        },
-      },
-    }
-  ],
-  templateUrl: './admin-lead-edit.component.html',
-  styleUrl: './admin-lead-edit.component.scss'
+        {
+            provide: MAT_DATE_FORMATS,
+            useValue: {
+                parse: {
+                    dateInput: ['l', 'LL'],
+                },
+                display: {
+                    dateInput: 'L',
+                    monthYearLabel: 'MMM YYYY',
+                    dateA11yLabel: 'LL',
+                    monthYearA11yLabel: 'MMMM YYYY',
+                },
+            },
+        }
+    ],
+    templateUrl: './admin-lead-edit.component.html',
+    styleUrl: './admin-lead-edit.component.scss'
 })
 export class AdminLeadEditComponent {
 

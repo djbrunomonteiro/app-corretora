@@ -7,18 +7,17 @@ import { FavoritoPipe } from '../../../pipes/favorito.pipe';
 import { UrlFotosPipe } from '../../../pipes/url-fotos.pipe';
 
 @Component({
-  selector: 'app-central-ajuda',
-  standalone: true,
-  imports: [
-    MaterialModule, 
-    CommonModule,
-    NgxMaskDirective,
-    NgxMaskPipe,
-    UrlFotosPipe,
-    FavoritoPipe
-  ],
-  templateUrl: './central-ajuda.component.html',
-  styleUrl: './central-ajuda.component.scss'
+    selector: 'app-central-ajuda',
+    imports: [
+        MaterialModule,
+        CommonModule,
+        NgxMaskDirective,
+        NgxMaskPipe,
+        UrlFotosPipe,
+        FavoritoPipe
+    ],
+    templateUrl: './central-ajuda.component.html',
+    styleUrl: './central-ajuda.component.scss'
 })
 export class CentralAjudaComponent {
 

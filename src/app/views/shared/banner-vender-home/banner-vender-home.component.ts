@@ -8,18 +8,17 @@ import { MatDialog } from '@angular/material/dialog';
 import { FormContatoComponent } from '../form-contato/form-contato.component';
 
 @Component({
-  selector: 'app-banner-vender-home',
-  standalone: true,
-  imports: [
-    MaterialModule, 
-    CommonModule, 
-    FormsModule, 
-    ReactiveFormsModule,
-    SearchHomeComponent,
-    UrlFotosPipe,
-  ],
-  templateUrl: './banner-vender-home.component.html',
-  styleUrl: './banner-vender-home.component.scss'
+    selector: 'app-banner-vender-home',
+    imports: [
+        MaterialModule,
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        SearchHomeComponent,
+        UrlFotosPipe,
+    ],
+    templateUrl: './banner-vender-home.component.html',
+    styleUrl: './banner-vender-home.component.scss'
 })
 export class BannerVenderHomeComponent {
 

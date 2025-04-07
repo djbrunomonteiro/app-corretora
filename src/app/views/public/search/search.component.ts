@@ -22,25 +22,24 @@ import { EMeta } from '../../../enums/meta';
 
 
 @Component({
-  selector: 'app-search',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NgxMaskDirective,
-    NgxMaskPipe,
-    UrlFotosPipe,
-    FavoritoPipe,
-    CardAnuncioComponent,
-    SearchFilterComponent,
-    ScrollableDirective,
-    LoadingComponent
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  templateUrl: './search.component.html',
-  styleUrl: './search.component.scss'
+    selector: 'app-search',
+    imports: [
+        MaterialModule,
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgxMaskDirective,
+        NgxMaskPipe,
+        UrlFotosPipe,
+        FavoritoPipe,
+        CardAnuncioComponent,
+        SearchFilterComponent,
+        ScrollableDirective,
+        LoadingComponent
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    templateUrl: './search.component.html',
+    styleUrl: './search.component.scss'
 })
 export class SearchComponent implements OnInit {
 

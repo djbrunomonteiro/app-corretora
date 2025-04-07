@@ -17,19 +17,18 @@ import { environment } from '../../../../environments/environment';
 import { RecaptchaModule } from 'ng-recaptcha';
 
 @Component({
-  selector: 'app-form-contato',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NgxMaskDirective,
-    NgxMaskPipe,
-    RecaptchaModule
-  ],
-  templateUrl: './form-contato.component.html',
-  styleUrl: './form-contato.component.scss'
+    selector: 'app-form-contato',
+    imports: [
+        MaterialModule,
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgxMaskDirective,
+        NgxMaskPipe,
+        RecaptchaModule
+    ],
+    templateUrl: './form-contato.component.html',
+    styleUrl: './form-contato.component.scss'
 })
 export class FormContatoComponent implements OnInit {
 

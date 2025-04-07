@@ -12,16 +12,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { environment } from '../../../../environments/environment';
 
 @Component({
-  selector: 'app-post-details',
-  standalone: true,
-  imports: [
-    CommonModule,
-    UrlFotosPipe,
-    MatIconModule,
-    MatButtonModule
-  ],
-  templateUrl: './post-details.component.html',
-  styleUrl: './post-details.component.scss'
+    selector: 'app-post-details',
+    imports: [
+        CommonModule,
+        UrlFotosPipe,
+        MatIconModule,
+        MatButtonModule
+    ],
+    templateUrl: './post-details.component.html',
+    styleUrl: './post-details.component.scss'
 })
 export class PostDetailsComponent {
   #scroller = inject(ViewportScroller);

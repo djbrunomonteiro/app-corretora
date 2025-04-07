@@ -13,19 +13,18 @@ import { LeadsStore } from '../../../store/leads-store';
 import { LeadService } from '../../../services/lead.service';
 
 @Component({
-  selector: 'app-form-desbloquear-preco',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NgxMaskDirective,
-    NgxMaskPipe,
-    RecaptchaModule
-  ],
-  templateUrl: './form-desbloquear-preco.component.html',
-  styleUrl: './form-desbloquear-preco.component.scss'
+    selector: 'app-form-desbloquear-preco',
+    imports: [
+        MaterialModule,
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgxMaskDirective,
+        NgxMaskPipe,
+        RecaptchaModule
+    ],
+    templateUrl: './form-desbloquear-preco.component.html',
+    styleUrl: './form-desbloquear-preco.component.scss'
 })
 export class FormDesbloquearPrecoComponent {
 

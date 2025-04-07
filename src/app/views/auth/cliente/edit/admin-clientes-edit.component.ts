@@ -40,27 +40,25 @@ import { ETabs } from '../../../../enums/tabs';
 import { UserStore } from '../../../../store/user-store';
 
 @Component({
-  selector: 'app-admin-clientes-edit',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    NgxMaskDirective,
-    NgxMaskPipe,
-    DropzoneCdkModule,
-    DropzoneMaterialModule,
-    UrlFotosPipe,
-    CardAnuncioComponent,
-    ListAnuncioRecentesComponent,
-    CentralAjudaComponent,
-    ClienteDuvidaComponent,
-    ListAgendamentosComponent,
-  ],
-
-  templateUrl: './admin-clientes-edit.component.html',
-  styleUrl: './admin-clientes-edit.component.scss',
+    selector: 'app-admin-clientes-edit',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MaterialModule,
+        NgxMaskDirective,
+        NgxMaskPipe,
+        DropzoneCdkModule,
+        DropzoneMaterialModule,
+        UrlFotosPipe,
+        CardAnuncioComponent,
+        ListAnuncioRecentesComponent,
+        CentralAjudaComponent,
+        ClienteDuvidaComponent,
+        ListAgendamentosComponent,
+    ],
+    templateUrl: './admin-clientes-edit.component.html',
+    styleUrl: './admin-clientes-edit.component.scss'
 })
 export class AdminClientesEditComponent implements OnInit, AfterViewInit {
   @Input() isCadastroPublic: boolean = false;

@@ -7,11 +7,10 @@ import { first } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [MaterialModule],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+    selector: 'app-login',
+    imports: [MaterialModule],
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.scss'
 })
 export class AdminLoginComponent implements OnInit {
   constructor(

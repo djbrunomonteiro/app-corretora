@@ -9,18 +9,17 @@ import { Router } from '@angular/router';
 import { LeadService } from '../../../services/lead.service';
 
 @Component({
-  selector: 'app-slides-ultimos',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    CommonModule,
-    UrlFotosPipe,
-    NgxMaskDirective,
-    NgxMaskPipe,
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  templateUrl: './slides-ultimos.component.html',
-  styleUrl: './slides-ultimos.component.scss'
+    selector: 'app-slides-ultimos',
+    imports: [
+        MaterialModule,
+        CommonModule,
+        UrlFotosPipe,
+        NgxMaskDirective,
+        NgxMaskPipe,
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    templateUrl: './slides-ultimos.component.html',
+    styleUrl: './slides-ultimos.component.scss'
 })
 export class SlidesUltimosComponent {
 

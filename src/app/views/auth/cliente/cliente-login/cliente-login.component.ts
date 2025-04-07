@@ -12,19 +12,18 @@ import { EClientetemplate } from '../../../../enums/clientetemplate';
 import { ClienteCadastroComponent } from '../../../shared/cliente-cadastro/cliente-cadastro.component';
 
 @Component({
-  selector: 'app-cliente-login',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    NgxMaskDirective,
-    NgxMaskPipe,
-    ClienteCadastroComponent
-  ],
-  templateUrl: './cliente-login.component.html',
-  styleUrl: './cliente-login.component.scss'
+    selector: 'app-cliente-login',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MaterialModule,
+        NgxMaskDirective,
+        NgxMaskPipe,
+        ClienteCadastroComponent
+    ],
+    templateUrl: './cliente-login.component.html',
+    styleUrl: './cliente-login.component.scss'
 })
 export class ClienteLoginComponent implements OnInit{
 

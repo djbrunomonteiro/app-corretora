@@ -16,23 +16,22 @@ import { BlogStore } from '../../../../store/blog-store';
 import { IPost } from '../../../../models/post';
 
 @Component({
-  selector: 'app-admin-post-editor',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    NgxMaskDirective,
-    NgxMaskPipe,
-    DropzoneCdkModule,
-    DropzoneMaterialModule,
-    UrlFotosPipe,
-    NgxEditorModule
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  templateUrl: './admin-post-editor.component.html',
-  styleUrl: './admin-post-editor.component.scss'
+    selector: 'app-admin-post-editor',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MaterialModule,
+        NgxMaskDirective,
+        NgxMaskPipe,
+        DropzoneCdkModule,
+        DropzoneMaterialModule,
+        UrlFotosPipe,
+        NgxEditorModule
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    templateUrl: './admin-post-editor.component.html',
+    styleUrl: './admin-post-editor.component.scss'
 })
 export class AdminPostEditorComponent implements OnInit, AfterViewInit {
 

@@ -6,15 +6,14 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MenuComponent } from '../../../layout/menu/menu.component';
 
 @Component({
-  selector: 'app-tabs',
-  standalone: true,
-  imports: [
-    MaterialModule, 
-    CommonModule,
-    RouterModule
-  ],
-  templateUrl: './tabs.component.html',
-  styleUrl: './tabs.component.scss'
+    selector: 'app-tabs',
+    imports: [
+        MaterialModule,
+        CommonModule,
+        RouterModule
+    ],
+    templateUrl: './tabs.component.html',
+    styleUrl: './tabs.component.scss'
 })
 export class TabsComponent {
 

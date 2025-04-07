@@ -22,21 +22,20 @@ import { AnunciosStore } from '../../../store/anuncios-store';
 import { LeadService } from '../../../services/lead.service';
 
 @Component({
-  selector: 'app-slides',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    SearchHomeComponent,
-    UrlFotosPipe,
-    NgxMaskDirective,
-    NgxMaskPipe,
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  templateUrl: './slides.component.html',
-  styleUrl: './slides.component.scss',
+    selector: 'app-slides',
+    imports: [
+        MaterialModule,
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        SearchHomeComponent,
+        UrlFotosPipe,
+        NgxMaskDirective,
+        NgxMaskPipe,
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    templateUrl: './slides.component.html',
+    styleUrl: './slides.component.scss'
 })
 export class SlidesComponent {
   @Input() slidesConfig!: IConfigSlides;

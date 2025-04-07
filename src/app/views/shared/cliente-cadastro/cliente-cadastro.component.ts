@@ -16,19 +16,18 @@ import { EClientetemplate } from '../../../enums/clientetemplate';
 import { AdminClientesEditComponent } from '../../auth/cliente/edit/admin-clientes-edit.component';
 
 @Component({
-  selector: 'app-cliente-cadastro',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    NgxMaskDirective,
-    NgxMaskPipe,
-    AdminClientesEditComponent
-  ],
-  templateUrl: './cliente-cadastro.component.html',
-  styleUrl: './cliente-cadastro.component.scss'
+    selector: 'app-cliente-cadastro',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MaterialModule,
+        NgxMaskDirective,
+        NgxMaskPipe,
+        AdminClientesEditComponent
+    ],
+    templateUrl: './cliente-cadastro.component.html',
+    styleUrl: './cliente-cadastro.component.scss'
 })
 export class ClienteCadastroComponent {
 

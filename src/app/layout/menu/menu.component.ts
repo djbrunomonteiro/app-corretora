@@ -10,15 +10,14 @@ import { ClientesStore } from '../../store/cliente-store';
 import { UserStore } from '../../store/user-store';
 
 @Component({
-  selector: 'app-menu',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MaterialModule,
-    RouterModule
-  ],
-  templateUrl: './menu.component.html',
-  styleUrl: './menu.component.scss'
+    selector: 'app-menu',
+    imports: [
+        CommonModule,
+        MaterialModule,
+        RouterModule
+    ],
+    templateUrl: './menu.component.html',
+    styleUrl: './menu.component.scss'
 })
 export class MenuComponent {
 

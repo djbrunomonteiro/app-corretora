@@ -21,26 +21,25 @@ import { EEventsAnalytics } from '../../../enums/events-analitycs';
 import { HeaderComponent } from '../../../layout/header/header.component';
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [
-    MaterialModule, 
-    CommonModule, 
-    FormsModule, 
-    ReactiveFormsModule,
-    SearchHomeComponent,
-    UrlFotosPipe,
-    SlidesComponent,
-    BannerVenderHomeComponent,
-    BannerPrincipalComponent,
-    SlidesUltimosComponent,
-    GridPostsComponent,
-    RouterModule,
-    HeaderComponent
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+    selector: 'app-home',
+    imports: [
+        MaterialModule,
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        SearchHomeComponent,
+        UrlFotosPipe,
+        SlidesComponent,
+        BannerVenderHomeComponent,
+        BannerPrincipalComponent,
+        SlidesUltimosComponent,
+        GridPostsComponent,
+        RouterModule,
+        HeaderComponent
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
 

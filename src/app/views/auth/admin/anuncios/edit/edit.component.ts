@@ -23,28 +23,27 @@ import {toSignal} from '@angular/core/rxjs-interop'
 import { IResponse } from '../../../../../models/response';
 
 @Component({
-  selector: 'app-edit',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    NgxMaskDirective,
-    NgxMaskPipe,
-    DropzoneCdkModule,
-    DropzoneMaterialModule,
-    UrlFotosPipe,
-    NgxEditorModule
-  ],
-  providers: [
-    {
-      provide: STEPPER_GLOBAL_OPTIONS,
-      useValue: { showError: true },
-    },
-  ],
-  templateUrl: './edit.component.html',
-  styleUrl: './edit.component.scss'
+    selector: 'app-edit',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MaterialModule,
+        NgxMaskDirective,
+        NgxMaskPipe,
+        DropzoneCdkModule,
+        DropzoneMaterialModule,
+        UrlFotosPipe,
+        NgxEditorModule
+    ],
+    providers: [
+        {
+            provide: STEPPER_GLOBAL_OPTIONS,
+            useValue: { showError: true },
+        },
+    ],
+    templateUrl: './edit.component.html',
+    styleUrl: './edit.component.scss'
 })
 export class AdminAnuncioEditComponent implements OnInit, AfterViewInit, OnDestroy {
 

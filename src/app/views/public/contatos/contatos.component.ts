@@ -8,14 +8,13 @@ import { EMeta } from '../../../enums/meta';
 import { environment } from '../../../../environments/environment';
 
 @Component({
-  selector: 'app-contatos',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MaterialModule
-  ],
-  templateUrl: './contatos.component.html',
-  styleUrl: './contatos.component.scss'
+    selector: 'app-contatos',
+    imports: [
+        CommonModule,
+        MaterialModule
+    ],
+    templateUrl: './contatos.component.html',
+    styleUrl: './contatos.component.scss'
 })
 export class ContatosComponent implements OnInit {
 

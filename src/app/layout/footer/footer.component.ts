@@ -7,16 +7,15 @@ import { Router, RouterModule } from '@angular/router';
 import { environment } from '../../../environments/environment';
 
 @Component({
-  selector: 'app-footer',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    MenuComponent,
-    CommonModule,
-    RouterModule
-  ],
-  templateUrl: './footer.component.html',
-  styleUrl: './footer.component.scss'
+    selector: 'app-footer',
+    imports: [
+        MaterialModule,
+        MenuComponent,
+        CommonModule,
+        RouterModule
+    ],
+    templateUrl: './footer.component.html',
+    styleUrl: './footer.component.scss'
 })
 export class FooterComponent {
 

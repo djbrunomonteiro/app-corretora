@@ -10,19 +10,18 @@ import { ClientesStore } from '../../../store/cliente-store';
 import { AgendamentosStore } from '../../../store/agendamentos-store';
 
 @Component({
-  selector: 'app-list-agendamentos',
-  standalone: true,
-  imports: [
-    MaterialModule, 
-    CommonModule,
-    NgxMaskDirective,
-    NgxMaskPipe,
-    UrlFotosPipe,
-    FavoritoPipe
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  templateUrl: './list-agendamentos.component.html',
-  styleUrl: './list-agendamentos.component.scss'
+    selector: 'app-list-agendamentos',
+    imports: [
+        MaterialModule,
+        CommonModule,
+        NgxMaskDirective,
+        NgxMaskPipe,
+        UrlFotosPipe,
+        FavoritoPipe
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    templateUrl: './list-agendamentos.component.html',
+    styleUrl: './list-agendamentos.component.scss'
 })
 export class ListAgendamentosComponent {
 

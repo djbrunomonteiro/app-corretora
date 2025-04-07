@@ -12,21 +12,20 @@ import { LeadService } from '../../../services/lead.service';
 
 
 @Component({
-  selector: 'app-slides-home',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    SearchHomeComponent,
-    UrlFotosPipe,
-    NgxMaskDirective,
-    NgxMaskPipe,
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  templateUrl: './slides-home.component.html',
-  styleUrl: './slides-home.component.scss'
+    selector: 'app-slides-home',
+    imports: [
+        MaterialModule,
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        SearchHomeComponent,
+        UrlFotosPipe,
+        NgxMaskDirective,
+        NgxMaskPipe,
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    templateUrl: './slides-home.component.html',
+    styleUrl: './slides-home.component.scss'
 })
 export class SlidesHomeComponent implements OnInit {
 

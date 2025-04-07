@@ -12,17 +12,16 @@ import { AdminLeadEditComponent } from '../admin-lead-edit/admin-lead-edit.compo
 import { LeadsStore } from '../../../../store/leads-store';
 
 @Component({
-  selector: 'app-admin-leads',
-  standalone: true,
-  imports: [
-    MaterialModule, 
-    CommonModule,
-    NgxMaskDirective,
-    NgxMaskPipe,
-    AdminLeadEditComponent
-  ],
-  templateUrl: './admin-leads.component.html',
-  styleUrl: './admin-leads.component.scss'
+    selector: 'app-admin-leads',
+    imports: [
+        MaterialModule,
+        CommonModule,
+        NgxMaskDirective,
+        NgxMaskPipe,
+        AdminLeadEditComponent
+    ],
+    templateUrl: './admin-leads.component.html',
+    styleUrl: './admin-leads.component.scss'
 })
 export class AdminLeadsComponent implements OnInit{
 

@@ -15,16 +15,15 @@ import { ClientesStore } from '../../../../../store/cliente-store';
 import { ICliente } from '../../../../../models/cliente';
 
 @Component({
-  selector: 'app-admin-clientes-list',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    CommonModule,
-    NgxMaskDirective,
-    NgxMaskPipe,
-  ],
-  templateUrl: './admin-clientes-list.component.html',
-  styleUrl: './admin-clientes-list.component.scss'
+    selector: 'app-admin-clientes-list',
+    imports: [
+        MaterialModule,
+        CommonModule,
+        NgxMaskDirective,
+        NgxMaskPipe,
+    ],
+    templateUrl: './admin-clientes-list.component.html',
+    styleUrl: './admin-clientes-list.component.scss'
 })
 export class AdminClientesListComponent implements OnInit {
 

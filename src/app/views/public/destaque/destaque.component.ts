@@ -38,29 +38,28 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { AnalyticsService } from '../../../services/analytics.service';
 import { EEventsAnalytics } from '../../../enums/events-analitycs';
 @Component({
-  selector: 'app-destaque',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    CommonModule,
-    NgxMaskDirective,
-    NgxMaskPipe,
-    UrlFotosPipe,
-    FormContatoComponent,
-    LoadingComponent,
-    YouTubePlayer,
-    FontAwesomeModule,
-    ShareButtons,
-    MatChipsModule,
-    RouterModule,
-    ReactiveFormsModule,
-    FormsModule,
-    SlidesUltimosComponent,
-    MatProgressBarModule
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  templateUrl: './destaque.component.html',
-  styleUrl: './destaque.component.scss',
+    selector: 'app-destaque',
+    imports: [
+        MaterialModule,
+        CommonModule,
+        NgxMaskDirective,
+        NgxMaskPipe,
+        UrlFotosPipe,
+        FormContatoComponent,
+        LoadingComponent,
+        YouTubePlayer,
+        FontAwesomeModule,
+        ShareButtons,
+        MatChipsModule,
+        RouterModule,
+        ReactiveFormsModule,
+        FormsModule,
+        SlidesUltimosComponent,
+        MatProgressBarModule
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    templateUrl: './destaque.component.html',
+    styleUrl: './destaque.component.scss'
 })
 export class DestaqueComponent {
   anunciosStore = inject(AnunciosStore);

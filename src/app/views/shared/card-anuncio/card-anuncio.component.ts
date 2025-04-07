@@ -15,19 +15,18 @@ import { AnunciosStore } from '../../../store/anuncios-store';
 import { LeadService } from '../../../services/lead.service';
 
 @Component({
-  selector: 'app-card-anuncio',
-  standalone: true,
-  imports: [
-    MaterialModule, 
-    CommonModule,
-    NgxMaskDirective,
-    NgxMaskPipe,
-    UrlFotosPipe,
-    FavoritoPipe
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  templateUrl: './card-anuncio.component.html',
-  styleUrl: './card-anuncio.component.scss'
+    selector: 'app-card-anuncio',
+    imports: [
+        MaterialModule,
+        CommonModule,
+        NgxMaskDirective,
+        NgxMaskPipe,
+        UrlFotosPipe,
+        FavoritoPipe
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    templateUrl: './card-anuncio.component.html',
+    styleUrl: './card-anuncio.component.scss'
 })
 export class CardAnuncioComponent implements OnInit {
 
