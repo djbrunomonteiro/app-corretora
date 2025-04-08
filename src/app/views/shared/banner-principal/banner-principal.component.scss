@@ -5,7 +5,6 @@
 
 }
 .container-default{
-    // background-color: #F5F5F7;
     width: 100% !important;
     margin: 0px;
     height: 90vh;
@@ -21,37 +20,12 @@
         width: auto;
         bottom: -40px;
         box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
-        // height: 100px;
-        // margin-left: 100px;
-        // margin-right: 100px;
-
-
-        // width: 600px;
-        // margin-left: 300px;
     }
 
-    // width: 100%;
-    // align-items: baseline;
-    // justify-content: center;
-    // .search{
-    //     width: 50%;
-    //     border: 1px solid red;
-    //     background-color: #fff;
-    //     border-radius: 20px;
-    // }
-    // .foto{
-    //     display: flex;
-    //     align-items: center;
-    //     // width:50%;
-    //     ;
-    //     img{
-    //         height: 550px;
-    //     }
-
-    // }
+  
 }
 
-.lead-form{
+.anuncio-box{
     width: 420px;
     height: 300px;
     background-color: #ffff;
@@ -119,26 +93,35 @@
     }
 }
 
-@media (max-width: 540px) {
+@media (max-width: 768px){
     .container-default{
+        width: 100vw !important;
+        height: 70dvh;
+        margin: 0px;
         display: flex;
-        flex-direction: column;
-        width: 100%;
-        align-items: center;
         justify-content: center;
-        .search{
-            width: 80%;
-        }
-        .foto{
-            display: flex;
-            align-items: center;
-            // width:50%;
-            ;
-            img{
-                height: 350px;
-            }
+        align-items: center;
+        background-position: top center !important;
+        background-size: cover;
+        position: relative;
     
+        .search{
+            // position: static;
+            // height: 100px;
+            height: 250px;
+        }
+
+        .anuncio-box{
+            // width: 100vw;
+            // top: 0px;
+            height: 250px;
+            width: 100%;
+            left: 0;
+            top: 60px;
+            background-color: #e6e6e6c0;
+            // bottom: 30px;
         }
     }
-    
+        
+
 }
