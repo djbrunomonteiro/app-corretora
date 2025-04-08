@@ -29,7 +29,7 @@
     }
 
     .sticky{
-        background-color: #0011ffdc;
+        background-color: #2F4F4E;
         z-index: 1000;
         text-align: end;
         width: 100%;
@@ -65,7 +65,7 @@
     }
 
     .list{
-        background-color: #e3e5fca4;
+        background-color: #eeeeee;
         text-align: end;
         width: 100%;
         // height: 100px;
@@ -73,7 +73,7 @@
         display: flex;
         justify-content: start;
         flex-direction: column;
-        color: white;
+        color: #201B12;
         text-align: start;
         // position: sticky;
         padding: 20px;
@@ -97,8 +97,8 @@
 }
 
 .finalizado{
-    background-color: red;
-    color: #fff;
+    // background-color: red;
+    color: red;
     padding: 20px;
     font-size: large;
     width: 100%;

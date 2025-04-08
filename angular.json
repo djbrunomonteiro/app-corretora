@@ -31,7 +31,6 @@
             ],
             "styles": [
               "src/styles.scss",
-              "@angular/material/prebuilt-themes/rose-red.css",
               "node_modules/ngx-sharebuttons/themes/modern.scss",
               "node_modules/ngx-sharebuttons/themes/material.scss"
             ],

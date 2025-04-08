@@ -1,6 +1,6 @@
 import { Component, HostListener, Inject, OnInit, PLATFORM_ID, effect, inject } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { AuthService } from './services/auth.service';
@@ -9,6 +9,8 @@ import { UtilsService } from './services/utils.service';
 import { AnunciosStore } from './store/anuncios-store';
 import { CoreService } from './services/core.service';
 import { CookiesComponent } from './views/shared/cookies/cookies.component';
+import { filter } from 'rxjs';
+
 
 register();
 
@@ -34,8 +36,14 @@ export class AppComponent implements OnInit {
     private core: CoreService,
     private auth: AuthService,
     private utils: UtilsService,
+    private router: Router,
     @Inject(PLATFORM_ID) public platformId: Object,
     ) {
+      this.router.events.pipe(
+        filter(event => event instanceof NavigationEnd)
+      ).subscribe(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
     }
 
   ngOnInit(): void {

@@ -14,7 +14,7 @@
                 <input formControlName="termo" matInput placeholder="Ex: código 3435">
             </mat-form-field>
         </div>
-        <button (click)="pesquisar()" class="w-100" mat-raised-button color="primary">Pesquisar</button>
+        <button (click)="pesquisar()" class="w-100" mat-flat-button color="primary">Pesquisar</button>
         @if (openFilter) {
             <button (click)="ctrlFilter(false)" class="w-100 my-2" mat-stroked-button color="warn">Ocultar Filtros</button>
         }@else {
